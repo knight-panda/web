@@ -1,0 +1,12 @@
+.product-page {
+  background: #f4f5f7;
+  padding: 2rem 1rem;
+}
+
+.product-container {
+  max-width: 89rem;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}

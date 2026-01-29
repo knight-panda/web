@@ -1,0 +1,147 @@
+/* LEFT */
+.cart-left .free-banner {
+    background: #dff8ec;
+    color: #0f8f5c;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.cart-card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 1rem;
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 4rem 1fr auto auto;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.cart-item img {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.5rem;
+    object-fit: cover;
+}
+
+.ci-qantity {
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-top: 0.5rem;
+}
+
+.item-info .name {
+    font-weight: 600;
+}
+
+.qty {
+    border: 1px solid #ddd;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+/* RIGHT */
+.cart-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.summary-card {
+    background: #fff;
+    padding: 1.2rem;
+    border-radius: 1rem;
+}
+
+.sc-address-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.sc-add-edit-btn {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.sc-address {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin: 0.5rem 0 0 0;
+}
+
+.summary-card.clickable {
+    cursor: pointer;
+}
+
+.sc-apply-coupon-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.sc-apply-coupon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--search-bg-color);
+    padding: 1rem;
+    border-radius: 1rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin: 1rem 0 0 0;
+    border: 1px solid var(--primary-color);
+}
+
+.sc-bill-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.bill .row {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.bill .free {
+    color: green;
+    font-weight: 600;
+}
+
+.bill .total {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.pay-btn {
+    background: var(--primary-color);
+    color: #fff;
+    padding: 1rem;
+    font-size: 1.1rem;
+    border-radius: 1rem;
+    border: none;
+    cursor: pointer;
+}
+
+/* 📱 Mobile */
+@media (max-width: 64rem) {
+    .cart-container {
+        grid-template-columns: 1fr;
+    }
+}
