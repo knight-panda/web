@@ -74,6 +74,10 @@
     cursor: pointer;
 }
 
+.sc-add-edit-btn:hover {
+  text-decoration: underline;
+}
+
 .sc-address {
     display: flex;
     flex-direction: column;

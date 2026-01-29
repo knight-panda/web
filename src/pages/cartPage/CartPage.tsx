@@ -1,22 +1,32 @@
+import { useState } from "react";
 import CartItems from "../../components/cart/CartItems";
 import CartSummary from "../../components/cart/CartSummary";
+import AddressDialog from "../../components/address/AddressDialog";
 import "./CartPage.css";
 
 const CartPage = () => {
+  const [openAddress, setOpenAddress] = useState(false);
 
-    const handleAddEditAddress = () => {
-        console.log("Add / Edit Address clicked");
-        // later: open modal / bottom sheet
-    };
+  const handleAddEditAddress = () => {
+    setOpenAddress(true);
+  };
 
-    return (
-        <div className="cart-page">
-            <div className="cart-container">
-                <CartItems />
-                <CartSummary addEditAddress={handleAddEditAddress}/>
-            </div>
-        </div>
-    );
+  const closeAddressDialog = () => {
+    setOpenAddress(false);
+  };
+
+  return (
+    <div className="cart-page">
+      <div className="cart-container">
+        <CartItems />
+        <CartSummary addEditAddress={handleAddEditAddress} />
+      </div>
+
+      {openAddress && (
+        <AddressDialog onClose={closeAddressDialog} />
+      )}
+    </div>
+  );
 };
 
 export default CartPage;
