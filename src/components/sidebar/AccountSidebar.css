@@ -1,0 +1,33 @@
+.account-sidebar {
+    background: #fff;
+    border-radius: 1rem;
+    padding: 1.5rem 1.5rem 0 1.5rem;
+}
+
+.account-sidebar .phone {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.account-sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.account-sidebar li {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 0;
+    cursor: pointer;
+    color: #444;
+}
+
+.account-sidebar li.active {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.account-sidebar li.logout {
+    color: #c0392b;
+}
