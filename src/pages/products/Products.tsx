@@ -61,10 +61,12 @@ const products: Product[] = [
 
 const Products = () => {
   return (
-    <div className="products-grid">
-      {products.map((item) => (
-        <ProductCard />
-      ))}
+    <div className="product">
+      <div className="products-grid">
+        {products.map((item) => (
+          <ProductCard />
+        ))}
+      </div>
     </div>
   )
 }
