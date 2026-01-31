@@ -1,8 +1,13 @@
-.admin-page{
-    width: 93rem;
-    margin: 1rem auto;
+.admin-page {
+    background: #f5f6f8;
+    min-height: 100vh;
+    padding: 1rem 1rem;
 }
 
-.admin-container{
-    
+.admin-container {
+    max-width: 89rem;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 18rem 1fr;
+    gap: 2rem;
 }
