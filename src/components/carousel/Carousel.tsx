@@ -4,9 +4,15 @@ import banner_mobile_1 from "../../assets/banner.png";
 
 const desktopImages = [
   banner_mobile_1,
+  banner_mobile_1,
+  banner_mobile_1,
+  banner_mobile_1,
 ]
 
 const mobileImages = [
+  banner_mobile_1,
+  banner_mobile_1,
+  banner_mobile_1,
   banner_mobile_1,
 ];
 
