@@ -1,4 +1,4 @@
-import Orders from "../../components/order/Orders";
+import Orders from "../order/Orders";
 import AccountSidebar from "../../components/sidebar/AccountSidebar";
 import "./account.css";
 
