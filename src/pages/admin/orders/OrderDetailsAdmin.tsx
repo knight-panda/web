@@ -4,6 +4,13 @@ import "./OrderDetailsAdmin.css";
 
 import { MdOutlineArrowBack } from "react-icons/md";
 import productImage from "../../../assets/product_2.png"
+import CartSummary from "../../../components/cart/CartSummary";
+import CartSummaryAdmin from "../../../components/order/OrderSummaryDetails";
+import CartItems from "../../../components/cart/CartItems";
+import CartItemsAdmin from "../../../components/order/OrderItemsDetails";
+import OrderSummaryDetails from "../../../components/order/OrderSummaryDetails";
+import OrderItemsDetails from "../../../components/order/OrderItemsDetails";
+import { MdOutlineArrowDropDown } from "react-icons/md";
 
 // Define the shape of our order items for type safety
 interface OrderItem {
@@ -43,13 +50,13 @@ const OrderDetailsAdmin: React.FC = () => {
     <div className="order-details-container">
       {/* Header Section */}
       <div className="od-header">
-        <div className="back-btn" onClick={() => navigate(-1)}>
+        <div className="od-back-btn" onClick={() => navigate(-1)}>
           <MdOutlineArrowBack />
           Orders
         </div>
         <div className="od-title-row">
           <div className="order-id">Order details #{orderId || "N/A"}</div>
-          <div className="status-badge shipping">SHIPPING</div>
+          <div className="od-status-badge shipping">SHIPPING <MdOutlineArrowDropDown className="od-status-dropdown"/></div>
         </div>
         <div className="order-date">Date: 08/02/2023</div>
       </div>
@@ -74,18 +81,18 @@ const OrderDetailsAdmin: React.FC = () => {
       </div>
 
       {/* Tracking Form Section */}
-      <div className="tracking-info">
-        <div className="input-group-row">
-          <div className="input-field">
+      <div className="od-tracking-info">
+        <div className="od-input-group-row">
+          <div className="od-input-field">
             <label>Courier name</label>
             <input type="text" value="Adora Express" readOnly />
           </div>
-          <div className="input-field">
+          <div className="od-input-field">
             <label>Tracking number</label>
             <input type="text" value="SSA4569AEF4592" readOnly />
           </div>
         </div>
-        <div className="input-field full-width">
+        <div className="od-input-field full-width">
           <label>Shipment tracking URL</label>
           <input
             type="text"
@@ -98,35 +105,13 @@ const OrderDetailsAdmin: React.FC = () => {
       {/* Items List Section */}
       <h3>Item ordered</h3>
       <div className="items-section">
-        <div className="items-card">
-          {items.map((item) => (
-            <div key={item.id} className="order-item">
-              <img src={productImage} alt={item.name} />
-              <div className="order-item-info">
-                <div className="order-item-name">{item.name}</div>
-                <div className="order-item-quantity">{item.qty} x {item.qtyCount}</div>
-
-              </div>
-              <div className="order-item-price">₹ {item.price.toFixed(2)}</div>
-            </div>
-          ))}
-
+        <div className="od-items">
+          <OrderItemsDetails />
         </div>
 
         {/* Pricing Summary */}
-        <div className="order-summary">
-          <div className="summary-line">
-            <span>Product Total</span>
-            <span>$900.00</span>
-          </div>
-          <div className="summary-line">
-            <span>Shipping cost</span>
-            <span className="free-text">FREE</span>
-          </div>
-          <div className="summary-line total">
-            <span>Total</span>
-            <span>$900.00</span>
-          </div>
+        <div className="od-summary">
+          <OrderSummaryDetails />
         </div>
       </div>
     </div>
