@@ -1,0 +1,82 @@
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.dialog-box {
+  width: 420px;
+  background: #fff;
+  padding: 24px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.dialog-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: 1rem;
+}
+
+.dialog-form label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  margin-left: 0.2rem;
+}
+
+.dialog-form input,
+.dialog-form select {
+  padding: 1rem 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+/* ===== CUSTOM SELECT ===== */
+.dialog-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #fff;
+  padding-right: 36px;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23666' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 18px;
+}
+
+/* focus effect */
+.dialog-form select:focus,
+.dialog-form input:focus {
+  border-color: #ff7a00;
+  box-shadow: 0 0 0 2px rgba(255, 122, 0, 0.15);
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.cancel-btn {
+  background: #eee;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+}
+
+.save-btn {
+  background: #ff7a00;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+}

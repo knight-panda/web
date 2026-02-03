@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./OrderDetailsAdmin.css";
 
@@ -11,6 +11,7 @@ import CartItemsAdmin from "../../../components/order/OrderItemsDetails";
 import OrderSummaryDetails from "../../../components/order/OrderSummaryDetails";
 import OrderItemsDetails from "../../../components/order/OrderItemsDetails";
 import { MdOutlineArrowDropDown } from "react-icons/md";
+import OrderStatusDialog from "../../../components/order/OrderStatusDialog";
 
 // Define the shape of our order items for type safety
 interface OrderItem {
@@ -23,6 +24,7 @@ interface OrderItem {
 }
 
 const OrderDetailsAdmin: React.FC = () => {
+  const [open, setOpen] = useState(false);
   const { orderId } = useParams<{ orderId: string }>();
   const navigate = useNavigate();
 
@@ -46,6 +48,13 @@ const OrderDetailsAdmin: React.FC = () => {
     },
   ];
 
+  const handleSave = () => {
+    console.log("Updated:", "data");
+
+    // 🔥 call your API here
+    // await updateOrder(orderId, data)
+  };
+
   return (
     <div className="order-details-container">
       {/* Header Section */}
@@ -54,10 +63,16 @@ const OrderDetailsAdmin: React.FC = () => {
           <MdOutlineArrowBack />
           Orders
         </div>
-        <div className="od-title-row">
+        <div className="od-title-row" >
           <div className="order-id">Order details #{orderId || "N/A"}</div>
-          <div className="od-status-badge shipping">SHIPPING <MdOutlineArrowDropDown className="od-status-dropdown"/></div>
+          <div className="od-status-badge shipping" onClick={() => setOpen(true)}>SHIPPING <MdOutlineArrowDropDown className="od-status-dropdown" /></div>
         </div>
+
+        <OrderStatusDialog
+          isOpen={open}
+          onClose={() => setOpen(false)}
+          onSave={handleSave}
+        />
         <div className="order-date">Date: 08/02/2023</div>
       </div>
 
