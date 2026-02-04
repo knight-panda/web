@@ -6,6 +6,7 @@ import type { OrderModel } from "../../../models/OrderModel";
 
 import productImage from "../../../assets/product_2.png"
 import { IoFilter } from "react-icons/io5";
+import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 
 const OrdersAdmin = () => {
   const navigate = useNavigate();
@@ -36,47 +37,35 @@ const OrdersAdmin = () => {
       });
   }, []);
 
+  useEffect(() => {
+    const close = () => setFilterOpen(false);
+    window.addEventListener("click", close);
+    return () => window.removeEventListener("click", close);
+  }, []);
+
   if (loading) return <p>Loading orders...</p>;
 
   return (
-    <div className="orders-panel">
+    <div className="admin-orders-panel">
       <div className="orders-title-box">
         <div className="orders-title">Orders</div>
         {/* <IoFilter className="orders-filter"/> */}
 
-        <div className="filter-container" style={{ position: 'relative', display: 'inline-block' }}>
+        <div className="filter-container" onClick={(e) => e.stopPropagation()}>
+          <span>Filter</span>
           <IoFilter
             className="orders-filter"
-            style={{ cursor: 'pointer' }}
             onClick={() => setFilterOpen(!filterOpen)}
           />
 
           {filterOpen && (
-            <div className="filter-dropdown" style={{
-              position: 'absolute',
-              right: 0,
-              top: '100%',
-              background: 'white',
-              border: '1px solid #ddd',
-              borderRadius: '8px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-              zIndex: 1000,
-              minWidth: '180px',
-              padding: '8px 0'
-            }}>
+            <div className="filter-dropdown">
               <select
+                className="filter-select"
                 value={selectedFilter}
                 onChange={(e) => {
                   setSelectedFilter(e.target.value);
                   setFilterOpen(false);
-                }}
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  border: 'none',
-                  background: 'none',
-                  fontSize: '14px',
-                  cursor: 'pointer'
                 }}
               >
                 {filterOptions.map(option => (
@@ -88,6 +77,7 @@ const OrdersAdmin = () => {
             </div>
           )}
         </div>
+
 
       </div>
       {orders.map((order) => (
@@ -110,10 +100,8 @@ const OrdersAdmin = () => {
             </div>
 
             <div className="order-status">
-              PENDING
+              PENDING <MdKeyboardDoubleArrowRight />
             </div>
-
-            <span className="arrow">→</span>
           </div>
 
           <div className="order-items">
