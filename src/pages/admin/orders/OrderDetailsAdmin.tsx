@@ -3,11 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./OrderDetailsAdmin.css";
 
 import { MdOutlineArrowBack } from "react-icons/md";
-import productImage from "../../../assets/product_2.png"
-import CartSummary from "../../../components/cart/CartSummary";
-import CartSummaryAdmin from "../../../components/order/OrderSummaryDetails";
-import CartItems from "../../../components/cart/CartItems";
-import CartItemsAdmin from "../../../components/order/OrderItemsDetails";
 import OrderSummaryDetails from "../../../components/order/OrderSummaryDetails";
 import OrderItemsDetails from "../../../components/order/OrderItemsDetails";
 import { MdOutlineArrowDropDown } from "react-icons/md";
