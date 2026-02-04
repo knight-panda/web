@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./OrderDetailsAdmin.css";
 
@@ -6,6 +6,8 @@ import { MdOutlineArrowBack } from "react-icons/md";
 import OrderSummaryDetails from "../../../components/order/OrderSummaryDetails";
 import OrderItemsDetails from "../../../components/order/OrderItemsDetails";
 import { MdOutlineArrowDropDown } from "react-icons/md";
+import OrderStatusDialog from "../../../components/order/OrderStatusDialog";
+import type { OrderTrackingData } from "../../../models/OrderModel";
 
 // Define the shape of our order items for type safety
 interface OrderItem {
@@ -18,7 +20,9 @@ interface OrderItem {
 }
 
 const OrderDetailsAdmin: React.FC = () => {
+  const [open, setOpen] = useState(false);
   const { orderId } = useParams<{ orderId: string }>();
+  const [orderStatus, setOrderStatus] = useState("CONFIRMED");
   const navigate = useNavigate();
 
   // In a real app, you would fetch this data using the orderId
@@ -41,6 +45,21 @@ const OrderDetailsAdmin: React.FC = () => {
     },
   ];
 
+  const handleSave = async (trackingData: OrderTrackingData) => {
+    try {
+      // Update order status via API
+      // await updateOrderStatus(orderId, trackingData);
+      setOrderStatus(trackingData.status)
+
+      setOpen(false);
+      // Optionally refresh order data or refetch
+      // refetchOrderDetails();
+    } catch (error) {
+      console.error("Failed to update status:", error);
+      // toast.error("Failed to update status");
+    }
+  };
+
   return (
     <div className="order-details-container">
       {/* Header Section */}
@@ -49,10 +68,18 @@ const OrderDetailsAdmin: React.FC = () => {
           <MdOutlineArrowBack />
           Orders
         </div>
-        <div className="od-title-row">
+        <div className="od-title-row" >
           <div className="order-id">Order details #{orderId || "N/A"}</div>
-          <div className="od-status-badge shipping">SHIPPING <MdOutlineArrowDropDown className="od-status-dropdown"/></div>
+          <div className={`od-status-badge ${orderStatus || 'PENDING'}`}
+            onClick={() => setOpen(true)}>{orderStatus} <MdOutlineArrowDropDown className="od-status-dropdown" /></div>
         </div>
+
+        <OrderStatusDialog
+          isOpen={open}
+          onClose={() => setOpen(false)}
+          onSave={handleSave}
+          orderStatus="SHIPPING"
+        />
         <div className="order-date">Date: 08/02/2023</div>
       </div>
 

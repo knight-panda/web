@@ -44,7 +44,6 @@
     align-items: center;
     justify-content: space-between;
     background: white;
-    color: var(--primary-color);
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     padding: 0 0 0 0.7rem;
     border-radius: 4px;
@@ -53,17 +52,27 @@
     cursor: pointer;
 }
 
-.od-status-badge.shipping {
-    background: white;
+.od-status-badge.PENDING {
+    color: #acacac;
+}
+
+.od-status-badge.SHIPPING {
     color: var(--primary-color);
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-    margin: 0;
+}
+
+.od-status-badge.DELIVERED {
+    color: #188a0e;
+}
+
+.od-status-badge.CANCELLED {
+    color: #c0392b;
 }
 
 .od-status-dropdown {
     height: 2rem;
     width: 2rem;
-    padding: 0 !important; /* Force override */
+    padding: 0 !important;
+    /* Force override */
     margin: 0;
     border: none;
     outline: none;

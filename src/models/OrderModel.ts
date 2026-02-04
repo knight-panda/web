@@ -1,11 +1,9 @@
 // Order status types
 export type OrderStatus =
-  | "placed"
-  | "confirmed"
-  | "preparing"
-  | "out_for_delivery"
-  | "arrived"
-  | "cancelled";
+  "CONFIRMED"
+  | "SHIPPING"
+  | "DELIVERED"
+  | "CANCELLED";
 
 
 // Product inside order
@@ -17,7 +15,6 @@ export interface OrderItemModel {
   quantity: number;
 }
 
-
 // Main order
 export interface OrderModel {
   orderId: string;
@@ -26,4 +23,11 @@ export interface OrderModel {
   deliveryTime: string;
   status: OrderStatus;
   items: OrderItemModel[];
+}
+
+export interface OrderTrackingData {
+  status: OrderStatus;
+  courier: string;
+  trackingId: string;
+  trackingUrl: string;
 }

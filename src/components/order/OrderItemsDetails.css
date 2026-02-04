@@ -62,6 +62,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    color: black;
     font-size: 1.1rem;
     font-weight: 700;
 }
@@ -74,12 +75,13 @@
 }
 
 .sc-add-edit-btn:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .sc-address {
     display: flex;
     flex-direction: column;
+    color: black;
     gap: 0.2rem;
     font-size: 0.9rem;
     font-weight: 400;
@@ -93,6 +95,7 @@
 .sc-apply-coupon-title {
     font-size: 1.1rem;
     font-weight: 700;
+    color: black;
 }
 
 .sc-apply-coupon {
@@ -111,12 +114,14 @@
 .sc-bill-title {
     font-size: 1.1rem;
     font-weight: 700;
+    color: black;
     margin-bottom: 1rem;
 }
 
 .bill .row {
     display: flex;
     justify-content: space-between;
+    color: black;
     margin: 0.5rem 0;
     font-size: 0.9rem;
     font-weight: 400;
