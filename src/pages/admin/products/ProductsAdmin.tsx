@@ -61,8 +61,8 @@ const products: Product[] = [
 
 const ProductsAdmin = () => {
   return (
-    <div className="product">
-      <div className="products-grid">
+    <div className="admin-product">
+      <div className="admin-products-grid">
         {products.map((item) => (
           <ProductCardAdmin />
         ))}

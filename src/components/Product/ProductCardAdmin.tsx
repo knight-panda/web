@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { BsPlus, BsDash } from "react-icons/bs"
-import "./ProductCard.css"
+import "./ProductCardAdmin.css"
 
 import logo from "../../assets/product_2.png"
 import { IoMdArrowDropdown } from "react-icons/io";
@@ -14,7 +14,7 @@ const ProductCardAdmin = () => {
   }
 
   return (
-    <div className="product-card-modern">
+    <div className="admin-product-card-modern">
       {/* IMAGE */}
       <div className="product-img">
         <div className="product-discount">20% Off</div>

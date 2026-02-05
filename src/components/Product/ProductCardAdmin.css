@@ -1,12 +1,11 @@
-.product-card-modern {
+.admin-product-card-modern {
   background: #fff;
   border-radius: 0.8rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
   transition: transform 0.2s ease;
 }
 
-.product-card-modern:hover {
+.admin-product-card-modern:hover {
   transform: translateY(-0.3vw);
 }
 
