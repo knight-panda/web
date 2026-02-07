@@ -1,5 +1,4 @@
 .admin-product {
-  padding: 16px;
   box-sizing: border-box;
   overflow-y: auto;
   background: #f6f7fb;
@@ -11,7 +10,115 @@
   max-width: 100%;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0 0.5rem;
+  box-sizing: border-box;
+}
+
+.admin-product-title-box {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  box-sizing: border-box;
   gap: 1rem;
+}
+
+.admin-product-title {
+  width: 100%;
+  font-size: 1.5rem;
+  color: black;
+  font-weight: 600;
+}
+
+.admin-add-product {
+  width: 10rem;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  padding: 0.5rem;
+  border-radius: 0.9rem;
+  font-weight: 500;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* ---------- Filter Container ---------- */
+.admin-product-filter-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.admin-product-filter {
+  font-size: 22px;
+  cursor: pointer;
+  color: #444;
+  transition: 0.2s ease;
+}
+
+.admin-product-orders-filter:hover {
+  color: #111;
+  transform: scale(1.1);
+}
+
+
+.admin-product-filter-dropdown {
+  position: absolute;
+  right: 0;
+  top: 120%;
+  width: 180px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  padding: 8px;
+  animation: fadeSlide 0.18s ease;
+  z-index: 1000;
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Select ---------- */
+.admin-product-filter-select {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  background-color: #f9fafb;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23444' height='18' viewBox='0 0 24 24' width='18' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+}
+
+.admin-product-filter-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background-color: #fff;
 }
 
 /* ========== TABLET ========== */

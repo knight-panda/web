@@ -1,6 +1,11 @@
 import ProductCardAdmin from "../../../components/Product/ProductCardAdmin"
+import { useEffect, useState } from "react";
 import type { Product } from "../../../models/Product"
 import "./ProductsAdmin.css"
+
+import { IoFilter } from "react-icons/io5";
+import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const products: Product[] = [
   {
@@ -60,11 +65,69 @@ const products: Product[] = [
 ]
 
 const ProductsAdmin = () => {
+  const navigate = useNavigate();
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState('all');
+
+  const filterOptions = [
+    { value: 'all', label: 'All Orders' },
+    { value: 'pending', label: 'Pending' },
+    { value: 'confirmed', label: 'Confirmed' },
+    { value: 'shipping', label: 'Shipping' },
+    { value: 'delivered', label: 'Delivered' },
+    { value: 'cancelled', label: 'Cancelled' }
+  ];
+
+  useEffect(() => {
+    const close = () => setFilterOpen(false);
+    window.addEventListener("click", close);
+    return () => window.removeEventListener("click", close);
+  }, []);
+
   return (
     <div className="admin-product">
+      <div className="admin-product-title-box">
+        <div className="admin-product-title">Products</div>
+
+        <div className="admin-add-product">
+          Add Product +
+        </div>
+        {/* <IoFilter className="orders-filter"/> */}
+
+        <div className="admin-product-filter-container" onClick={(e) => e.stopPropagation()}>
+          <span>Filter</span>
+          <IoFilter
+            className="admin-product-filter"
+            onClick={() => setFilterOpen(!filterOpen)}
+          />
+
+          {filterOpen && (
+            <div className="admin-product-filter-dropdown">
+              <select
+                className="admin-product-filter-select"
+                value={selectedFilter}
+                onChange={(e) => {
+                  setSelectedFilter(e.target.value);
+                  setFilterOpen(false);
+                }}
+              >
+                {filterOptions.map(option => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+        </div>
+
+
+      </div>
       <div className="admin-products-grid">
         {products.map((item) => (
-          <ProductCardAdmin />
+          <div onClick={() => navigate(`/admin-dashboard/products/${"58"}`)}>
+            <ProductCardAdmin />
+          </div>
         ))}
       </div>
     </div>

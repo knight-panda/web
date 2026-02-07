@@ -1,0 +1,162 @@
+/* page */
+.page {
+  background: #f6f7fb;
+  min-height: 100vh;
+  padding: 30px 50px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* header */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  margin: 12px 0 25px;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.back {
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* grid layout */
+.grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+}
+
+/* card */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+  margin-bottom: 18px;
+}
+
+/* forms */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+}
+
+label {
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #555;
+}
+
+input,
+select,
+textarea {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+textarea {
+  resize: none;
+  height: 80px;
+}
+
+/* row */
+.row {
+  display: flex;
+  gap: 14px;
+}
+
+.row .form-group {
+  flex: 1;
+}
+
+/* buttons */
+.btn {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: #2f6fed;
+  color: white;
+}
+
+.btn.light {
+  background: #f0f0f0;
+}
+
+.btn.small {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.btn.danger {
+  background: #ff5b5b;
+  color: white;
+}
+
+.full {
+  width: 100%;
+  margin-top: 12px;
+}
+
+/* tags */
+.tags {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tag {
+  background: #eef2ff;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+/* image */
+.image-box {
+  background: #e8eff0;
+  height: 240px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.image-box img {
+  height: 200px;
+}
+
+.img-actions {
+  position: absolute;
+  display: flex;
+  gap: 6px;
+  bottom: 10px;
+}
+
+/* right column */
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

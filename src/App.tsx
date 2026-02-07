@@ -6,6 +6,7 @@ import AdminDashboard from "./layouts/admin/AdminDashboard"
 import OrdersAdmin from "./pages/admin/orders/OrdersAdmin"
 import OrderDetailsAdmin from "./pages/admin/orders/OrderDetailsAdmin"
 import ProductsAdmin from "./pages/admin/products/ProductsAdmin"
+import AddUpdateProduct from "./pages/admin/products/AddUpdateProduct"
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           {/* Child routes */}
           <Route path="orders" element={<OrdersAdmin />} />
           <Route path="products" element={<ProductsAdmin />} />
+          <Route path="/admin-dashboard/products/:productsId" element={<AddUpdateProduct />} />
 
           <Route index element={<OrdersAdmin />} />
           <Route path="/admin-dashboard/orders/:orderId" element={<OrderDetailsAdmin />} />
