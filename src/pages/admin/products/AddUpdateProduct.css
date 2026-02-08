@@ -1,32 +1,49 @@
-/* page */
-.page {
+.au-product-page {
   background: #f6f7fb;
-  min-height: 100vh;
-  padding: 30px 50px;
+  width: 100%;
   font-family: Arial, Helvetica, sans-serif;
+  overflow-y: auto;
+  padding-bottom: 1rem;
+  box-sizing: border-box;
 }
 
 /* header */
-.topbar {
+.au-product-topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
-.title {
-  margin: 12px 0 25px;
-  font-size: 26px;
-  font-weight: 600;
+.au-product-back {
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 0.5rem;
+  color: black;
+  font-size: 1rem;
+  font-weight: 700;
 }
 
-.actions {
+.au-product-actions {
   display: flex;
   gap: 12px;
 }
 
-.back {
-  font-size: 14px;
+.au-product-btn {
+  padding: 10px 14px;
+  box-sizing: border-box;
+  border-radius: 6px;
+  border: none;
   cursor: pointer;
+}
+
+.au-product-btn.primary {
+  background: var(--primary-color);
+  color: white;
 }
 
 /* grid layout */
@@ -34,6 +51,7 @@
   display: grid;
   grid-template-columns: 320px 1fr;
   gap: 24px;
+  margin-top: 1rem;
 }
 
 /* card */
@@ -41,7 +59,8 @@
   background: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
 }
 
 .card h3 {
@@ -68,6 +87,7 @@ textarea {
   border-radius: 6px;
   border: 1px solid #ddd;
   font-size: 14px;
+  box-sizing: border-box;
 }
 
 textarea {
@@ -85,30 +105,15 @@ textarea {
   flex: 1;
 }
 
-/* buttons */
-.btn {
-  padding: 10px 14px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-}
-
-.btn.primary {
-  background: #2f6fed;
-  color: white;
-}
-
-.btn.light {
-  background: #f0f0f0;
-}
-
 .btn.small {
   padding: 6px 10px;
   font-size: 12px;
+  box-sizing: border-box;
+  border: none;
 }
 
 .btn.danger {
-  background: #ff5b5b;
+  background-color: #ff5b5b;
   color: white;
 }
 
@@ -129,6 +134,7 @@ textarea {
   padding: 6px 10px;
   border-radius: 20px;
   font-size: 12px;
+  box-sizing: border-box;
 }
 
 /* image */

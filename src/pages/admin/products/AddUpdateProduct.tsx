@@ -1,25 +1,27 @@
 import React from 'react'
 import "./AddUpdateProduct.css"
 
+import { MdOutlineArrowBack } from "react-icons/md";
+
 const AddUpdateProduct = () => {
   return (
-    <div className="page">
+    <div className="au-product-page">
       {/* Header */}
-      <div className="topbar">
-        <div className="back">← Back to List</div>
+      <div className="au-product-topbar">
+        <div className="au-product-back">
+          <MdOutlineArrowBack />
+          <div>Add New Product</div>
+        </div>
 
-        <div className="actions">
-          <button className="btn light">Scan to Fill Form</button>
-          <button className="btn primary">Save to Draft</button>
+        <div className="au-product-actions">
+          <button className="au-product-btn primary">Add Product</button>
         </div>
       </div>
-
-      <h2 className="title">Add New Product</h2>
 
       <div className="grid">
         {/* LEFT SIDE */}
         <div className="card">
-          <h3>Product Image</h3>
+          <div>Product Image</div>
 
           <label>Tag</label>
           <div className="tags">
@@ -48,7 +50,7 @@ const AddUpdateProduct = () => {
         <div className="right-column">
           {/* General Info */}
           <div className="card">
-            <h3>General Information</h3>
+            <div>General Information</div>
 
             <div className="form-group">
               <label>Product Name</label>
@@ -99,7 +101,7 @@ const AddUpdateProduct = () => {
 
           {/* Manage Stock */}
           <div className="card">
-            <h3>Manage Stock</h3>
+            <div>Manage Stock</div>
 
             <div className="row">
               <div className="form-group">
