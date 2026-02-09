@@ -7,8 +7,10 @@ const AddUpdateProduct = () => {
   const [image, setImage] = useState<string>(
     "https://m.media-amazon.com/images/I/71ZjEl7y78L._SX679_.jpg"
   );
+  const [extraImages, setExtraImages] = useState<string[]>([]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const multiFileInputRef = useRef<HTMLInputElement>(null);
 
   const handleReplaceClick = () => {
     fileInputRef.current?.click(); // open file picker
@@ -25,6 +27,22 @@ const AddUpdateProduct = () => {
   const handleRemove = () => {
     setImage(""); // remove image
   };
+
+  const handleAddMoreClick = () => {
+    multiFileInputRef.current?.click();
+  };
+
+  const handleMultiFilesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    const urls = files.map((file) => URL.createObjectURL(file));
+
+    setExtraImages((prev) => [...prev, ...urls]);
+  };
+
+  const handleRemoveExtra = (index: number) => {
+    setExtraImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
 
   return (
     <div className="au-product-page">
@@ -77,7 +95,33 @@ const AddUpdateProduct = () => {
             />
           </div>
 
-          <button className="au-product-btn light full">+ Add Another Image</button>
+          <button className="au-product-btn light full" onClick={handleAddMoreClick}>+ Add Another Image</button>
+
+          {/* Extra Images Preview */}
+          <div className="au-product-image-grid">
+            {extraImages.map((img, index) => (
+              <div key={index} className="au-product-image-item">
+                <img src={img} alt="extra" />
+                <button
+                  className="au-product-btn small danger remove-btn"
+                  onClick={() => handleRemoveExtra(index)}
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {/* hidden multi file input */}
+          <input
+            ref={multiFileInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            style={{ display: "none" }}
+            onChange={handleMultiFilesChange}
+          />
+
         </div>
 
         {/* RIGHT SIDE */}

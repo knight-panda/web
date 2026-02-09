@@ -117,6 +117,34 @@
   bottom: 10px;
 }
 
+.au-product-image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 90px);
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.au-product-image-item {
+  position: relative;
+}
+
+.au-product-image-item img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.remove-btn {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+
 .au-product-card h3 {
   margin-bottom: 18px;
 }
