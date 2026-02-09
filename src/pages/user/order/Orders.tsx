@@ -1,9 +1,9 @@
 import "./Orders.css";
 import { useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa6";
-import type { OrderModel } from "../../models/OrderModel";
+import type { OrderModel } from "../../../models/OrderModel";
 
-import productImage from "../../assets/product_2.png"
+import productImage from "../../../assets/product_2.png"
 
 const Orders = () => {
   const [orders, setOrders] = useState<OrderModel[]>([]);

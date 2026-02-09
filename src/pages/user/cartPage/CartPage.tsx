@@ -1,7 +1,7 @@
 import { useState } from "react";
-import CartItems from "../../components/cart/CartItems";
-import CartSummary from "../../components/cart/CartSummary";
-import AddressDialog from "../../components/address/AddressDialog";
+import CartItems from "../../../components/cart/CartItems";
+import CartSummary from "../../../components/cart/CartSummary";
+import AddressDialog from "../../../components/address/AddressDialog";
 import "./CartPage.css";
 
 const CartPage = () => {

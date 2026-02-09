@@ -1,5 +1,6 @@
 import Orders from "../order/Orders";
-import AccountSidebar from "../../components/sidebar/AccountSidebar";
+import { Outlet, useNavigate } from 'react-router-dom';
+import AccountSidebar from "../../../components/sidebar/AccountSidebar";
 import "./account.css";
 
 const AccountPage = () => {
@@ -7,6 +8,7 @@ const AccountPage = () => {
     <div className="account-page">
       <div className="account-container">
         <AccountSidebar />
+        <Outlet />
         <Orders />
       </div>
     </div>

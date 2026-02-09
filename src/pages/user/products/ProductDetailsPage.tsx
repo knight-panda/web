@@ -1,5 +1,5 @@
-import ProductGallery from "../../components/Product/ProductGallery";
-import ProductInfo from "../../components/Product/ProductInfo";
+import ProductGallery from "../../../components/Product/ProductGallery";
+import ProductInfo from "../../../components/Product/ProductInfo";
 import "./ProductDetailsPage.css";
 
 const ProductDetailsPage = () => {

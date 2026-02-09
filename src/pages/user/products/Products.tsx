@@ -1,5 +1,5 @@
-import ProductCard from "../../components/Product/ProductCard"
-import type { Product } from "../../models/Product"
+import ProductCard from "../../../components/Product/ProductCard"
+import type { Product } from "../../../models/Product"
 import "./Products.css"
 
 const products: Product[] = [
