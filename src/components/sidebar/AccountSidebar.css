@@ -2,18 +2,42 @@
     background: #fff;
     border-radius: 1rem;
     padding: 1.5rem 1.5rem 0 1.5rem;
-    width: 25%;
+    width: 20rem;
     box-sizing: border-box;
 }
 
-.account-sidebar .phone {
-    font-weight: 600;
-    margin-bottom: 1.5rem;
+.as-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
 }
 
-.account-sidebar ul {
+.as-profile-icon {
+    height: 2rem;
+    width: 2rem;
+    color: #444;
+}
+
+.as-user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.as-user-name {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.as-user-phone {
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.as-menu-items {
     list-style: none;
     padding: 0;
+    margin-top: 0.5rem;
 }
 
 .account-sidebar li {

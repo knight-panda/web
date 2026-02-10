@@ -1,18 +1,17 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import './App.css'
-import MainLayout from "./layouts/MainLayout"
-import Home from "./pages/Home"
 import AdminDashboard from "./layouts/admin/AdminDashboard"
 import OrdersAdmin from "./pages/admin/orders/OrdersAdmin"
 import OrderDetailsAdmin from "./pages/admin/orders/OrderDetailsAdmin"
 import ProductsAdmin from "./pages/admin/products/ProductsAdmin"
 import AddUpdateProduct from "./pages/admin/products/AddUpdateProduct"
+import MainLayout from "./layouts/user/MainLayout"
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<MainLayout />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />}>
           {/* Default page when visiting /admin
           <Route index element={<Orders />} /> 

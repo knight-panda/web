@@ -7,7 +7,7 @@
 .account-container {
   max-width: 89rem;
   margin: auto;
-  display: grid;
+  display: flex;
   grid-template-columns: 18rem 1fr;
   gap: 2rem;
 }

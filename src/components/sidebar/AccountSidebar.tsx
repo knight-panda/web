@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   FaMapMarkerAlt,
   FaBox,
@@ -5,24 +6,64 @@ import {
   FaGift,
   FaUserShield,
   FaSignOutAlt,
-  FaUser ,
+  FaUser,
+  FaUserCircle,
 } from "react-icons/fa";
 import "./AccountSidebar.css";
 
-const AccountSidebar = () => {
+interface AccountSidebarProps {
+  onTagClick?: (tag: string) => void;
+}
+
+const AccountSidebar: React.FC<AccountSidebarProps> = ({ onTagClick }) => {
+  const [activeTag, setActiveTag] = useState("profile");
+
+  const menuItems = [
+    { id: "profile", label: "My Profile", icon: FaUser },
+    { id: "orders", label: "My Orders", icon: FaBox },
+    { id: "addresses", label: "My Addresses", icon: FaMapMarkerAlt },
+    { id: "giftcards", label: "E-Gift Cards", icon: FaGift },
+    { id: "privacy", label: "Account privacy", icon: FaUserShield },
+    { id: "logout", label: "Logout", icon: FaSignOutAlt },
+  ];
+
+  const handleClick = (id: string) => {
+    if (id === "logout") {
+      if (confirm("Are you sure you want to logout?")) {
+        window.location.href = "/login";
+      }
+    } else {
+      setActiveTag(id); // Now works because setActiveTag is defined
+      if (onTagClick) {
+        onTagClick(id);
+      }
+    }
+  };
+
   return (
     <div className="account-sidebar">
-      <div className="phone">+91 9437706875</div>
+      <div className="as-profile">
+        <FaUserCircle className="as-profile-icon" />
 
-      <ul>
-        <li><FaUser /> My Profile</li>
-        <li><FaMapMarkerAlt /> My Addresses</li>
-        <li className="active"><FaBox /> My Orders</li>
-        <li><FaFileMedical /> My Prescriptions</li>
-        <li><FaGift /> E-Gift Cards</li>
-        <li><FaUserShield /> Account privacy</li>
-        <li className="logout"><FaSignOutAlt /> Logout</li>
-      </ul>
+        <div className="as-user-info">
+          <div className="as-user-name">Debasish Sahoo</div>
+          <div className="as-user-phone">+91 9437706875</div>
+        </div>
+
+      </div>
+
+      <div className="as-menu-items">
+        {menuItems.map(({ id, label, icon: Icon }) => (
+          <li
+            key={id}
+            className={`${activeTag === id ? "active" : ""} ${id === "logout" ? "logout" : ""}`}
+            onClick={() => handleClick(id)}
+            style={{ cursor: "pointer" }}
+          >
+            <Icon /> {label}
+          </li>
+        ))}
+      </div>
     </div>
   );
 };
