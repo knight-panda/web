@@ -20,7 +20,7 @@ const AccountSidebar: React.FC<AccountSidebarProps> = ({ onTagClick }) => {
 
   const menuItems = [
     { id: "profile", label: "My Profile", icon: FaUser },
-    { id: "orders", label: "My Orders", icon: FaBox },
+    { id: "my-orders", label: "My Orders", icon: FaBox },
     { id: "addresses", label: "My Addresses", icon: FaMapMarkerAlt },
     { id: "giftcards", label: "E-Gift Cards", icon: FaGift },
     { id: "privacy", label: "Account privacy", icon: FaUserShield },

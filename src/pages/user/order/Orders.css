@@ -1,4 +1,4 @@
-.orders-panel {
+.uo-panel {
     background: transparent;
     display: flex;
     flex-direction: column;
@@ -10,24 +10,113 @@
     box-sizing: border-box;
 }
 
-.order-card {
+.uo-title-box {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    box-sizing: border-box;
+}
+
+.uo-title {
+    font-size: 1.5rem;
+    color: black;
+    font-weight: 600;
+}
+
+/* ---------- Filter Container ---------- */
+.uo-filter-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.uo-filter {
+    font-size: 22px;
+    cursor: pointer;
+    color: #444;
+    transition: 0.2s ease;
+}
+
+.uo-filter:hover {
+    color: #111;
+    transform: scale(1.1);
+}
+
+
+.uo-filter-dropdown {
+    position: absolute;
+    right: 0;
+    top: 120%;
+    width: 180px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    padding: 8px;
+    animation: fadeSlide 0.18s ease;
+    z-index: 1000;
+}
+
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------- Select ---------- */
+.uo-filter-select {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    background-color: #f9fafb;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23444' height='18' viewBox='0 0 24 24' width='18' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+
+.uo-filter-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: #fff;
+}
+
+.uo-card {
     background: #fff;
     border-radius: 1rem;
     padding: 1rem;
 }
 
-.order-header {
+.uo-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.status {
+.uo-status {
     display: flex;
     gap: 1rem;
 }
 
-.check {
+.uo-check {
     width: 2.5rem;
     height: 2.5rem;
     background: #dff6ea;
@@ -39,13 +128,13 @@
     flex-shrink: 0;
 }
 
-.order-items {
+.uo-items {
     display: flex;
     gap: 1rem;
     margin-top: 1rem;
 }
 
-.order-items img {
+.uo-items img {
     width: 5rem;
     height: 5rem;
     object-fit: contain;

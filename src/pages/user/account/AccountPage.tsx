@@ -4,12 +4,17 @@ import AccountSidebar from "../../../components/sidebar/AccountSidebar";
 import "./account.css";
 
 const AccountPage = () => {
+  const navigate = useNavigate();
+
+  const handleNavigation = (id: string) => {
+    navigate(id);
+  };
+
   return (
     <div className="account-page">
       <div className="account-container">
-        <AccountSidebar />
+        <AccountSidebar onTagClick={handleNavigation}/>
         <Outlet />
-        <Orders />
       </div>
     </div>
   );

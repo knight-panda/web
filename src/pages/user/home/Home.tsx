@@ -7,7 +7,6 @@ import Products from '../.././user/products/Products'
 const Home = () => {
     return (
         <div>
-            <AccountPage />
             <CartPage />
             <ProductDetailsPage/>
             <Carousel />
