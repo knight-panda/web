@@ -10,6 +10,9 @@ import AccountPage from "./pages/user/account/AccountPage"
 import Orders from "./pages/user/order/Orders"
 import Home from "./pages/user/home/Home"
 import OrderDetails from "./pages/user/order/OrderDetails"
+import MyProfile from "./pages/user/profile/MyProfile"
+import ProductDetailsPage from "./pages/user/products/ProductDetailsPage"
+import CartPage from "./pages/user/cartPage/CartPage"
 
 function App() {
   return (
@@ -17,10 +20,16 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/product-details" element={<ProductDetailsPage />} />
+
           <Route path="account" element={<AccountPage />}>
 
             <Route path="/account/my-orders" element={<Orders />} />
             <Route path="/account/my-orders/:orderId" element={<OrderDetails />} />
+
+            <Route path="/account/my-profile" element={<MyProfile />} />
+            <Route index element={<MyProfile />} />
           </Route>
         </Route>
 

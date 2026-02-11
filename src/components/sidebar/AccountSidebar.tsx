@@ -16,10 +16,10 @@ interface AccountSidebarProps {
 }
 
 const AccountSidebar: React.FC<AccountSidebarProps> = ({ onTagClick }) => {
-  const [activeTag, setActiveTag] = useState("profile");
+  const [activeTag, setActiveTag] = useState("my-profile");
 
   const menuItems = [
-    { id: "profile", label: "My Profile", icon: FaUser },
+    { id: "my-profile", label: "My Profile", icon: FaUser },
     { id: "my-orders", label: "My Orders", icon: FaBox },
     { id: "addresses", label: "My Addresses", icon: FaMapMarkerAlt },
     { id: "giftcards", label: "E-Gift Cards", icon: FaGift },
