@@ -13,15 +13,22 @@ import OrderDetails from "./pages/user/order/OrderDetails"
 import MyProfile from "./pages/user/profile/MyProfile"
 import ProductDetailsPage from "./pages/user/products/ProductDetailsPage"
 import CartPage from "./pages/user/cartPage/CartPage"
+import AuthLayout from "./layouts/auth/AuthLayout"
+import RegisterPage from "./pages/auth/RegisterPage"
+import LoginPage from "./pages/auth/LoginPage"
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<AuthLayout />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Route>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/product-details" element={<ProductDetailsPage />} />
+          <Route path="/product/:productId" element={<ProductDetailsPage />} />
 
           <Route path="account" element={<AccountPage />}>
 

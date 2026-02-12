@@ -90,6 +90,7 @@
 /* DETAILS */
 .product-details {
   padding: 1rem;
+  cursor: pointer;
 }
 
 .product-name {

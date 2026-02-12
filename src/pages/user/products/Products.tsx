@@ -1,5 +1,6 @@
 import ProductCard from "../../../components/Product/ProductCard"
 import type { Product } from "../../../models/Product"
+import { useNavigate } from "react-router-dom";
 import "./Products.css"
 
 const products: Product[] = [
@@ -60,11 +61,17 @@ const products: Product[] = [
 ]
 
 const Products = () => {
+  const navigate = useNavigate();
+
+  const handleProductClick = (id: string) => {
+    navigate(`/product/${id}`)
+  }
+
   return (
     <div className="product">
       <div className="products-grid">
         {products.map((item) => (
-          <ProductCard />
+          <ProductCard onProductClick={handleProductClick} />
         ))}
       </div>
     </div>

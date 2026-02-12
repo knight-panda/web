@@ -5,7 +5,14 @@ import "./ProductCard.css"
 import logo from "../../assets/product_2.png"
 import { IoMdArrowDropdown } from "react-icons/io";
 
-const ProductCard = () => {
+
+type ProductCardProps = {
+  onProductClick?: (productId: string) => void
+}
+
+const ProductCard: React.FC<ProductCardProps> = ({
+  onProductClick,
+}) => {
   const [qty, setQty] = useState(0)
 
   const increase = () => setQty(qty + 1)
@@ -13,13 +20,18 @@ const ProductCard = () => {
     if (qty > 0) setQty(qty - 1)
   }
 
+  const productClick = (id: string) => {
+    onProductClick?.(id)
+  }
+
   return (
-    <div className="product-card-modern">
+    <div className="product-card-modern" >
       {/* IMAGE */}
       <div className="product-img">
         <div className="product-discount">20% Off</div>
         <img
           src={logo}
+          onClick={() => productClick("lipu")}
         />
 
         <div className="product-add-to-cart">
@@ -45,7 +57,7 @@ const ProductCard = () => {
       </div>
 
       {/* INFO */}
-      <div className="product-details">
+      <div className="product-details" onClick={() => productClick("lipu")}>
         <div className="product-name">
           Campus Running Shoes for Men
         </div>
