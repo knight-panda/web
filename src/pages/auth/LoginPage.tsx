@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import "./Login.css"
 import { useNavigate } from "react-router-dom";
 
-import logo from "../../assets/Knight Panda Logo.png" 
+import logo from "../../assets/Knight Panda Logo.png"
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
@@ -14,6 +14,10 @@ const LoginPage: React.FC = () => {
         e.preventDefault()
         console.log({ number, password, remember })
     }
+
+    const goToRegister = () => {
+        navigate("/register");
+    };
 
     return (
         <div className="login-wrapper">
@@ -65,7 +69,7 @@ const LoginPage: React.FC = () => {
 
                     {/* Footer */}
                     <p className="login-footer">
-                        Don't have an account? <a onClick={() => navigate(`/admin-dashboard/products/${"58"}`)}>Sign up</a>
+                        Don't have an account? <a onClick={goToRegister}>Sign up</a>
                     </p>
                 </form>
             </div>

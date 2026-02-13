@@ -24,6 +24,10 @@ const Navbar = () => {
     navigate("/account");
   };
 
+  const goToLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <div className="navbar">
 
@@ -44,7 +48,7 @@ const Navbar = () => {
 
         {/* RIGHT */}
         <div className="navbar-right">
-          <div className="nav-item-user">
+          <div className="nav-item-user" onClick={goToLogin}>
             <FaRegCircleUser className="nav-item-icon" />
             <span className="icon-text">Login</span>
           </div>
