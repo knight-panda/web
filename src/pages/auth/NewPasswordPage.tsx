@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 
 import logo from "../../assets/Knight Panda Logo.png"
 
-const VerifyOtpPage = () => {
+const NewPasswordPage = () => {
   const navigate = useNavigate();
-  const [number, setNumber] = useState("")
+  const [password, setPassword] = useState("")
   const [otp, setOtp] = useState("")
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log({ number, otp })
+    console.log({ password, otp })
   }
 
   const goToRegister = () => {
@@ -22,33 +22,27 @@ const VerifyOtpPage = () => {
     navigate(-1);
   };
 
-
   return (
     <div className="login-wrapper">
       <div className="login-card">
         <img className="login-logo-img" src={logo} alt="logo" />
-        <div className="login-title">Verify Otp</div>
+        <div className="login-title">Set New Password</div>
 
         <form onSubmit={handleSubmit} className="login-form">
           {/* Email */}
           <input
-            type="number"
-            placeholder="123456"
-            value={number}
-            onChange={(e) => setOtp(e.target.value)}
+            type="password"
+            placeholder="New Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="login-input"
             required
           />
 
           {/* Button */}
           <button type="submit" className="login-btn">
-            Verify Otp
+            Save
           </button>
-
-          {/* Footer */}
-          <p className="register-footer">
-            Didn’t receive the OTP? <a onClick={goToBack}>Resend OTP</a>
-          </p>
 
         </form>
       </div>
@@ -56,4 +50,4 @@ const VerifyOtpPage = () => {
   )
 }
 
-export default VerifyOtpPage
+export default NewPasswordPage

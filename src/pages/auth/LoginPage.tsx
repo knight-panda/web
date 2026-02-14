@@ -8,7 +8,7 @@ const LoginPage: React.FC = () => {
     const navigate = useNavigate();
     const [number, setNumber] = useState("")
     const [password, setPassword] = useState("")
-    const [remember, setRemember] = useState(false)
+    const [remember, setRemember] = useState(true)
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
@@ -18,6 +18,11 @@ const LoginPage: React.FC = () => {
     const goToRegister = () => {
         navigate("/register");
     };
+
+    const goToNewPasswordPage = () => {
+        navigate("/new-password");
+    };
+
 
     return (
         <div className="login-wrapper">
@@ -57,7 +62,7 @@ const LoginPage: React.FC = () => {
                             Remember for 30 days
                         </label>
 
-                        <a href="#" className="link">
+                        <a href="#" className="link" onClick={goToNewPasswordPage}>
                             Forgot password
                         </a>
                     </div>

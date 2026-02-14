@@ -16,6 +16,8 @@ import CartPage from "./pages/user/cartPage/CartPage"
 import AuthLayout from "./layouts/auth/AuthLayout"
 import RegisterPage from "./pages/auth/RegisterPage"
 import LoginPage from "./pages/auth/LoginPage"
+import VerifyOtpPage from "./pages/auth/VerifyOtpPage"
+import NewPasswordPage from "./pages/auth/NewPasswordPage"
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Route path="/" element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/verify-otp" element={<VerifyOtpPage />} />
+          <Route path="/new-password" element={<NewPasswordPage />} />
         </Route>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />

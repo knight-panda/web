@@ -19,6 +19,10 @@ const RegisterPage = () => {
         navigate(-1);
     };
 
+    const goToOtpPage = () => {
+        navigate("/verify-otp");
+    };
+
     return (
         <div className="register-wrapper">
             <div className="register-card">
@@ -65,7 +69,7 @@ const RegisterPage = () => {
                     />
 
                     {/* Button */}
-                    <button type="submit" className="register-btn">
+                    <button type="submit" className="register-btn" onClick={goToOtpPage}>
                         Register
                     </button>
 

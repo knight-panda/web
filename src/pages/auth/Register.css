@@ -1,12 +1,13 @@
 .register-wrapper {
-    height: 80vh;
     max-width: 89rem;
+    padding: 3rem 0;
     margin: auto;
     background: #f5f6f8;
     display: flex;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
+    overflow-y: auto;
 }
 
 /* Card */
