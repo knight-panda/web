@@ -13,7 +13,7 @@ const Navbar = () => {
   const cartCount = 3
 
   const goToCart = () => {
-    navigate("/cart");
+    navigate("/my-store/cart");
   };
 
   const goToHome = () => {
@@ -21,11 +21,11 @@ const Navbar = () => {
   };
 
   const goToAccount = () => {
-    navigate("/account");
+    navigate("account");
   };
 
   const goToLogin = () => {
-    navigate("/login");
+    navigate("login");
   };
 
   return (

@@ -16,11 +16,11 @@ const LoginPage: React.FC = () => {
     }
 
     const goToRegister = () => {
-        navigate("/register");
+        navigate("/my-store/register");
     };
 
     const goToNewPasswordPage = () => {
-        navigate("/new-password");
+        navigate("/my-store/new-password");
     };
 
 

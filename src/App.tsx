@@ -24,22 +24,25 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<AuthLayout />}>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/verify-otp" element={<VerifyOtpPage />} />
-          <Route path="/new-password" element={<NewPasswordPage />} />
-        </Route>
-        <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/product/:productId" element={<ProductDetailsPage />} />
 
-          <Route path="account" element={<AccountPage />}>
+        </Route>
+        <Route path="/:store-name" element={<MainLayout />}>
+          <Route path="/:store-name/login" element={<LoginPage />} />
+          <Route path="/:store-name/register" element={<RegisterPage />} />
+          <Route path="/:store-name/verify-otp" element={<VerifyOtpPage />} />
+          <Route path="/:store-name/new-password" element={<NewPasswordPage />} />
 
-            <Route path="/account/my-orders" element={<Orders />} />
-            <Route path="/account/my-orders/:orderId" element={<OrderDetails />} />
+          <Route index element={<Home />} />
+          <Route path="/:store-name/cart" element={<CartPage />} />
+          <Route path="/:store-name/product/:productId" element={<ProductDetailsPage />} />
 
-            <Route path="/account/my-profile" element={<MyProfile />} />
+          <Route path="/:store-name/account" element={<AccountPage />}>
+
+            <Route path="/:store-name/account/my-orders" element={<Orders />} />
+            <Route path="/:store-name/account/my-orders/:orderId" element={<OrderDetails />} />
+
+            <Route path="/:store-name/account/my-profile" element={<MyProfile />} />
             <Route index element={<MyProfile />} />
           </Route>
         </Route>
