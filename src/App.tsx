@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import './App.css'
-import AdminDashboard from "./layouts/admin/AdminDashboard"
+import AdminDashboard from "./pages/admin/dashboard/AdminDashboard"
 import OrdersAdmin from "./pages/admin/orders/OrdersAdmin"
 import OrderDetailsAdmin from "./pages/admin/orders/OrderDetailsAdmin"
 import ProductsAdmin from "./pages/admin/products/ProductsAdmin"
@@ -18,15 +18,16 @@ import RegisterPage from "./pages/auth/RegisterPage"
 import LoginPage from "./pages/auth/LoginPage"
 import VerifyOtpPage from "./pages/auth/VerifyOtpPage"
 import NewPasswordPage from "./pages/auth/NewPasswordPage"
+import AdminLayout from "./layouts/admin/AdminLayout"
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<AuthLayout />}>
+        {/* <Route path="/" element={<AuthLayout />}>
           <Route index element={<Home />} />
 
-        </Route>
+        </Route> */}
         <Route path="/:store-name" element={<MainLayout />}>
           <Route path="/:store-name/login" element={<LoginPage />} />
           <Route path="/:store-name/register" element={<RegisterPage />} />
@@ -47,11 +48,11 @@ function App() {
           </Route>
         </Route>
 
-        <Route path="/admin-dashboard" element={<AdminDashboard />}>
-          {/* Default page when visiting /admin
-          <Route index element={<Orders />} /> 
+        <Route path="/" element={<AdminLayout />}>
+          {/* Default page when visiting /admin */}
+          <Route index element={<AdminDashboard />} /> 
           
-          {/* Child routes */}
+          {/* /* Child routes */}
           <Route path="orders" element={<OrdersAdmin />} />
           <Route path="products" element={<ProductsAdmin />} />
           <Route path="/admin-dashboard/products/:productsId" element={<AddUpdateProduct />} />
