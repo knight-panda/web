@@ -32,16 +32,16 @@ const AdminNavbar = () => {
     };
 
     return (
-        <div className="navbar">
+        <div className="admin-navbar">
 
-            <div className="navbar-container">
+            <div className="admin-navbar-container">
                 {/* LEFT */}
-                <div className="navbar-left">
-                    <img className="logo-img" src={logo} alt="logo" onClick={goToHome} />
+                <div className="admin-navbar-left">
+                    <img className="admin-logo-img" src={logo} alt="logo" onClick={goToHome} />
 
 
-                    <div className="search-box">
-                        <CiSearch className="search-icon" />
+                    <div className="admin-search-box">
+                        <CiSearch className="admin-search-icon" />
                         <input
                             type="text"
                             placeholder="Search for products"
@@ -50,10 +50,10 @@ const AdminNavbar = () => {
                 </div>
 
                 {/* RIGHT */}
-                <div className="navbar-right">
-                    <div className="nav-item-user" onClick={goToLogin}>
-                        <FaStoreAlt className="nav-item-icon" />
-                        <span className="icon-text">Create Store</span>
+                <div className="admin-navbar-right">
+                    <div className="admin-nav-item-user" onClick={goToLogin}>
+                        <FaStoreAlt className="admin-nav-item-icon" />
+                        <span className="admin-icon-text">Create Store</span>
                     </div>
 
                 </div>

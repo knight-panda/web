@@ -1,0 +1,62 @@
+.ah-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    max-width: 89rem;
+    margin: auto;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.ah-left-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.ah-intro-title {
+    color: black;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.ah-intro-desc {
+    color: rgb(65, 65, 65);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.ah-intro-btn {
+    outline: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    padding: 0.7rem 2rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.ah-intro-btn:hover {
+    transform: scale(1.05);
+}
+
+.ah-right-side {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ah-intro-img {
+    height: 30rem;
+    width: 30rem;
+}
