@@ -1,68 +1,95 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import './App.css'
-import AdminDashboard from "./pages/admin/dashboard/AdminDashboard"
-import OrdersAdmin from "./pages/admin/orders/OrdersAdmin"
-import OrderDetailsAdmin from "./pages/admin/orders/OrderDetailsAdmin"
-import ProductsAdmin from "./pages/admin/products/ProductsAdmin"
-import AddUpdateProduct from "./pages/admin/products/AddUpdateProduct"
-import MainLayout from "./layouts/user/MainLayout"
-import AccountPage from "./pages/user/account/AccountPage"
-import Orders from "./pages/user/order/Orders"
-import Home from "./pages/user/home/Home"
-import OrderDetails from "./pages/user/order/OrderDetails"
-import MyProfile from "./pages/user/profile/MyProfile"
-import ProductDetailsPage from "./pages/user/products/ProductDetailsPage"
-import CartPage from "./pages/user/cartPage/CartPage"
-import AuthLayout from "./layouts/auth/AuthLayout"
-import RegisterPage from "./pages/auth/RegisterPage"
-import LoginPage from "./pages/auth/LoginPage"
-import VerifyOtpPage from "./pages/auth/VerifyOtpPage"
-import NewPasswordPage from "./pages/auth/NewPasswordPage"
-import AdminLayout from "./layouts/admin/AdminLayout"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import "./App.css";
+
+/* =========================
+   Lazy Imports (Code Split)
+   ========================= */
+
+/* layouts */
+const MainLayout = lazy(() => import("./layouts/user/MainLayout"));
+const AdminLayout = lazy(() => import("./layouts/admin/AdminLayout"));
+const AdminDashboardLayout = lazy(() => import("./layouts/admin/AdminDashboardLayout"));
+
+/* auth */
+const LoginPage = lazy(() => import("./pages/auth/LoginPage"));
+const RegisterPage = lazy(() => import("./pages/auth/RegisterPage"));
+const VerifyOtpPage = lazy(() => import("./pages/auth/VerifyOtpPage"));
+const NewPasswordPage = lazy(() => import("./pages/auth/NewPasswordPage"));
+
+/* user */
+const Home = lazy(() => import("./pages/user/home/Home"));
+const CartPage = lazy(() => import("./pages/user/cartPage/CartPage"));
+const ProductDetailsPage = lazy(
+  () => import("./pages/user/products/ProductDetailsPage")
+);
+const AccountPage = lazy(() => import("./pages/user/account/AccountPage"));
+const Orders = lazy(() => import("./pages/user/order/Orders"));
+const OrderDetails = lazy(() => import("./pages/user/order/OrderDetails"));
+const MyProfile = lazy(() => import("./pages/user/profile/MyProfile"));
+
+/* admin */
+const AdminDashboard = lazy(
+  () => import("./pages/admin/dashboard/AdminDashboard")
+);
+const OrdersAdmin = lazy(() => import("./pages/admin/orders/OrdersAdmin"));
+const OrderDetailsAdmin = lazy(
+  () => import("./pages/admin/orders/OrderDetailsAdmin")
+);
+const ProductsAdmin = lazy(() => import("./pages/admin/products/ProductsAdmin"));
+const AddUpdateProduct = lazy(
+  () => import("./pages/admin/products/AddUpdateProduct")
+);
+
+/* ========================= */
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* <Route path="/" element={<AuthLayout />}>
-          <Route index element={<Home />} />
+      <Suspense fallback={<div className="app-loader">Loading...</div>}>
+        <Routes>
 
-        </Route> */}
-        <Route path="/:store-name" element={<MainLayout />}>
-          <Route path="/:store-name/login" element={<LoginPage />} />
-          <Route path="/:store-name/register" element={<RegisterPage />} />
-          <Route path="/:store-name/verify-otp" element={<VerifyOtpPage />} />
-          <Route path="/:store-name/new-password" element={<NewPasswordPage />} />
+          {/* ================= USER ROUTES ================= */}
+          <Route path="/:storeName" element={<MainLayout />}>
 
-          <Route index element={<Home />} />
-          <Route path="/:store-name/cart" element={<CartPage />} />
-          <Route path="/:store-name/product/:productId" element={<ProductDetailsPage />} />
+            {/* auth */}
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
+            <Route path="verify-otp" element={<VerifyOtpPage />} />
+            <Route path="new-password" element={<NewPasswordPage />} />
 
-          <Route path="/:store-name/account" element={<AccountPage />}>
+            {/* pages */}
+            <Route index element={<Home />} />
+            <Route path="cart" element={<CartPage />} />
+            <Route path="product/:productId" element={<ProductDetailsPage />} />
 
-            <Route path="/:store-name/account/my-orders" element={<Orders />} />
-            <Route path="/:store-name/account/my-orders/:orderId" element={<OrderDetails />} />
-
-            <Route path="/:store-name/account/my-profile" element={<MyProfile />} />
-            <Route index element={<MyProfile />} />
+            {/* account nested */}
+            <Route path="account" element={<AccountPage />}>
+              <Route index element={<MyProfile />} />
+              <Route path="my-profile" element={<MyProfile />} />
+              <Route path="my-orders" element={<Orders />} />
+              <Route path="my-orders/:orderId" element={<OrderDetails />} />
+            </Route>
           </Route>
-        </Route>
 
-        <Route path="/" element={<AdminLayout />}>
-          {/* Default page when visiting /admin */}
-          <Route index element={<AdminDashboard />} /> 
-          
-          {/* /* Child routes */}
-          <Route path="orders" element={<OrdersAdmin />} />
-          <Route path="products" element={<ProductsAdmin />} />
-          <Route path="/admin-dashboard/products/:productsId" element={<AddUpdateProduct />} />
 
-          <Route index element={<OrdersAdmin />} />
-          <Route path="/admin-dashboard/orders/:orderId" element={<OrderDetailsAdmin />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  )
+          {/* ================= ADMIN ROUTES ================= */}
+          <Route path="/" element={<AdminLayout />}>
+            <Route index element={<AdminLayout />} />
+          </Route>
+
+
+          <Route path="/admin-dashboard" element={<AdminDashboardLayout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="orders" element={<OrdersAdmin />} />
+            <Route path="orders/:orderId" element={<OrderDetailsAdmin />} />
+            <Route path="products" element={<ProductsAdmin />} />
+            <Route path="products/:productId" element={<AddUpdateProduct />} />
+          </Route>
+        </Routes>
+      </Suspense>
+    </BrowserRouter >
+  );
 }
 
-export default App
+export default App;

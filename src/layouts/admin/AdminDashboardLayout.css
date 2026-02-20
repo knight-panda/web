@@ -1,0 +1,15 @@
+.admin-page {
+    background: #f5f6f8;
+    height: 100vh;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.admin-container {
+    max-width: 89rem;
+    margin: auto;
+    gap: 2rem;
+    display: flex;
+    height: 100%;
+}

@@ -1,6 +1,6 @@
 import React, { useState } from "react"; // 1. Added useState import
 import {
-    FaMapMarkerAlt,
+    FaChartLine,
     FaBox,
     FaFileMedical,
     FaGift,
@@ -18,7 +18,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ onTagClick }) => {
     const [activeTag, setActiveTag] = useState("profile");
 
     const menuItems = [
-        { id: "addresses", label: "My Addresses", icon: FaMapMarkerAlt },
+        { id: "addresses", label: "Dashboard", icon: FaChartLine },
         { id: "orders", label: "My Orders", icon: FaBox },
         { id: "products", label: "Products", icon: FaFileMedical },
         { id: "giftcards", label: "E-Gift Cards", icon: FaGift },
