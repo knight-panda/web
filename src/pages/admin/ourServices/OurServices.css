@@ -1,0 +1,22 @@
+.admin-service-container {
+    max-width: 89rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 2rem auto 0 auto;
+    padding: 2rem;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.as-img {
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.as-img:hover {
+    transform: scale(1.01);
+}
