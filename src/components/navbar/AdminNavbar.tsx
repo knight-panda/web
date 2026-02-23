@@ -1,6 +1,6 @@
 import React from 'react'
 import "./AdminNavbar.css"
-import logo from "../../assets/Knight Panda Logo.png" // put your logo image here
+import CrazoWeb from "../../assets/crazoweb_logo.png" // put your logo image here
 import { useNavigate } from "react-router-dom";
 
 import { CiSearch } from "react-icons/ci";
@@ -37,7 +37,7 @@ const AdminNavbar = () => {
             <div className="admin-navbar-container">
                 {/* LEFT */}
                 <div className="admin-navbar-left">
-                    <img className="admin-logo-img" src={logo} alt="logo" onClick={goToHome} />
+                    <img className="admin-logo-img" src={CrazoWeb} alt="logo" onClick={goToHome} />
 
 
                     <div className="admin-search-box">
