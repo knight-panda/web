@@ -1,6 +1,7 @@
 import React from 'react'
 import "./AdminNavbar.css"
-import CrazoWeb from "../../assets/crazoweb_logo.png" // put your logo image here
+import CrazoWeb from "../../assets/crazoweb_logo.png"
+import Logo from "../../assets/Knight Panda Logo.png"
 import { useNavigate } from "react-router-dom";
 
 import { CiSearch } from "react-icons/ci";

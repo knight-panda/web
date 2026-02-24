@@ -18,7 +18,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ onTagClick }) => {
     const [activeTag, setActiveTag] = useState("profile");
 
     const menuItems = [
-        { id: "addresses", label: "Dashboard", icon: FaChartLine },
+        { id: "", label: "Dashboard", icon: FaChartLine },
         { id: "orders", label: "My Orders", icon: FaBox },
         { id: "products", label: "Products", icon: FaFileMedical },
         { id: "giftcards", label: "E-Gift Cards", icon: FaGift },
