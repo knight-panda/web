@@ -27,3 +27,22 @@
 .account-sidebar li.logout {
     color: #c0392b;
 }
+
+.submenu {
+    padding-left: 2rem;
+    box-sizing: border-box;
+}
+
+.submenu-item {
+    font-size: 0.9rem;
+    padding: 1rem 0;
+    cursor: pointer;
+}
+
+.submenu-item:hover {
+    color: #007bff;
+}
+
+.arrow {
+    margin-left: auto;
+}
