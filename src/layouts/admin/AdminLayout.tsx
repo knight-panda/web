@@ -1,20 +1,30 @@
-import React from 'react'
-import AdminDashboard from '../../pages/admin/dashboard/AdminDashboard'
+import React, { useState } from 'react'
+import './AdminLayout.css'
 import AdminNavbar from '../../components/navbar/AdminNavbar'
 import AdminFooter from '../../components/footer/AdminFooter'
 import AdminHome from '../../pages/admin/home/AdminHome'
 import OurServices from '../../pages/admin/ourServices/OurServices'
 import AdminPricing from '../../pages/admin/pricing/AdminPricing'
+import AdminLogin from "../../pages/admin/adminAuth/AdminLogin"
 
-const AdminLayout = () => {
+const AdminLayout: React.FC = () => {
+
+  const [openLogin, setOpenLogin] = useState<boolean>(false)
+
   return (
-    <div>
-      <AdminNavbar />
+    <>
+      <AdminNavbar setOpenLogin={setOpenLogin} />
+
       <AdminHome />
       <OurServices />
       <AdminPricing />
       <AdminFooter />
-    </div>
+
+      {/* ===== LOGIN MODAL HERE ===== */}
+      {openLogin && (
+        <AdminLogin onClose={() => setOpenLogin(false)} />
+      )}
+    </>
   )
 }
 
