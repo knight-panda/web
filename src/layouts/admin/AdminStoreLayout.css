@@ -1,0 +1,68 @@
+.admin-store-layout {
+    max-width: 89rem;
+    margin: auto;
+}
+
+.asl-top {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding: 0.5rem;
+    gap: 2rem;
+    background-color: rgb(214, 230, 214);
+}
+
+.asl-save-btn {
+    background-color: white;
+    color: var(--primary-color);
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+}
+
+.asl-save-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.asl-view-btn {
+    background-color: rgb(214, 230, 214);
+    border: 1px solid green;
+    color: green;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+}
+
+.asl-view-btn:hover {
+    background-color: green;
+    color: white;
+}
+
+.asl-menu-container {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 1rem;
+    gap: 1rem;
+    background-color: white;
+}
+
+.asl-menu {
+    background-color: white;
+    color: var(--primary-color);
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+    border-radius: 0.5rem;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    cursor: pointer;
+}
+
+.asl-menu.active {
+    background-color: rgb(238, 238, 255);
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}

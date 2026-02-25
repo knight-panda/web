@@ -10,6 +10,7 @@ import "./App.css";
 const MainLayout = lazy(() => import("./layouts/user/MainLayout"));
 const AdminLayout = lazy(() => import("./layouts/admin/AdminLayout"));
 const AdminDashboardLayout = lazy(() => import("./layouts/admin/AdminDashboardLayout"));
+const AdminStoreLayout = lazy(() => import("./layouts/admin/AdminStoreLayout"));
 
 /* auth */
 const LoginPage = lazy(() => import("./pages/auth/LoginPage"));
@@ -40,6 +41,9 @@ const ProductsAdmin = lazy(() => import("./pages/admin/products/ProductsAdmin"))
 const AddUpdateProduct = lazy(
   () => import("./pages/admin/products/AddUpdateProduct")
 );
+
+// Edit Store
+
 
 /* ========================= */
 
@@ -85,6 +89,10 @@ function App() {
             <Route path="orders/:orderId" element={<OrderDetailsAdmin />} />
             <Route path="products" element={<ProductsAdmin />} />
             <Route path="products/:productId" element={<AddUpdateProduct />} />
+          </Route>
+
+          <Route path="/edit-store" element={<AdminStoreLayout />}>
+            
           </Route>
         </Routes>
       </Suspense>

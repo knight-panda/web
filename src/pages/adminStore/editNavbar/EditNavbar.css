@@ -1,0 +1,252 @@
+.edit-navbar {
+    height: 4rem;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    padding: 0 1rem;
+    width: 89rem;
+    cursor: pointer;
+}
+
+.edit-navbar:hover {
+    background-color: var(--search-bg-color);
+}
+
+.navbar-container {
+    height: 100%;
+    min-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0.7rem 0;
+}
+
+.logo-img {
+    height: 2rem;
+}
+
+/* LEFT */
+.navbar-left {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.search-box {
+    width: 30vw;
+    height: 100%;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1rem;
+    border-radius: 0.2rem;
+    background-color: var(--search-bg-color);
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+/* SEARCH */
+.search-box input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 400;
+    background-color: var(--search-bg-color);
+}
+
+.search-icon {
+    height: 1.5rem;
+    width: 1.5rem;
+    color: var(--gray-color);
+}
+
+/* RIGHT */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 2rem;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--gray-color);
+}
+
+.nav-item:hover {
+    color: var(--primary-color);
+}
+
+.nav-item-user {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--gray-color);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
+
+.nav-item-user:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.nav-cart-inline {
+    display: flex;
+    position: relative;
+}
+
+.nav-item-icon {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.nav-item-count {
+    position: absolute;
+    background-color: var(--primary-color);
+    color: white;
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -0.5rem;
+    right: -0.5rem;
+}
+
+.icon-text {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-box {
+    width: 400px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-body label {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    gap: 6px;
+}
+
+.toggle-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.edit-btn {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.logo-img {
+    height: 45px;
+}
+
+/* ========== TABLET ========== */
+@media (max-width: 1024px) {
+    .navbar {
+        height: 4rem;
+        padding: 0 1.5rem;
+    }
+
+    .logo img {
+        height: 2.2rem;
+    }
+
+    .search-box input {
+        width: 20rem;
+        height: 2.5rem;
+        font-size: 1rem;
+        padding: 0 0.75rem;
+    }
+
+    .navbar-right {
+        gap: 1.5rem;
+    }
+
+    .icon-item {
+        font-size: 1rem;
+    }
+
+    .icon-item img {
+        height: 1.3rem;
+    }
+}
+
+
+/* ========== MOBILE ========== */
+@media (max-width: 768px) {
+    .navbar {
+        height: 3.8rem;
+        padding: 0 1rem;
+    }
+
+    .search-box input {
+        width: 12rem;
+        height: 2.3rem;
+        font-size: 0.9rem;
+    }
+
+    .navbar-right span {
+        display: none;
+        /* hide text */
+    }
+
+    .icon-item img {
+        height: 1.4rem;
+    }
+}
