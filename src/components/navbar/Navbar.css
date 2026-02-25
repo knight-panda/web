@@ -1,4 +1,5 @@
 .navbar {
+  width: 89rem;
   height: 4rem;
   background-color: white;
   display: flex;
@@ -9,11 +10,13 @@
   z-index: 1000;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   padding: 0 1rem;
+  box-sizing: border-box;
+  margin: auto;
 }
 
 .navbar-container {
   height: 100%;
-  width: 89rem;
+  width: 100%;
   background-color: white;
   display: flex;
   align-items: center;
