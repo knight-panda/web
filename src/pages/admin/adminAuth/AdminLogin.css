@@ -60,6 +60,32 @@
     margin-top: 1.5rem;
 }
 
+.input-group {
+    position: relative;
+    width: 100%;
+}
+
+.input-group .login-input {
+    width: 100%;
+}
+
+.get-otp-text {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #3498db;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.get-otp-text:hover {
+    color: #1d6fa5;
+    text-decoration: underline;
+}
+
 /* Inputs */
 .login-input {
     padding: 14px;
@@ -69,6 +95,7 @@
     outline: none;
     transition: 0.2s;
     margin-top: 1rem;
+    box-sizing: border-box;
 }
 
 .login-input:focus {

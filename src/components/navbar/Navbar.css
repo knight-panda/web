@@ -17,7 +17,6 @@
 .navbar-container {
   height: 100%;
   width: 100%;
-  background-color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -137,6 +136,84 @@
 .icon-text {
   font-size: 1.1rem;
   font-weight: 500;
+}
+
+/* Navbar Dialog */
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.modal-box {
+  width: 400px;
+  background: #fff;
+  border-radius: 0.8rem;
+  padding: 2rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.modal-body label {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  gap: 2rem;
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 1rem;
+}
+
+.model-close-btn {
+  font-size: 0.9rem;
+  padding: 0.7rem 1.5rem;
+  background-color: var(--gray-color);
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.model-close-btn:hover {
+  transform: scale(1.04);
+}
+
+.model-save-btn {
+  font-size: 0.9rem;
+  padding: 0.7rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.model-save-btn:hover {
+  transform: scale(1.04);
 }
 
 

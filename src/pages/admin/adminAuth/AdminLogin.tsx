@@ -1,39 +1,38 @@
-import React, { useState } from "react"
-import "./AdminLogin.css"
+import React, { useState } from "react";
+import "./AdminLogin.css";
 import { useNavigate } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 
-import CrazoWeb from "../../../assets/crazoweb_logo.png"
+import CrazoWeb from "../../../assets/crazoweb_logo.png";
 
 interface AdminLoginProps {
-    onClose: () => void
+    onClose: () => void;
 }
 
 const AdminLogin: React.FC<AdminLoginProps> = ({ onClose }) => {
-
     const navigate = useNavigate();
-    const [number, setNumber] = useState("")
-    const [password, setPassword] = useState("")
-    const [remember, setRemember] = useState(true)
+    const [number, setNumber] = useState("");
+    const [otp, setOtp] = useState("");
+    const [remember, setRemember] = useState(true);
 
     const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-        console.log({ number, password, remember })
-    }
-
-    const goToRegister = () => {
-        navigate("/my-store/register");
+        e.preventDefault();
+        console.log({ number, otp, remember });
     };
 
-    const goToNewPasswordPage = () => {
-        navigate("/my-store/new-password");
+    const handleGetOtp = () => {
+        if (!number) {
+            alert("Please enter mobile number first");
+            return;
+        }
+        console.log("Send OTP to:", number);
     };
 
     return (
         <div className="login-wrapper">
             <div className="login-card">
 
-                {/* CROSS BUTTON */}
+                {/* CLOSE BUTTON */}
                 <button className="login-close-btn" onClick={onClose}>
                     <IoClose size={22} />
                 </button>
@@ -43,20 +42,27 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onClose }) => {
 
                 <form onSubmit={handleSubmit} className="login-form">
 
-                    <input
-                        type="number"
-                        placeholder="+91 00000 00000"
-                        value={number}
-                        onChange={(e) => setNumber(e.target.value)}
-                        className="login-input"
-                        required
-                    />
+                    {/* NUMBER FIELD WITH GET OTP */}
+                    <div className="input-group">
+                        <input
+                            type="tel"
+                            placeholder="+91 00000 00000"
+                            value={number}
+                            onChange={(e) => setNumber(e.target.value)}
+                            className="login-input"
+                            required
+                        />
+                        <span className="get-otp-text" onClick={handleGetOtp}>
+                            Get OTP
+                        </span>
+                    </div>
 
+                    {/* OTP FIELD */}
                     <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        type="text"
+                        placeholder="Enter OTP"
+                        value={otp}
+                        onChange={(e) => setOtp(e.target.value)}
                         className="login-input"
                         required
                     />
@@ -70,24 +76,16 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onClose }) => {
                             />
                             Remember for 30 days
                         </label>
-
-                        <a href="#" className="link" onClick={goToNewPasswordPage}>
-                            Forgot password
-                        </a>
                     </div>
 
                     <button type="submit" className="login-btn">
-                        Login
+                        Submit
                     </button>
-
-                    <p className="login-footer">
-                        Don't have an account? <a onClick={goToRegister}>Sign up</a>
-                    </p>
 
                 </form>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default AdminLogin
+export default AdminLogin;

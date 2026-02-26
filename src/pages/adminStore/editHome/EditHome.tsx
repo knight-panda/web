@@ -1,12 +1,13 @@
 import React from 'react'
 import './EditHome.css'
-import EditNavbar from '../editNavbar/EditNavbar'
 import Navbar from '../../../components/navbar/Navbar'
+import Carousel from '../../../components/carousel/Carousel'
 
 function EditHome() {
     return (
         <div className='edit-home-container'>
             <Navbar />
+            <Carousel />
         </div>
     )
 }
