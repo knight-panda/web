@@ -15,7 +15,7 @@ const AdminLayout: React.FC = () => {
     <>
       <AdminNavbar setOpenLogin={setOpenLogin} />
 
-      <AdminHome />
+      <AdminHome setOpenLogin={setOpenLogin} />
       <OurServices />
       <AdminPricing />
       <AdminFooter />
