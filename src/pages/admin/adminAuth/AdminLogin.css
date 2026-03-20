@@ -7,7 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 999;
+    z-index: 9999;
 }
 
 /* Card */
@@ -144,6 +144,24 @@
 
 .login-btn:hover {
     background: #c5621b;
+}
+
+.login-goto-register {
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-top: 0.5rem;
+    color: black;
+}
+
+.highlight-text {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+.highlight-text:hover {
+    text-decoration: underline;
 }
 
 /* Footer */

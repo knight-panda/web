@@ -1,26 +1,26 @@
 import React, { useState } from "react"
 import "./Login.css"
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 import logo from "../../assets/Knight Panda Logo.png"
 
 const NewPasswordPage = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [password, setPassword] = useState("")
-  const [otp, setOtp] = useState("")
+  const [otp ] = useState("")
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log({ password, otp })
   }
 
-  const goToRegister = () => {
-    navigate("/register");
-  };
+  // const goToRegister = () => {
+  //   navigate("/register");
+  // };
 
-  const goToBack = () => {
-    navigate(-1);
-  };
+  // const goToBack = () => {
+  //   navigate(-1);
+  // };
 
   return (
     <div className="login-wrapper">

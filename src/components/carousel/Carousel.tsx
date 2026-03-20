@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Carousel.css";
 import banner_mobile_1 from "../../assets/banner.png";
 

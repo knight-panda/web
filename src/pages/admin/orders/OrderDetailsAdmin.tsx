@@ -10,14 +10,14 @@ import OrderStatusDialog from "../../../components/order/OrderStatusDialog";
 import type { OrderTrackingData } from "../../../models/OrderModel";
 
 // Define the shape of our order items for type safety
-interface OrderItem {
-  id: string;
-  name: string;
-  qty: string;
-  qtyCount: number;
-  price: number;
-  image: string;
-}
+// interface OrderItem {
+//   id: string;
+//   name: string;
+//   qty: string;
+//   qtyCount: number;
+//   price: number;
+//   image: string;
+// }
 
 const OrderDetailsAdmin: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -26,24 +26,24 @@ const OrderDetailsAdmin: React.FC = () => {
   const navigate = useNavigate();
 
   // In a real app, you would fetch this data using the orderId
-  const items: OrderItem[] = [
-    {
-      id: "1",
-      name: "Dior Tribales Earrings Front view Beige Multicolor Mizza",
-      qty: "1 ltr",
-      qtyCount: 1,
-      price: 450.0,
-      image: "https://via.placeholder.com/60",
-    },
-    {
-      id: "2",
-      name: "Mizza Slingback Ballerina Flat Multicolor Shiny",
-      qty: "1 kg",
-      qtyCount: 1,
-      price: 450.0,
-      image: "https://via.placeholder.com/60",
-    },
-  ];
+  // const items: OrderItem[] = [
+  //   {
+  //     id: "1",
+  //     name: "Dior Tribales Earrings Front view Beige Multicolor Mizza",
+  //     qty: "1 ltr",
+  //     qtyCount: 1,
+  //     price: 450.0,
+  //     image: "https://via.placeholder.com/60",
+  //   },
+  //   {
+  //     id: "2",
+  //     name: "Mizza Slingback Ballerina Flat Multicolor Shiny",
+  //     qty: "1 kg",
+  //     qtyCount: 1,
+  //     price: 450.0,
+  //     image: "https://via.placeholder.com/60",
+  //   },
+  // ];
 
   const handleSave = async (trackingData: OrderTrackingData) => {
     try {

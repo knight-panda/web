@@ -6,7 +6,7 @@ import logo from "../../assets/Knight Panda Logo.png"
 
 const VerifyOtpPage = () => {
   const navigate = useNavigate();
-  const [number, setNumber] = useState("")
+  const [number] = useState("")
   const [otp, setOtp] = useState("")
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -14,9 +14,9 @@ const VerifyOtpPage = () => {
     console.log({ number, otp })
   }
 
-  const goToRegister = () => {
-    navigate("/register");
-  };
+  // const goToRegister = () => {
+  //   navigate("/register");
+  // };
 
   const goToBack = () => {
     navigate(-1);

@@ -4,7 +4,6 @@ import type { Product } from "../../../models/Product"
 import "./ProductsAdmin.css"
 
 import { IoFilter } from "react-icons/io5";
-import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 const products: Product[] = [
@@ -124,7 +123,7 @@ const ProductsAdmin = () => {
 
       </div>
       <div className="admin-products-grid">
-        {products.map((item) => (
+        {products.map(() => (
           <div onClick={() => navigate(`/admin-dashboard/products/${"58"}`)}>
             <ProductCardAdmin />
           </div>

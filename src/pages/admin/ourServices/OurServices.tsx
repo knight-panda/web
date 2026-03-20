@@ -1,4 +1,3 @@
-import React from "react";
 import "./OurServices.css";
 
 import serviceImage_1 from "../../../assets/1.png";

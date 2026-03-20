@@ -47,9 +47,9 @@ const Navbar = () => {
     }))
   }
 
-  const goToCart = () => {
-    navigate("/my-store/cart");
-  };
+  // const goToCart = () => {
+  //   navigate("/my-store/cart");
+  // };
 
   const goToHome = () => {
     navigate("/");
@@ -59,9 +59,9 @@ const Navbar = () => {
     navigate("account");
   };
 
-  const goToLogin = () => {
-    navigate("login");
-  };
+  // const goToLogin = () => {
+  //   navigate("login");
+  // };
 
   return (
     <>

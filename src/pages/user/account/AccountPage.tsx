@@ -1,4 +1,3 @@
-import Orders from "../order/Orders";
 import { Outlet, useNavigate } from 'react-router-dom';
 import AccountSidebar from "../../../components/sidebar/AccountSidebar";
 import "./account.css";

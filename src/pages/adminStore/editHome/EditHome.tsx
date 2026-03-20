@@ -1,4 +1,3 @@
-import React from 'react'
 import './EditHome.css'
 import Navbar from '../../../components/navbar/Navbar'
 import Carousel from '../../../components/carousel/Carousel'

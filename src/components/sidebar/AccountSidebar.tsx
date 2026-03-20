@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   FaMapMarkerAlt,
   FaBox,
-  FaFileMedical,
   FaGift,
   FaUserShield,
   FaSignOutAlt,
