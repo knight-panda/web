@@ -143,7 +143,28 @@
 }
 
 .login-btn:hover {
-    background: #c5621b;
+    background: var(--primary-hover);
+}
+
+.btn-loader {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #fff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    display: inline-block;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.login-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
 }
 
 .login-goto-register {

@@ -1,5 +1,6 @@
 .admin-dashboard {
     width: 89rem;
+    overflow-y: auto;
 }
 
 /* Header */
@@ -7,10 +8,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-right: 1rem;
+    box-sizing: border-box;
 }
 
-.subtitle {
-    font-size: 14px;
+.ad-user-name {
+    font-size: 1rem;
+    color: black;
+    font-weight: 600;
+}
+
+.ad-user-subtitle {
+    font-size: 1rem;
     color: #888;
 }
 

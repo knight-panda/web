@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "https://crazoweb-api-691353735130.asia-south1.run.app/api",
+  baseURL: "https://crazoweb-api-309682237077.asia-south1.run.app/api",
   headers: {
     "Content-Type": "application/json",
   },

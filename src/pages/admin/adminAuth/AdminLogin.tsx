@@ -25,6 +25,11 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onClose }) => {
     const { verifyAdmin, loading: verifyAdminLoading, error: verifyAdminError } = useVerifyAdmin();
     const { login, loading: loginLoading, error: loginError } = useAdminLogin();
     const { verifyLogin, loading: verifyLoginAdminLoading, error: verifyLoginAdminError } = useVerifyLoginAdmin();
+    const isLoading =
+        loginLoading ||
+        registerLoading ||
+        verifyAdminLoading ||
+        verifyLoginAdminLoading;
 
     const validatePhone = (phone: string) => {
         return /^[6-9]\d{9}$/.test(phone); // Indian number
@@ -102,7 +107,6 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onClose }) => {
                 }
 
             } catch (err: any) {
-                // 🔥 show backend error
                 const errorMessage =
                     err?.response?.data?.message ||
                     err?.message ||
@@ -279,8 +283,18 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onClose }) => {
                         </div>
                     )}
 
-                    <button type="submit" className="login-btn">
-                        {isLogin ? "Sign in" : "Sign up"}
+                    <button
+                        type="submit"
+                        className="login-btn"
+                        disabled={isLoading}
+                    >
+                        {isLoading ? (
+                            <span className="btn-loader"></span>
+                        ) : isLogin ? (
+                            "Login"
+                        ) : (
+                            "Register"
+                        )}
                     </button>
 
                     {/* TOGGLE TEXT */}

@@ -7,8 +7,8 @@ const AdminDashboard = () => {
             {/* Header */}
             <div className="dashboard-header">
                 <div>
-                    <div>Welcome Back, Gulraiz.</div>
-                    <p className="subtitle">Welcome to the Dashboard</p>
+                    <div className="ad-user-name">Welcome Back.</div>
+                    <div className="ad-user-subtitle">Welcome to the Dashboard</div>
                 </div>
 
                 <div className="header-right">
@@ -22,7 +22,7 @@ const AdminDashboard = () => {
                             className="profile-img"
                         />
                         <div>
-                            <p className="profile-name">Gulraiz Khan</p>
+                            <div className="profile-name">Gulraiz Khan</div>
                             <span className="profile-role">Admin</span>
                         </div>
                     </div>
@@ -41,7 +41,7 @@ const AdminDashboard = () => {
                         <span>Total Revenue</span>
                         <span className="badge positive">+12%</span>
                     </div>
-                    <h3>$ 25,334</h3>
+                    <h3>₹ 25,334</h3>
                     <p className="card-sub">From Jan 01, 2024 - March 30, 2024</p>
                 </div>
 

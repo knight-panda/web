@@ -2,9 +2,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import "./App.css";
 
+import ProtectedRoute from "./routes/ProtectedRoute";
+import PublicRoute from "./routes/PublicRoute";
+
 /* =========================
-   Lazy Imports (Code Split)
-   ========================= */
+   Lazy Imports
+========================= */
 
 /* layouts */
 const MainLayout = lazy(() => import("./layouts/user/MainLayout"));
@@ -21,29 +24,18 @@ const NewPasswordPage = lazy(() => import("./pages/auth/NewPasswordPage"));
 /* user */
 const Home = lazy(() => import("./pages/user/home/Home"));
 const CartPage = lazy(() => import("./pages/user/cartPage/CartPage"));
-const ProductDetailsPage = lazy(
-  () => import("./pages/user/products/ProductDetailsPage")
-);
+const ProductDetailsPage = lazy(() => import("./pages/user/products/ProductDetailsPage"));
 const AccountPage = lazy(() => import("./pages/user/account/AccountPage"));
 const Orders = lazy(() => import("./pages/user/order/Orders"));
 const OrderDetails = lazy(() => import("./pages/user/order/OrderDetails"));
 const MyProfile = lazy(() => import("./pages/user/profile/MyProfile"));
 
 /* admin */
-const AdminDashboard = lazy(
-  () => import("./pages/admin/dashboard/AdminDashboard")
-);
+const AdminDashboard = lazy(() => import("./pages/admin/dashboard/AdminDashboard"));
 const OrdersAdmin = lazy(() => import("./pages/admin/orders/OrdersAdmin"));
-const OrderDetailsAdmin = lazy(
-  () => import("./pages/admin/orders/OrderDetailsAdmin")
-);
+const OrderDetailsAdmin = lazy(() => import("./pages/admin/orders/OrderDetailsAdmin"));
 const ProductsAdmin = lazy(() => import("./pages/admin/products/ProductsAdmin"));
-const AddUpdateProduct = lazy(
-  () => import("./pages/admin/products/AddUpdateProduct")
-);
-
-// Edit Store
-
+const AddUpdateProduct = lazy(() => import("./pages/admin/products/AddUpdateProduct"));
 
 /* ========================= */
 
@@ -55,7 +47,6 @@ function App() {
 
           {/* ================= USER ROUTES ================= */}
           <Route path="/:storeName" element={<MainLayout />}>
-
             {/* auth */}
             <Route path="login" element={<LoginPage />} />
             <Route path="register" element={<RegisterPage />} />
@@ -67,7 +58,7 @@ function App() {
             <Route path="cart" element={<CartPage />} />
             <Route path="product/:productId" element={<ProductDetailsPage />} />
 
-            {/* account nested */}
+            {/* account */}
             <Route path="account" element={<AccountPage />}>
               <Route index element={<MyProfile />} />
               <Route path="my-profile" element={<MyProfile />} />
@@ -76,14 +67,25 @@ function App() {
             </Route>
           </Route>
 
+          {/* ================= ADMIN PUBLIC ================= */}
+          <Route
+            path="/"
+            element={
+              <PublicRoute>
+                <AdminLayout />
+              </PublicRoute>
+            }
+          />
 
-          {/* ================= ADMIN ROUTES ================= */}
-          <Route path="/" element={<AdminLayout />}>
-            <Route index element={<AdminLayout />} />
-          </Route>
-
-
-          <Route path="/admin-dashboard" element={<AdminDashboardLayout />}>
+          {/* ================= ADMIN PROTECTED ================= */}
+          <Route
+            path="/admin-dashboard"
+            element={
+              <ProtectedRoute>
+                <AdminDashboardLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<AdminDashboard />} />
             <Route path="orders" element={<OrdersAdmin />} />
             <Route path="orders/:orderId" element={<OrderDetailsAdmin />} />
@@ -91,12 +93,19 @@ function App() {
             <Route path="products/:productId" element={<AddUpdateProduct />} />
           </Route>
 
-          <Route path="/edit-store" element={<AdminStoreLayout />}>
-            
-          </Route>
+          {/* ================= EDIT STORE ================= */}
+          <Route
+            path="/edit-store"
+            element={
+              <ProtectedRoute>
+                <AdminStoreLayout />
+              </ProtectedRoute>
+            }
+          />
+
         </Routes>
       </Suspense>
-    </BrowserRouter >
+    </BrowserRouter>
   );
 }
 
