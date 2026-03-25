@@ -1,43 +1,80 @@
 import React, { useState } from "react";
 import "./CreateStoreDialog.css";
+import { useNavigate } from "react-router-dom";
+import { useCreateStore } from "../../../hooks/store/useStore";
 
 interface Props {
     onClose: () => void;
 }
 
 const CreateStoreDialog: React.FC<Props> = ({ onClose }) => {
-    const [storeName, setStoreName] = useState("");
-    const [storeImage, setStoreImage] = useState<File | null>(null);
-    const [ownerName, setOwnerName] = useState("");
-    const [ownerImage, setOwnerImage] = useState<File | null>(null);
-    const [ownerEmail, setOwnerEmail] = useState("");
-    const [description, setDescription] = useState("");
-    const [themeColor, setThemeColor] = useState("#ff6b00");
+    const navigate = useNavigate();
+    const { createStore } = useCreateStore();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const [storeName, setStoreName] = useState("");
+    // const [storeImage, setStoreImage] = useState<File | null>(null);
+    const [primaryColor, setPrimaryColor] = useState("#ff6b00");
+    const [secondaryColor, setSecondaryColor] = useState("#ffffff");
+    const [loading, setLoading] = useState(false);
+
+    const generateSlug = (name: string) =>
+        name.toLowerCase().trim().replace(/\s+/g, "-");
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log({
-            storeName,
-            storeImage,
-            ownerName,
-            ownerImage,
-            ownerEmail,
-            description,
-            themeColor,
-        });
+
+        if (!storeName.trim()) {
+            alert("Store name is required");
+            return;
+        }
+
+        try {
+            setLoading(true);
+
+            const storeSlug = generateSlug(storeName);
+
+            // ✅ Dummy image
+            const logoUrl = "https://via.placeholder.com/150?text=Store+Logo";
+
+            const payload = {
+                storeName,
+                storeSlug,
+                logo: logoUrl,
+                domain: "", // ✅ send empty (since not using now)
+                subdomain: storeSlug,
+                currency: "INR",
+                timezone: "Asia/Kolkata",
+                primaryColor,
+                secondaryColor,
+                themeName: "default",
+            };
+
+            console.log("Final Payload:", payload);
+
+            const res = await createStore(payload);
+
+            if (res?.success) {
+                navigate("/admin/dashboard");
+            } else {
+                alert("Failed to create store");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Something went wrong");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
         <div className="store-dialog-wrapper">
             <div className="store-dialog">
-
                 <div className="dialog-header">
                     <h2>Create Your Store</h2>
                     <button onClick={onClose}>✕</button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="store-form">
-
                     <input
                         type="text"
                         placeholder="Store Name"
@@ -47,64 +84,41 @@ const CreateStoreDialog: React.FC<Props> = ({ onClose }) => {
                     />
 
                     <div className="file-input">
-                        <label>Store Image</label>
+                        <label>Store Logo (optional for now)</label>
                         <input
                             type="file"
                             accept="image/*"
-                            onChange={(e) => setStoreImage(e.target.files?.[0] || null)}
-                            required
+                            // onChange={(e) =>
+                            //     setStoreImage(e.target.files?.[0] || null)
+                            // }
                         />
                     </div>
-
-                    <input
-                        type="text"
-                        placeholder="Store Owner Name"
-                        value={ownerName}
-                        onChange={(e) => setOwnerName(e.target.value)}
-                        required
-                    />
-
-                    <div className="file-input">
-                        <label>Owner Profile Image</label>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => setOwnerImage(e.target.files?.[0] || null)}
-                            required
-                        />
-                    </div>
-
-                    <input
-                        type="email"
-                        placeholder="Owner Email"
-                        value={ownerEmail}
-                        onChange={(e) => setOwnerEmail(e.target.value)}
-                        required
-                    />
-
-                    <textarea
-                        placeholder="Store Description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        rows={3}
-                        required
-                    />
 
                     <div className="color-picker">
-                        <label>Store Theme Color</label>
+                        <label>Store Primary Color</label>
                         <input
                             type="color"
-                            value={themeColor}
-                            onChange={(e) => setThemeColor(e.target.value)}
+                            value={primaryColor}
+                            onChange={(e) => setPrimaryColor(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="color-picker">
+                        <label>Store Secondary Color</label>
+                        <input
+                            type="color"
+                            value={secondaryColor}
+                            onChange={(e) => setSecondaryColor(e.target.value)}
                         />
                     </div>
 
                     <button
                         type="submit"
                         className="create-store-btn"
-                        style={{ background: themeColor }}
+                        style={{ background: primaryColor }}
+                        disabled={loading}
                     >
-                        Create Store
+                        {loading ? "Creating..." : "Create Store"}
                     </button>
                 </form>
             </div>

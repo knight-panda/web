@@ -21,10 +21,10 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onClose }) => {
     const [timer, setTimer] = useState(0);
     const [isTimerActive, setIsTimerActive] = useState(false);
 
-    const { register, loading: registerLoading, error: RegisterError } = useAdminRegister();
-    const { verifyAdmin, loading: verifyAdminLoading, error: verifyAdminError } = useVerifyAdmin();
-    const { login, loading: loginLoading, error: loginError } = useAdminLogin();
-    const { verifyLogin, loading: verifyLoginAdminLoading, error: verifyLoginAdminError } = useVerifyLoginAdmin();
+    const { register, loading: registerLoading } = useAdminRegister();
+    const { verifyAdmin, loading: verifyAdminLoading } = useVerifyAdmin();
+    const { login, loading: loginLoading } = useAdminLogin();
+    const { verifyLogin, loading: verifyLoginAdminLoading } = useVerifyLoginAdmin();
     const isLoading =
         loginLoading ||
         registerLoading ||

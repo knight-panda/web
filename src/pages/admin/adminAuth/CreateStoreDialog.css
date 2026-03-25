@@ -4,7 +4,9 @@
   background: rgba(0, 0, 0, 0.55);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
+  overflow-y: auto;
+  padding-top: 2rem;
   z-index: 1000;
 }
 
