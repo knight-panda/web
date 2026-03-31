@@ -8,7 +8,8 @@ import {
   loginAdmin,
   registerAdmin,
   verifyRegisterAdmin,
-  verifyLoginAdmin
+  verifyLoginAdmin,
+  updateAdminProfile
 } from "../../../api/admin/authAdminApi";
 import type { LoginAdminRequest } from "../../../models/admin/auth/request/LoginAdminRequest";
 import type { LoginAdminResponse } from "../../../models/admin/auth/response/LoginAdminResponse";
@@ -197,6 +198,61 @@ export const useVerifyLoginAdmin = () => {
 
   return {
     verifyLogin,
+    loading,
+    data,
+    error,
+  };
+};
+
+/* ================= UPDATE PROFILE HOOK ================= */
+export const useUpdateAdminProfile = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [data, setData] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const updateProfile = async (file: File): Promise<any> => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const res = await updateAdminProfile(file);
+
+      console.log("Upload API response:", res);
+
+      // ✅ Handle string response (your backend)
+      if (typeof res === "string") {
+        return res;
+      }
+
+      // ✅ Handle object response (future safe)
+      if (!res.success) {
+        setError(res.message);
+        throw new Error(res.message);
+      }
+
+      setData(res);
+
+      if (res.data?.profileImage) {
+        localStorage.setItem("profileImage", res.data.profileImage);
+      }
+
+      return res.data?.profileImage || res;
+
+    } catch (err: any) {
+      const message =
+        err?.response?.data?.message ||
+        err?.message ||
+        "Profile update failed";
+
+      setError(message);
+      throw new Error(message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    updateProfile,
     loading,
     data,
     error,

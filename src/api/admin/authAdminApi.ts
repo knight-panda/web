@@ -34,3 +34,18 @@ export const verifyLoginAdmin = async (
   const response = await apiClient.post("/auth/verify-login-otp", payload);
   return response.data;
 };
+
+export const updateAdminProfile = async (
+  file: File
+): Promise<any> => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await apiClient.post("/upload-photo", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return response.data;
+};

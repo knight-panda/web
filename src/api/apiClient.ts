@@ -12,6 +12,11 @@ apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
 
+    if (config.url?.includes("/upload-photo")) {
+      delete config.headers.Authorization;
+      return config;
+    }
+
     if (token) {
       config.headers = config.headers || {};
       config.headers.Authorization = `Bearer ${token}`;
@@ -34,7 +39,7 @@ apiClient.interceptors.response.use(
       localStorage.removeItem("token");
 
       // optional: redirect
-      window.location.href = "/login";
+      window.location.href = "/";
     }
 
     return Promise.reject(error);
