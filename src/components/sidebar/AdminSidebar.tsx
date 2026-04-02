@@ -10,6 +10,7 @@ import {
     FaUser,
     FaChevronDown,
     FaChevronRight,
+    FaImages
 } from "react-icons/fa";
 import "./AdminSidebar.css";
 
@@ -45,6 +46,12 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ onTagClick }) => {
             id: "/edit-store",
             label: "Store",
             icon: FaStore,
+        },
+
+        {
+            id: "/carousels",
+            label: "Carousels",
+            icon: FaImages,
         },
 
         {
