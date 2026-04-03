@@ -1,12 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { useAddStoreCarousel, useUpdateStoreCarousel } from "../../../hooks/store/useStoreCarousel";
+import { useUpdateAdminProfile } from "../../../hooks/admin/auth/useAdminRegister";
 
 interface Props {
   onClose: () => void;
+  onSuccess: () => void;
+  editMode?: boolean;
+  initialData?: {
+    id: string;
+    imageUrl: string;
+  };
 }
 
-const AddCarouselDialog: React.FC<Props> = ({ onClose }) => {
-  const [preview, setPreview] = useState<string | null>(null);
+const AddCarouselDialog: React.FC<Props> = ({
+  onClose,
+  onSuccess,
+  editMode = false,
+  initialData
+}) => {
+  const [preview, setPreview] = useState<string | null>(initialData?.imageUrl || null);
   const [file, setFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const { updateProfile } = useUpdateAdminProfile();
+  const { createStoreCarousel, loading: createLoading } = useAddStoreCarousel();
+  const { editStoreCarousel, loading: updateLoading } = useUpdateStoreCarousel();
+
+  const [uploading, setUploading] = useState(false);
+
+  const isLoading = uploading || createLoading || updateLoading;
 
   const handleImage = (file: File | null) => {
     if (!file) return;
@@ -14,16 +36,55 @@ const AddCarouselDialog: React.FC<Props> = ({ onClose }) => {
     setPreview(URL.createObjectURL(file));
   };
 
-  const handleSave = () => {
-    if (!file) {
-      alert("Please upload an image");
-      return;
+  const handleSave = async (e: React.FormEvent) => {
+    e?.preventDefault();
+
+    try {
+      setUploading(true);
+
+      let imageUrl = initialData?.imageUrl;
+
+      // ✅ If user selected new image → upload
+      if (file) {
+        const uploadedUrl = await updateProfile(file);
+
+        if (!uploadedUrl) {
+          throw new Error("Image upload failed");
+        }
+
+        imageUrl = uploadedUrl;
+      }
+
+      if (!imageUrl) {
+        alert("Please upload an image");
+        return;
+      }
+
+      const payload = { imageUrl };
+
+      let res;
+
+      // ✅ EDIT MODE
+      if (editMode && initialData?.id) {
+        res = await editStoreCarousel(initialData.id, payload);
+      }
+      // ✅ CREATE MODE
+      else {
+        res = await createStoreCarousel(payload);
+      }
+
+      if (res?.success) {
+        onSuccess();
+        onClose();
+      } else {
+        alert("Operation failed");
+      }
+
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setUploading(false);
     }
-
-    // 👉 call API here
-    console.log("Uploading:", file);
-
-    onClose();
   };
 
   return (
@@ -33,14 +94,23 @@ const AddCarouselDialog: React.FC<Props> = ({ onClose }) => {
 
         {/* Upload Area */}
         <div className="upload-box">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={(e) => {
+              const file = e.target.files?.[0] || null;
+              handleImage(file);
+              e.target.value = ""; // allow same file reselect
+            }}
+          />
+
           {!preview ? (
-            <label className="upload-placeholder">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleImage(e.target.files?.[0] || null)}
-                hidden
-              />
+            <label
+              className="upload-placeholder"
+              onClick={() => fileInputRef.current?.click()}
+            >
               <div>Click to upload image</div>
             </label>
           ) : (
@@ -48,11 +118,9 @@ const AddCarouselDialog: React.FC<Props> = ({ onClose }) => {
               <img src={preview} alt="preview" className="preview" />
 
               <button
+                type="button"
                 className="change-btn"
-                onClick={() => {
-                  setPreview(null);
-                  setFile(null);
-                }}
+                onClick={() => fileInputRef.current?.click()} // ✅ open picker
               >
                 Change Image
               </button>
@@ -63,8 +131,19 @@ const AddCarouselDialog: React.FC<Props> = ({ onClose }) => {
         {/* Actions */}
         <div className="dialog-actions">
           <button onClick={onClose}>Cancel</button>
-          <button className="primary" onClick={handleSave}>
-            Upload
+          <button
+            type="button"
+            className="primary"
+            onClick={handleSave}
+            disabled={isLoading}
+          >
+            {isLoading
+              ? editMode
+                ? "Updating..."
+                : "Uploading..."
+              : editMode
+                ? "Update"
+                : "Upload"}
           </button>
         </div>
       </div>

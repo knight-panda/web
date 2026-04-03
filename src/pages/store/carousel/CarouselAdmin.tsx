@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./CarouselAdmin.css";
 import AddCarouselDialog from "./AddCarouselDialog";
-import { useGetStoreCarousel } from "../../../hooks/store/useStoreCarousel";
+import { useDeleteStoreCarousel, useGetStoreCarousel } from "../../../hooks/store/useStoreCarousel";
 
 const CarouselAdmin = () => {
     const [showDialog, setShowDialog] = useState(false);
+    const { removeStoreCarousel } = useDeleteStoreCarousel();
+    const [editItem, setEditItem] = useState<any>(null);
+
+    const [deletingId, setDeletingId] = useState<string | null>(null);
 
     const { fetchStoreCarousel, loading, data, error } = useGetStoreCarousel();
 
@@ -13,6 +17,26 @@ const CarouselAdmin = () => {
     }, []);
 
     const carousels = Array.isArray(data?.data) ? data.data : [];
+
+    // delete handler
+    const handleDelete = async (id: string) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete?");
+        if (!confirmDelete) return;
+
+        try {
+            setDeletingId(id);
+
+            const res = await removeStoreCarousel(id);
+
+            if (res.success) {
+                fetchStoreCarousel(); // 🔥 refresh list
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setDeletingId(null);
+        }
+    };
 
     return (
         <div className="carousel-admin">
@@ -52,8 +76,22 @@ const CarouselAdmin = () => {
                             />
 
                             <div className="ca-overlay">
-                                <button className="edit-btn">Edit</button>
-                                <button className="delete-btn">Delete</button>
+                                <button
+                                    className="edit-btn"
+                                    onClick={() => {
+                                        setEditItem(item);
+                                        setShowDialog(true);
+                                    }}
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    className="delete-btn"
+                                    onClick={() => handleDelete(item.id)}
+                                    disabled={deletingId === item.id}
+                                >
+                                    {deletingId === item.id ? "Deleting..." : "Delete"}
+                                </button>
                             </div>
                         </div>
                     ))
@@ -69,7 +107,15 @@ const CarouselAdmin = () => {
             </div>
 
             {showDialog && (
-                <AddCarouselDialog onClose={() => setShowDialog(false)} />
+                <AddCarouselDialog
+                    onClose={() => {
+                        setShowDialog(false);
+                        setEditItem(null);
+                    }}
+                    onSuccess={() => fetchStoreCarousel()}
+                    editMode={!!editItem}
+                    initialData={editItem}
+                />
             )}
         </div>
     );
