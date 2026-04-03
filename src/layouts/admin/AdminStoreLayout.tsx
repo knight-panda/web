@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './AdminStoreLayout.css'
-import EditHome from '../../pages/adminStore/editHome/EditHome'
+import EditHome from '../../pages/store/editHome/EditHome'
 
 function AdminStoreLayout() {
   const [activeMenu, setActiveMenu] = useState('Home')
