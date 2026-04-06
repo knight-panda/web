@@ -137,20 +137,6 @@ const AddUpdateProduct = () => {
 
             <div className="au-product-row">
               <div className="au-product-form-group">
-                <label>Product Type</label>
-                <select>
-                  <option>Moisturizer</option>
-                </select>
-              </div>
-
-              <div className="au-product-form-group">
-                <label>Product Merk</label>
-                <input defaultValue="Scarlett Whitening" />
-              </div>
-            </div>
-
-            <div className="au-product-row">
-              <div className="au-product-form-group">
                 <label>Price</label>
                 <input defaultValue="$ 100.00" />
               </div>
@@ -182,10 +168,6 @@ const AddUpdateProduct = () => {
             <div className="au-product-header-text">Manage Stock</div>
 
             <div className="au-product-row">
-              <div className="au-product-form-group">
-                <label>Stock Keeping Unit</label>
-                <input defaultValue="SKC001380003" />
-              </div>
 
               <div className="au-product-form-group">
                 <label>Stock</label>

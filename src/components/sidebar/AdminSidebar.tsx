@@ -57,11 +57,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ onTagClick }) => {
         {
             id: "products",
             label: "Products",
-            icon: FaFileMedical,
-            children: [
-                { id: "all-products", label: "All Products" },
-                { id: "add-product", label: "Add Product" },
-            ],
+            icon: FaFileMedical
         },
 
         { id: "giftcards", label: "E-Gift Cards", icon: FaGift },
