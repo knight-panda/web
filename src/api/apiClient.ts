@@ -35,11 +35,11 @@ apiClient.interceptors.response.use(
     if (error?.response?.status === 401) {
       console.log("Unauthorized! Redirect to login.");
 
-      // optional: clear token
-      localStorage.removeItem("token");
+      // // optional: clear token
+      // localStorage.removeItem("token");
 
-      // optional: redirect
-      window.location.href = "/";
+      // // optional: redirect
+      // window.location.href = "/";
     }
 
     return Promise.reject(error);

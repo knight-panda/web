@@ -1,81 +1,30 @@
-import ProductCardAdmin from "../../../components/Product/ProductCardAdmin"
+import ProductCardAdmin from "../../../components/Product/ProductCardAdmin";
 import { useEffect, useState } from "react";
-import type { Product } from "../../../models/Product"
-import "./ProductsAdmin.css"
+import "./ProductsAdmin.css";
 
 import { IoFilter } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-
-const products: Product[] = [
-  {
-    id: 1,
-    title: "Campus Running Shoes",
-    price: 1299,
-    mrp: 2499,
-    stock: 10,
-    image:
-      "https://rukminim2.flixcart.com/image/416/416/xif0q/shoe/6/9/9/8-brd-406-campus-original-imagk9f7k9gzfmyb.jpeg"
-  },
-  {
-    id: 2,
-    title: "Noise Smart Watch",
-    price: 1999,
-    mrp: 3999,
-    stock: 8,
-    image:
-      "https://rukminim2.flixcart.com/image/416/416/xif0q/smartwatch/l/z/n/-original-imagp6kx9z3zdhmy.jpeg"
-  },
-  {
-    id: 3,
-    title: "Boat Wireless Headphones",
-    price: 1499,
-    mrp: 2999,
-    stock: 15,
-    image:
-      "https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/j/d/2/-original-imaghhrysf6pzszp.jpeg"
-  },
-  {
-    id: 4,
-    title: "Puma Casual T-Shirt",
-    price: 799,
-    mrp: 1599,
-    stock: 20,
-    image:
-      "https://rukminim2.flixcart.com/image/416/416/xif0q/t-shirt/y/o/q/m-original-imagkzcgxhhkzm8g.jpeg"
-  },
-  {
-    id: 3,
-    title: "Boat Wireless Headphones",
-    price: 1499,
-    mrp: 2999,
-    stock: 15,
-    image:
-      "https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/j/d/2/-original-imaghhrysf6pzszp.jpeg"
-  },
-  {
-    id: 4,
-    title: "Puma Casual T-Shirt",
-    price: 799,
-    mrp: 1599,
-    stock: 20,
-    image:
-      "https://rukminim2.flixcart.com/image/416/416/xif0q/t-shirt/y/o/q/m-original-imagkzcgxhhkzm8g.jpeg"
-  }
-]
+import { useGetStoreProducts } from "../../../hooks/store/useStoreProduct";
 
 const ProductsAdmin = () => {
   const navigate = useNavigate();
   const [filterOpen, setFilterOpen] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState('all');
+  const [selectedFilter, setSelectedFilter] = useState("all");
+
+  const { fetchStoreProducts, data, loading, error } = useGetStoreProducts();
 
   const filterOptions = [
-    { value: 'all', label: 'All Orders' },
-    { value: 'pending', label: 'Pending' },
-    { value: 'confirmed', label: 'Confirmed' },
-    { value: 'shipping', label: 'Shipping' },
-    { value: 'delivered', label: 'Delivered' },
-    { value: 'cancelled', label: 'Cancelled' }
+    { value: "all", label: "All Orders" },
+    { value: "pending", label: "Pending" },
+    { value: "confirmed", label: "Confirmed" },
+    { value: "shipping", label: "Shipping" },
+    { value: "delivered", label: "Delivered" },
+    { value: "cancelled", label: "Cancelled" },
   ];
+
+  useEffect(() => {
+    fetchStoreProducts();
+  }, []);
 
   useEffect(() => {
     const close = () => setFilterOpen(false);
@@ -88,12 +37,14 @@ const ProductsAdmin = () => {
       <div className="admin-product-title-box">
         <div className="admin-product-title">Products</div>
 
-        <div className="admin-add-product">
+        <div className="admin-add-product" onClick={() => navigate("add")}>
           Add Product +
         </div>
-        {/* <IoFilter className="orders-filter"/> */}
 
-        <div className="admin-product-filter-container" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="admin-product-filter-container"
+          onClick={(e) => e.stopPropagation()}
+        >
           <span>Filter</span>
           <IoFilter
             className="admin-product-filter"
@@ -110,7 +61,7 @@ const ProductsAdmin = () => {
                   setFilterOpen(false);
                 }}
               >
-                {filterOptions.map(option => (
+                {filterOptions.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
@@ -119,18 +70,33 @@ const ProductsAdmin = () => {
             </div>
           )}
         </div>
-
-
       </div>
+
+      {/* ✅ LOADING */}
+      {loading && <div>Loading products...</div>}
+
+      {/* ❌ ERROR */}
+      {error && <div style={{ color: "red" }}>{error}</div>}
+
+      {/* ✅ PRODUCT GRID */}
       <div className="admin-products-grid">
-        {products.map(() => (
-          <div onClick={() => navigate(`/admin-dashboard/products/${"58"}`)}>
-            <ProductCardAdmin />
+        {data?.data?.map((product) => (
+          <div
+            key={product.id}
+            onClick={() => navigate(`/admin-dashboard/products/${product.id}`)}
+          >
+            <ProductCardAdmin
+              title={product.name}
+              price={product.price}
+              mrp={product.discountPrice}
+              stock={product.stock}
+              image={product.imageThumbnail}
+            />
           </div>
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductsAdmin
+export default ProductsAdmin;

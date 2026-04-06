@@ -1,7 +1,7 @@
 export interface StoreProductResponse {
     success: boolean;
     message: string;
-    data: Product;
+    data: Product[];
 }
 
 export interface Product {
