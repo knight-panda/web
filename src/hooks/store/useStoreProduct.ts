@@ -4,6 +4,7 @@ import {
   addStoreProduct,
   updateStoreProduct,
   deleteStoreProduct,
+  uploadProductImages,
 } from "../../api/store/storeProductApi";
 import type { StoreProductResponse } from "../../models/store/carousel/response/StoreProductResponse";
 import type { StoreProductRequest } from "../../models/store/carousel/request/StoreProductRequest";
@@ -154,4 +155,49 @@ export const useDeleteStoreProduct = () => {
   };
 
   return { removeStoreProduct, loading, data, error };
+};
+
+export const useUploadProductImages = () => {
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<string[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const uploadImages = async (files: File[]): Promise<string[]> => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      if (!files || files.length === 0) {
+        throw new Error("No files selected");
+      }
+
+      const res = await uploadProductImages(files);
+
+      if (!Array.isArray(res)) {
+        throw new Error("Invalid response format");
+      }
+
+      setData(res);
+
+      return res;
+
+    } catch (err: any) {
+      const message =
+        err?.response?.data?.message ||
+        err?.message ||
+        "Image upload failed";
+
+      setError(message);
+      throw new Error(message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    uploadImages,
+    loading,
+    data,
+    error,
+  };
 };

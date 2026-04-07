@@ -83,7 +83,11 @@ const ProductsAdmin = () => {
         {data?.data?.map((product) => (
           <div
             key={product.id}
-            onClick={() => navigate(`/admin-dashboard/products/${product.id}`)}
+            onClick={() =>
+              navigate(`/admin-dashboard/products/${product.id}`, {
+                state: { product }, // pass full product
+              })
+            }
           >
             <ProductCardAdmin
               title={product.name}

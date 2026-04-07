@@ -32,3 +32,21 @@ export const deleteStoreProduct = async (
   const response = await apiClient.delete(`/store-products/${id}`);
   return response.data;
 };
+
+export const uploadProductImages = async (
+  files: File[]
+): Promise<any> => {
+  const formData = new FormData();
+
+  files.forEach((file) => {
+    formData.append("files", file); // key should match backend
+  });
+
+  const response = await apiClient.post("/upload-images", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return response.data;
+};
