@@ -109,6 +109,7 @@
 .au-product-image-box img {
   width: 50%;
   border-radius: 10px;
+  aspect-ratio: 1/1;
 }
 
 .au-product-img-actions {

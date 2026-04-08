@@ -95,14 +95,18 @@ const AddUpdateProduct = () => {
   };
 
   const handleRemoveExtra = (index: number) => {
-    // remove from preview
     setExtraImages((prev) => prev.filter((_, i) => i !== index));
 
-    // remove from existing images
-    setExistingImages((prev) => prev.filter((_, i) => i !== index));
+    // 🧠 FIX: differentiate existing vs new images
+    if (index < existingImages.length) {
+      // removing existing image
+      setExistingImages((prev) => prev.filter((_, i) => i !== index));
+    } else {
+      // removing newly added file
+      const newIndex = index - existingImages.length;
 
-    // remove from new files
-    setExtraFiles((prev) => prev.filter((_, i) => i !== index));
+      setExtraFiles((prev) => prev.filter((_, i) => i !== newIndex));
+    }
   };
 
   // ================= INPUT HANDLING =================
@@ -214,22 +218,39 @@ const AddUpdateProduct = () => {
           <div className="au-product-header-text">Product Image</div>
 
           <div className="au-product-image-box">
-            {image && <img src={image} alt="product" />}
+            {image ? (
+              <img className="au-product-image" src={image} alt="product" />
+            ) : (
+              <div className="au-product-placeholder">
+                No Image Selected
+              </div>
+            )}
 
             <div className="au-product-img-actions">
-              <button
-                className="au-product-btn small"
-                onClick={handleReplaceClick}
-              >
-                Replace
-              </button>
+              {!image ? (
+                <button
+                  className="au-product-btn small primary"
+                  onClick={handleReplaceClick}
+                >
+                  Upload Image
+                </button>
+              ) : (
+                <>
+                  <button
+                    className="au-product-btn small"
+                    onClick={handleReplaceClick}
+                  >
+                    Replace
+                  </button>
 
-              <button
-                className="au-product-btn small danger"
-                onClick={handleRemove}
-              >
-                Remove
-              </button>
+                  <button
+                    className="au-product-btn small danger"
+                    onClick={handleRemove}
+                  >
+                    Remove
+                  </button>
+                </>
+              )}
             </div>
 
             <input
