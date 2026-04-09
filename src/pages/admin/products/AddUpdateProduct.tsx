@@ -22,11 +22,11 @@ const AddUpdateProduct = () => {
   const { editStoreProduct } = useUpdateStoreProduct();
   const { removeStoreProduct, loading: deleteLoading } = useDeleteStoreProduct();
 
-  // ✅ Preview states
+  // Preview states
   const [image, setImage] = useState<string>("");
   const [extraImages, setExtraImages] = useState<string[]>([]);
 
-  // ✅ File states (IMPORTANT)
+  // File states (IMPORTANT)
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
   const [extraFiles, setExtraFiles] = useState<File[]>([]);
   const [existingImages, setExistingImages] = useState<string[]>([]);
@@ -70,12 +70,21 @@ const AddUpdateProduct = () => {
 
   const handleReplaceClick = () => fileInputRef.current?.click();
 
+  const MAX_SIZE = 7 * 1024 * 1024; // 7MB
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setThumbnailFile(file); // ✅ store file
-      setImage(URL.createObjectURL(file)); // preview
+
+    if (!file) return;
+
+    // ❌ Restrict size
+    if (file.size > MAX_SIZE) {
+      alert("Image must be less than 7MB");
+      return;
     }
+
+    setThumbnailFile(file);
+    setImage(URL.createObjectURL(file));
   };
 
   const handleRemove = () => {
@@ -88,16 +97,28 @@ const AddUpdateProduct = () => {
   const handleMultiFilesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
 
-    setExtraFiles((prev) => [...prev, ...files]); // ✅ store files
+    const MAX_SIZE = 7 * 1024 * 1024;
 
-    const urls = files.map((file) => URL.createObjectURL(file));
-    setExtraImages((prev) => [...prev, ...urls]); // preview
+    // ❌ filter large files
+    const validFiles = files.filter((file) => {
+      if (file.size > MAX_SIZE) {
+        alert(`${file.name} is larger than 7MB`);
+        return false;
+      }
+      return true;
+    });
+
+    // store only valid files
+    setExtraFiles((prev) => [...prev, ...validFiles]);
+
+    const urls = validFiles.map((file) => URL.createObjectURL(file));
+    setExtraImages((prev) => [...prev, ...urls]);
   };
 
   const handleRemoveExtra = (index: number) => {
     setExtraImages((prev) => prev.filter((_, i) => i !== index));
 
-    // 🧠 FIX: differentiate existing vs new images
+    // FIX: differentiate existing vs new images
     if (index < existingImages.length) {
       // removing existing image
       setExistingImages((prev) => prev.filter((_, i) => i !== index));
@@ -121,16 +142,16 @@ const AddUpdateProduct = () => {
     try {
       let thumbnailUrl = image;
 
-      // ✅ Upload thumbnail
+      // Upload thumbnail
       if (thumbnailFile) {
         const res = await uploadImages([thumbnailFile]);
         thumbnailUrl = res[0];
       }
 
-      // ✅ Start with existing images
+      // Start with existing images
       let finalImageUrls = [...existingImages];
 
-      // ✅ Upload new images and merge
+      // Upload new images and merge
       if (extraFiles.length > 0) {
         const uploaded = await uploadImages(extraFiles);
         finalImageUrls = [...existingImages, ...uploaded];
@@ -144,7 +165,7 @@ const AddUpdateProduct = () => {
         stock: Number(form.stock),
         minimumStock: Number(form.minimumStock),
         imageThumbnail: thumbnailUrl,
-        imageUrls: finalImageUrls, // ✅ FIXED (merged)
+        imageUrls: finalImageUrls, // FIXED (merged)
         tags: form.tags,
       };
 
