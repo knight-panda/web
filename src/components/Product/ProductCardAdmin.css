@@ -21,7 +21,9 @@
 .product-img img {
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-bottom-right-radius: 0.8rem;
 }
 
 .product-discount {
@@ -142,7 +144,7 @@
 }
 
 .product-quantity {
-   font-size: 0.9rem;
+  font-size: 0.9rem;
   -webkit-line-clamp: 1;
   /* Number of lines to show */
   -webkit-box-orient: vertical;
