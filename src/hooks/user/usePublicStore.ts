@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { SingleStoreResponse } from "../../models/store/response/SingleStoreResponse";
-import { getSinglePublicStore } from "../../api/store/publicStoreApi";
+import { getSinglePublicStore } from "../../api/user/publicStoreApi";
 
 /* ================= GET STORE HOOK ================= */
 export const usePublicStore = () => {
@@ -15,11 +15,11 @@ export const usePublicStore = () => {
       setLoading(true);
       setError(null);
 
-      // ✅ pass slug
+      // pass slug
       const res: SingleStoreResponse =
         await getSinglePublicStore(storeSlug);
 
-      // ✅ handle API-level failure
+      // handle API-level failure
       if (!res.success) {
         setError(res.message);
         throw new Error(res.message);

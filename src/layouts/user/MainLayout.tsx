@@ -3,7 +3,7 @@ import Navbar from "../../components/navbar/Navbar";
 import { Outlet, useLocation } from "react-router-dom";
 import ScrollToTop from "../../utils/ScrollToTop";
 import { useEffect } from "react";
-import { usePublicStore } from "../../hooks/store/usePublicStore";
+import { usePublicStore } from "../../hooks/user/usePublicStore";
 
 const MainLayout = () => {
   const location = useLocation();
