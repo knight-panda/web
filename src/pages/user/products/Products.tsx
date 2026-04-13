@@ -1,81 +1,61 @@
-import ProductCard from "../../../components/Product/ProductCard"
-import type { Product } from "../../../models/Product"
+import { useEffect } from "react";
+import ProductCard from "../../../components/Product/ProductCard";
 import { useNavigate } from "react-router-dom";
-import "./Products.css"
+import "./Products.css";
+import { usePublicProducts } from "../../../hooks/user/usePublicStore";
 
-const products: Product[] = [
-  {
-    id: 1,
-    title: "Campus Running Shoes",
-    price: 1299,
-    mrp: 2499,
-    stock: 10,
-    image:
-      "https://rukminim2.flixcart.com/image/416/416/xif0q/shoe/6/9/9/8-brd-406-campus-original-imagk9f7k9gzfmyb.jpeg"
-  },
-  {
-    id: 2,
-    title: "Noise Smart Watch",
-    price: 1999,
-    mrp: 3999,
-    stock: 8,
-    image:
-      "https://rukminim2.flixcart.com/image/416/416/xif0q/smartwatch/l/z/n/-original-imagp6kx9z3zdhmy.jpeg"
-  },
-  {
-    id: 3,
-    title: "Boat Wireless Headphones",
-    price: 1499,
-    mrp: 2999,
-    stock: 15,
-    image:
-      "https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/j/d/2/-original-imaghhrysf6pzszp.jpeg"
-  },
-  {
-    id: 4,
-    title: "Puma Casual T-Shirt",
-    price: 799,
-    mrp: 1599,
-    stock: 20,
-    image:
-      "https://rukminim2.flixcart.com/image/416/416/xif0q/t-shirt/y/o/q/m-original-imagkzcgxhhkzm8g.jpeg"
-  },
-  {
-    id: 3,
-    title: "Boat Wireless Headphones",
-    price: 1499,
-    mrp: 2999,
-    stock: 15,
-    image:
-      "https://rukminim2.flixcart.com/image/416/416/xif0q/headphone/j/d/2/-original-imaghhrysf6pzszp.jpeg"
-  },
-  {
-    id: 4,
-    title: "Puma Casual T-Shirt",
-    price: 799,
-    mrp: 1599,
-    stock: 20,
-    image:
-      "https://rukminim2.flixcart.com/image/416/416/xif0q/t-shirt/y/o/q/m-original-imagkzcgxhhkzm8g.jpeg"
-  }
-]
+type Props = {
+  storeId: string;
+};
 
-const Products = () => {
+const Products = ({ storeId }: Props) => {
   const navigate = useNavigate();
+  const { fetchProducts, data, loading, error } = usePublicProducts();
+
+  // ✅ Fetch products
+  useEffect(() => {
+    if (storeId) {
+      fetchProducts(storeId);
+    }
+  }, [storeId]);
 
   const handleProductClick = (id: string) => {
-    navigate(`/product/${id}`)
+    navigate(`/product/${id}`);
+  };
+
+  // ⏳ Loading UI
+  if (loading) {
+    return <div className="product">Loading products...</div>;
+  }
+
+  // ❌ Error UI
+  if (error) {
+    return <div className="product">Error: {error}</div>;
+  }
+
+  // ⚠️ No products
+  if (!data?.data?.length) {
+    return <div className="product">No products available</div>;
   }
 
   return (
     <div className="product">
       <div className="products-grid">
-        {products.map(() => (
-          <ProductCard onProductClick={handleProductClick} />
+        {data.data.map((product: any) => (
+          <ProductCard
+            key={product.id}
+            id={product.id}
+            title={product.title}
+            price={product.price}
+            mrp={product.mrp}
+            stock={product.stock}
+            image={product.imageUrl}
+            onProductClick={handleProductClick}
+          />
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Products
+export default Products;

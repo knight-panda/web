@@ -1,32 +1,46 @@
 import { useEffect, useState } from "react";
 import "./Carousel.css";
-import banner_mobile_1 from "../../assets/banner.png";
+import { usePublicCarousel } from "../../hooks/user/usePublicStore";
 
-const desktopImages = [
-  banner_mobile_1,
-  banner_mobile_1,
-  banner_mobile_1,
-  banner_mobile_1,
-]
+type Props = {
+  storeId: string;
+};
 
-const mobileImages = [
-  banner_mobile_1,
-  banner_mobile_1,
-  banner_mobile_1,
-  banner_mobile_1,
-];
-
-const Carousel = () => {
+const Carousel = ({ storeId }: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
 
-  const currentImages = isMobile ? mobileImages : desktopImages;
+  const { fetchCarousel, data } = usePublicCarousel();
 
+  // ✅ Fetch API data
+  useEffect(() => {
+    if (storeId) {
+      fetchCarousel(storeId);
+    }
+  }, [storeId]);
+
+  // ✅ Handle screen resize
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 1024);
     };
+
     window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // ✅ Extract images from API
+  const desktopImages =
+    data?.data?.map((item: any) => item.imageUrl) || [];
+
+  const mobileImages =
+    data?.data?.map((item: any) => item.mobileImageUrl || item.imageUrl) || [];
+
+  const currentImages = isMobile ? mobileImages : desktopImages;
+
+  // ✅ Auto slide
+  useEffect(() => {
+    if (currentImages.length === 0) return;
 
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) =>
@@ -34,15 +48,17 @@ const Carousel = () => {
       );
     }, 3000);
 
-    return () => {
-      clearInterval(timer);
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [currentImages.length]);
+    return () => clearInterval(timer);
+  }, [currentImages]);
+
+  // ⏳ fallback UI
+  if (!currentImages.length) {
+    return <div className="slider">No banners available</div>;
+  }
 
   return (
     <div className="slider">
-      {currentImages.map((img, index) => (
+      {currentImages.map((img: string, index: number) => (
         <img
           key={index}
           src={img}

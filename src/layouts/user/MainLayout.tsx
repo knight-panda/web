@@ -9,7 +9,6 @@ const MainLayout = () => {
   const location = useLocation();
   const { fetchStore, loading, error, data } = usePublicStore();
 
-  // ✅ extract slug from URL → "/fhf" => "fhf"
   const slug = location.pathname.split("/")[1];
 
   useEffect(() => {
@@ -18,12 +17,10 @@ const MainLayout = () => {
     }
   }, [slug]);
 
-  // ⏳ Loading
   if (loading) {
     return <div>Loading store...</div>;
   }
 
-  // ❌ Store not found
   if (error || !data?.success) {
     return (
       <div style={{ textAlign: "center", marginTop: "100px" }}>
@@ -33,12 +30,17 @@ const MainLayout = () => {
     );
   }
 
-  // ✅ Store loaded
+  // pass storeId or full data
   return (
     <div>
       <ScrollToTop />
       <Navbar />
-      <Outlet />
+      
+      <Outlet context={{ 
+        storeId: data.data.id,
+        store: data.data
+      }} />
+      
       <Footer />
     </div>
   );

@@ -1,38 +1,55 @@
-import { useState } from "react"
-import { BsPlus, BsDash } from "react-icons/bs"
-import "./ProductCard.css"
-
-import logo from "../../assets/product_2.png"
+import { useState } from "react";
+import { BsPlus, BsDash } from "react-icons/bs";
+import "./ProductCard.css";
 import { IoMdArrowDropdown } from "react-icons/io";
 
-
 type ProductCardProps = {
-  onProductClick?: (productId: string) => void
-}
+  id: string;
+  title: string;
+  description?: string;
+  price: number;
+  mrp: number;
+  stock: number;
+  image: string;
+  onProductClick?: (productId: string) => void;
+};
 
 const ProductCard: React.FC<ProductCardProps> = ({
+  id,
+  title,
+  description,
+  price,
+  mrp,
+  stock,
+  image,
   onProductClick,
 }) => {
-  const [qty, setQty] = useState(0)
+  const [qty, setQty] = useState(0);
 
-  const increase = () => setQty(qty + 1)
+  const increase = () => {
+    if (qty < stock) setQty(qty + 1);
+  };
+
   const decrease = () => {
-    if (qty > 0) setQty(qty - 1)
-  }
+    if (qty > 0) setQty(qty - 1);
+  };
 
-  const productClick = (id: string) => {
-    onProductClick?.(id)
-  }
+  const handleClick = () => {
+    onProductClick?.(id);
+  };
+
+  // ✅ calculate discount %
+  const discount = Math.round(((mrp - price) / mrp) * 100);
 
   return (
-    <div className="product-card-modern" >
+    <div className="product-card-modern">
       {/* IMAGE */}
       <div className="product-img">
-        <div className="product-discount">20% Off</div>
-        <img
-          src={logo}
-          onClick={() => productClick("lipu")}
-        />
+        {mrp > price && (
+          <div className="product-discount">{discount}% Off</div>
+        )}
+
+        <img src={image} alt={title} onClick={handleClick} />
 
         <div className="product-add-to-cart">
           {qty === 0 ? (
@@ -53,32 +70,29 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </div>
           )}
         </div>
-
       </div>
 
       {/* INFO */}
-      <div className="product-details" onClick={() => productClick("lipu")}>
-        <div className="product-name">
-          Campus Running Shoes for Men
-        </div>
+      <div className="product-details" onClick={handleClick}>
+        <div className="product-name">{title}</div>
 
-        <div className="product-desc">
-          Your navbar was sticking, but it was getting covered by other elements like banners, sliders, or sections below it
-        </div>
+        {description && (
+          <div className="product-desc">{description}</div>
+        )}
 
         <div className="product-price-row">
-          <span className="price">₹1,299</span>
-          <span className="mrp">₹2,499</span>
+          <span className="price">₹{price}</span>
+          {mrp > price && <span className="mrp">₹{mrp}</span>}
         </div>
 
         {/* ACTION */}
         <div className="product-quantity-box">
-          <div className="product-quantity">1 Package(200gm)</div>
+          <div className="product-quantity">1 Package</div>
           <IoMdArrowDropdown />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductCard
+export default ProductCard;
