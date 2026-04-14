@@ -3,6 +3,7 @@ import ProductCard from "../../../components/Product/ProductCard";
 import { useNavigate } from "react-router-dom";
 import "./Products.css";
 import { usePublicProducts } from "../../../hooks/user/usePublicStore";
+import type { Product } from "../../../models/user/public/response/PublicProductsResponse";
 
 type Props = {
   storeId: string;
@@ -41,15 +42,15 @@ const Products = ({ storeId }: Props) => {
   return (
     <div className="product">
       <div className="products-grid">
-        {data.data.map((product: any) => (
+        {data.data.map((product: Product) => (
           <ProductCard
             key={product.id}
             id={product.id}
-            title={product.title}
-            price={product.price}
-            mrp={product.mrp}
+            title={product.name} // ✅ name → title
+            price={product.discountPrice || product.price} // ✅ use discount if available
+            mrp={product.price} // ✅ original price
             stock={product.stock}
-            image={product.imageUrl}
+            image={product.imageThumbnail || product.imageUrls?.[0]} // ✅ thumbnail or first image
             onProductClick={handleProductClick}
           />
         ))}
