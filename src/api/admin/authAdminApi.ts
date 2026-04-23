@@ -10,28 +10,28 @@ import apiClient from "../apiClient";
 export const registerAdmin = async (
   payload: RegisterAdminRequest
 ): Promise<RegisterAdminResponse> => {
-  const response = await apiClient.post("/auth/register", payload);
+  const response = await apiClient.post("/auth/admin/register", payload);
   return response.data;
 };
 
 export const verifyRegisterAdmin = async (
   payload: VerifyAdminRequest
 ): Promise<VerifyAdminResponse> => {
-  const response = await apiClient.post("/auth/verify-register-otp", payload);
+  const response = await apiClient.post("/auth/admin/verify-register-otp", payload);
   return response.data;
 };
 
 export const loginAdmin = async (
   payload: LoginAdminRequest
 ): Promise<LoginAdminResponse> => {
-  const response = await apiClient.post("/auth/login", payload);
+  const response = await apiClient.post("/auth/admin/login", payload);
   return response.data;
 };
 
 export const verifyLoginAdmin = async (
   payload: VerifyAdminRequest
 ): Promise<VerifyAdminResponse> => {
-  const response = await apiClient.post("/auth/verify-login-otp", payload);
+  const response = await apiClient.post("/auth/admin/verify-login-otp", payload);
   return response.data;
 };
 
