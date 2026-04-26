@@ -40,70 +40,94 @@ const AddUpdateProduct = lazy(() => import("./pages/admin/products/AddUpdateProd
 
 /* ========================= */
 
+function getHostInfo() {
+  const host = window.location.hostname;
+  const parts = host.split(".");
+
+  // localhost support
+  if (host.includes("localhost")) {
+    return {
+      isMainDomain: parts.length === 1,
+      storeName: parts.length > 1 ? parts[0] : null,
+    };
+  }
+
+  return {
+    isMainDomain: parts.length <= 2, // xyz.com
+    storeName: parts.length > 2 ? parts[0] : null, // nike.xyz.com
+  };
+}
+
 function App() {
+  const { isMainDomain, storeName } = getHostInfo();
+
   return (
     <BrowserRouter>
       <Suspense fallback={<div className="app-loader">Loading...</div>}>
         <Routes>
 
-          {/* ================= USER ROUTES ================= */}
-          <Route path="/:storeName" element={<MainLayout />}>
-            {/* auth */}
-            <Route path="login" element={<LoginPage />} />
-            <Route path="register" element={<RegisterPage />} />
-            <Route path="verify-otp" element={<VerifyOtpPage />} />
-            <Route path="new-password" element={<NewPasswordPage />} />
+          {/* ================= MAIN DOMAIN (xyz.com) ================= */}
+          {isMainDomain && (
+            <>
+              <Route
+                path="/"
+                element={
+                  <PublicRoute>
+                    <AdminLayout />
+                  </PublicRoute>
+                }
+              />
 
-            {/* pages */}
-            <Route index element={<Home />} />
-            <Route path="cart" element={<CartPage />} />
-            <Route path="product/:productId" element={<ProductDetailsPage />} />
+              <Route
+                path="/admin-dashboard"
+                element={
+                  <ProtectedRoute>
+                    <AdminDashboardLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<AdminDashboard />} />
+                <Route path="orders" element={<OrdersAdmin />} />
+                <Route path="orders/:orderId" element={<OrderDetailsAdmin />} />
+                <Route path="carousels" element={<CarouselAdmin />} />
+                <Route path="products" element={<ProductsAdmin />} />
+                <Route path="products/:productId" element={<AddUpdateProduct />} />
+              </Route>
 
-            {/* account */}
-            <Route path="account" element={<AccountPage />}>
-              <Route index element={<MyProfile />} />
-              <Route path="my-profile" element={<MyProfile />} />
-              <Route path="my-orders" element={<Orders />} />
-              <Route path="my-orders/:orderId" element={<OrderDetails />} />
+              <Route
+                path="/edit-store"
+                element={
+                  <ProtectedRoute>
+                    <AdminStoreLayout />
+                  </ProtectedRoute>
+                }
+              />
+            </>
+          )}
+
+          {/* ================= SUBDOMAIN (storename.xyz.com) ================= */}
+          {storeName && (
+            <Route path="/" element={<MainLayout />}>
+              {/* auth */}
+              <Route path="login" element={<LoginPage />} />
+              <Route path="register" element={<RegisterPage />} />
+              <Route path="verify-otp" element={<VerifyOtpPage />} />
+              <Route path="new-password" element={<NewPasswordPage />} />
+
+              {/* pages */}
+              <Route index element={<Home />} />
+              <Route path="cart" element={<CartPage />} />
+              <Route path="product/:productId" element={<ProductDetailsPage />} />
+
+              {/* account */}
+              <Route path="account" element={<AccountPage />}>
+                <Route index element={<MyProfile />} />
+                <Route path="my-profile" element={<MyProfile />} />
+                <Route path="my-orders" element={<Orders />} />
+                <Route path="my-orders/:orderId" element={<OrderDetails />} />
+              </Route>
             </Route>
-          </Route>
-
-          {/* ================= ADMIN PUBLIC ================= */}
-          <Route
-            path="/"
-            element={
-              <PublicRoute>
-                <AdminLayout />
-              </PublicRoute>
-            }
-          />
-
-          {/* ================= ADMIN PROTECTED ================= */}
-          <Route
-            path="/admin-dashboard"
-            element={
-              <ProtectedRoute>
-                <AdminDashboardLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route index element={<AdminDashboard />} />
-            <Route path="orders" element={<OrdersAdmin />} />
-            <Route path="orders/:orderId" element={<OrderDetailsAdmin />} />
-            <Route path="carousels" element={<CarouselAdmin />} />
-            <Route path="products" element={<ProductsAdmin />} />
-            <Route path="products/:productId" element={<AddUpdateProduct />} />
-          </Route>
-
-          {/* ================= EDIT STORE ================= */}
-          <Route
-            path="/edit-store"
-            element={
-              <ProtectedRoute>
-                <AdminStoreLayout />
-              </ProtectedRoute>
-            }
-          />
+          )}
 
         </Routes>
       </Suspense>
