@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./CarouselAdmin.css";
 import AddCarouselDialog from "./AddCarouselDialog";
 import { useDeleteStoreCarousel, useGetStoreCarousel } from "../../../hooks/store/useStoreCarousel";

@@ -8,7 +8,7 @@ type OutletContextType = {
 };
 
 const Home = () => {
-  const { storeId, store } = useOutletContext<OutletContextType>();
+  const { storeId } = useOutletContext<OutletContextType>();
 
   return (
     <div>
