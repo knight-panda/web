@@ -8,16 +8,30 @@ import { usePublicStore } from "../../hooks/user/usePublicStore";
 /* ================= STORE DETECTION ================= */
 const getStoreName = () => {
   const host = window.location.hostname;
-  const parts = host.split(".");
+  const cleanHost = host.replace("www.", "");
 
-  console.log("HOST:", host); // DEBUG
+  console.log("HOST:", host);
 
-  // localhost support
+  // 1. Localhost (dev)
   if (host.includes("localhost")) {
+    const parts = host.split(".");
     return parts.length > 1 ? parts[0] : null;
   }
 
-  return parts.length > 2 ? parts[0] : null;
+  // 3. Main domain → NO STORE (show landing page)
+  if (cleanHost === "crazoweb.com") {
+    return null;
+  }
+
+  const parts = cleanHost.split(".");
+
+  // 4. Subdomain → abc.crazoweb.com
+  if (parts.length > 2) {
+    return parts[0];
+  }
+
+  // 5. Custom domain → knightpanda.in
+  return cleanHost;
 };
 
 const MainLayout = () => {
