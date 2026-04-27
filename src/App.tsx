@@ -42,9 +42,12 @@ const AddUpdateProduct = lazy(() => import("./pages/admin/products/AddUpdateProd
 
 function getHostInfo() {
   const host = window.location.hostname;
-  const parts = host.split(".");
+  const cleanHost = host.replace("www.", "");
+  const parts = cleanHost.split(".");
 
-  // localhost support
+  const MAIN_DOMAIN = "crazoweb.com";
+
+  // localhost
   if (host.includes("localhost")) {
     return {
       isMainDomain: parts.length === 1,
@@ -52,9 +55,26 @@ function getHostInfo() {
     };
   }
 
+  // MAIN DOMAIN (admin / landing)
+  if (cleanHost === MAIN_DOMAIN) {
+    return {
+      isMainDomain: true,
+      storeName: null,
+    };
+  }
+
+  // SUBDOMAIN → abc.crazoweb.com
+  if (cleanHost.endsWith("." + MAIN_DOMAIN)) {
+    return {
+      isMainDomain: false,
+      storeName: parts[0],
+    };
+  }
+
+  // CUSTOM DOMAIN → knightpanda.in
   return {
-    isMainDomain: parts.length <= 2, // xyz.com
-    storeName: parts.length > 2 ? parts[0] : null, // nike.xyz.com
+    isMainDomain: false,
+    storeName: cleanHost,
   };
 }
 
