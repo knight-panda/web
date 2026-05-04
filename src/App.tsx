@@ -41,40 +41,43 @@ const AddUpdateProduct = lazy(() => import("./pages/admin/products/AddUpdateProd
 /* ========================= */
 
 function getHostInfo() {
-  const host = window.location.hostname;
-  const cleanHost = host.replace("www.", "");
-  const parts = cleanHost.split(".");
+  let host = window.location.hostname.toLowerCase();
 
+  // remove www safely
+  host = host.replace(/^www\./, "");
+
+  const parts = host.split(".");
   const MAIN_DOMAIN = "crazoweb.com";
 
-  // localhost
-  if (host.includes("localhost")) {
+  if (host.includes("localhost") || host === "127.0.0.1") {
     return {
       isMainDomain: parts.length === 1,
       storeName: parts.length > 1 ? parts[0] : null,
     };
   }
 
-  // MAIN DOMAIN (admin / landing)
-  if (cleanHost === MAIN_DOMAIN) {
+  // 2. MAIN DOMAIN
+  if (host === MAIN_DOMAIN) {
     return {
       isMainDomain: true,
       storeName: null,
     };
   }
 
-  // SUBDOMAIN → abc.crazoweb.com
-  if (cleanHost.endsWith("." + MAIN_DOMAIN)) {
+  // 3. SUBDOMAIN (abc.crazoweb.com)
+  if (host.endsWith("." + MAIN_DOMAIN)) {
+    const subdomain = host.replace("." + MAIN_DOMAIN, "");
+
     return {
       isMainDomain: false,
-      storeName: parts[0],
+      storeName: subdomain,
     };
   }
 
-  // CUSTOM DOMAIN → knightpanda.in
+  // 4. CUSTOM DOMAIN
   return {
     isMainDomain: false,
-    storeName: cleanHost,
+    storeName: host,
   };
 }
 

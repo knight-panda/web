@@ -7,31 +7,42 @@ import { usePublicStore } from "../../hooks/user/usePublicStore";
 
 /* ================= STORE DETECTION ================= */
 const getStoreName = () => {
-  const host = window.location.hostname;
-  const cleanHost = host.replace("www.", "");
+  let host = window.location.hostname.toLowerCase();
 
   console.log("HOST:", host);
 
-  // 1. Localhost (dev)
-  if (host.includes("localhost")) {
-    const parts = host.split(".");
-    return parts.length > 1 ? parts[0] : null;
-  }
+  // remove www
+  host = host.replace(/^www\./, "");
 
-  // 3. Main domain → NO STORE (show landing page)
-  if (cleanHost === "crazoweb.com") {
+
+  if (host.includes("localhost") || host.includes("127.0.0.1")) {
+    const parts = window.location.host.split(":")[0].split(".");
+
+    // e.g. store.localhost
+    if (parts.length > 1) {
+      return parts[0];
+    }
+
     return null;
   }
 
-  const parts = cleanHost.split(".");
+  if (host === "crazoweb.com") {
+    return null;
+  }
 
-  // 4. Subdomain → abc.crazoweb.com
-  if (parts.length > 2) {
+  const parts = host.split(".");
+
+  // =========================
+  // 3. SUBDOMAIN (abc.crazoweb.com)
+  // =========================
+  if (host.endsWith("crazoweb.com") && parts.length > 2) {
     return parts[0];
   }
 
-  // 5. Custom domain → knightpanda.in
-  return cleanHost;
+  // =========================
+  // 4. CUSTOM DOMAIN (knightpanda.in)
+  // =========================
+  return host;
 };
 
 const MainLayout = () => {
