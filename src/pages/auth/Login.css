@@ -67,6 +67,12 @@
     border-color: var(--primary-color);
 }
 
+.error-text {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+}
+
 /* Row */
 .login-row {
     display: flex;
