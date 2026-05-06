@@ -69,7 +69,8 @@
 
 .error-text {
     color: red;
-    font-size: 14px;
+    font-size: 0.8rem;
+    font-weight: 400;
     text-align: center;
 }
 
@@ -123,8 +124,12 @@
     color: #6b7280;
 }
 
-.login-footer a {
+.register-link {
     color: #2563eb;
     text-decoration: none;
     cursor: pointer;
+}
+
+.register-link:hover {
+    text-decoration: underline;
 }

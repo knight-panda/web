@@ -128,7 +128,7 @@ const LoginPage: React.FC = () => {
                     <p className="login-footer">
                         Don't have an account?{" "}
                         <span className="link" onClick={goToRegister}>
-                            Sign up
+                            Register
                         </span>
                     </p>
                 </form>

@@ -75,6 +75,13 @@
     font-size: 13px;
 }
 
+.register-error {
+    color: red;
+    font-size: 0.8rem;
+    font-weight: 400;
+    text-align: center;
+}
+
 /* Primary button */
 .register-btn {
     padding: 14px;
