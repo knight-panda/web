@@ -38,7 +38,7 @@ const LoginPage: React.FC = () => {
             const res = await login({
                 phone: number,
                 password: password,
-                storeId: "94b81338-2018-4a0b-8ddb-e0a6d9af8699", // ⚠️ replace dynamically
+                storeId: localStorage.getItem("activeStoreId") || "",
             });
 
             // ✅ Success

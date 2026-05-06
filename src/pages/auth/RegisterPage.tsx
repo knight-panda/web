@@ -88,7 +88,7 @@ const RegisterPage = () => {
                 email,
                 phone: number,
                 password,
-                storeId: "94b81338-2018-4a0b-8ddb-e0a6d9af8699", // 🔥 dynamic later
+                storeId: localStorage.getItem("activeStoreId") || "",
             });
 
             console.log("Register success:", res);
@@ -155,7 +155,7 @@ const RegisterPage = () => {
                     {/* Phone */}
                     <input
                         type="tel"
-                        placeholder="9876543210"
+                        placeholder="00000 00000"
                         value={number}
                         onChange={(e) => {
                             const value = e.target.value;

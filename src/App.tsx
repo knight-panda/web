@@ -4,6 +4,8 @@ import "./App.css";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
+import UserProtectedRoute from "./routes/UserProtectedRoute";
+import UserPublicRoute from "./routes/UserPublicRoute";
 
 /* =========================
    Lazy Imports
@@ -132,18 +134,55 @@ function App() {
           {storeName && (
             <Route path="/" element={<MainLayout />}>
               {/* auth */}
-              <Route path="login" element={<LoginPage />} />
-              <Route path="register" element={<RegisterPage />} />
-              <Route path="verify-otp" element={<VerifyOtpPage />} />
+              <Route
+                path="login"
+                element={
+                  <UserPublicRoute>
+                    <LoginPage />
+                  </UserPublicRoute>
+                }
+              />
+
+              <Route
+                path="register"
+                element={
+                  <UserPublicRoute>
+                    <RegisterPage />
+                  </UserPublicRoute>
+                }
+              />
+
+              <Route
+                path="verify-otp"
+                element={
+                  <UserPublicRoute>
+                    <VerifyOtpPage />
+                  </UserPublicRoute>
+                }
+              />
               <Route path="new-password" element={<NewPasswordPage />} />
 
               {/* pages */}
               <Route index element={<Home />} />
-              <Route path="cart" element={<CartPage />} />
+              <Route
+                path="cart"
+                element={
+                  <UserProtectedRoute>
+                    <CartPage />
+                  </UserProtectedRoute>
+                }
+              />
               <Route path="product/:productId" element={<ProductDetailsPage />} />
 
               {/* account */}
-              <Route path="account" element={<AccountPage />}>
+              <Route
+                path="account"
+                element={
+                  <UserProtectedRoute>
+                    <AccountPage />
+                  </UserProtectedRoute>
+                }
+              >
                 <Route index element={<MyProfile />} />
                 <Route path="my-profile" element={<MyProfile />} />
                 <Route path="my-orders" element={<Orders />} />

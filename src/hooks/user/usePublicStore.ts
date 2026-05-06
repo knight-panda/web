@@ -29,6 +29,21 @@ export const usePublicStore = () => {
         throw new Error(res.message);
       }
 
+      // ✅ Save active store
+      if (res.data?.id) {
+        localStorage.setItem(
+          "activeStoreId",
+          res.data.id
+        );
+      }
+
+      if (res.data?.storeSlug) {
+        localStorage.setItem(
+          "activeStoreSlug",
+          res.data.storeSlug
+        );
+      }
+
       setData(res);
       return res;
     } catch (err: any) {

@@ -42,7 +42,7 @@ const VerifyOtpPage = () => {
       console.log("OTP verified:", res);
 
       // ✅ Redirect after success
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       console.error(err);
     }

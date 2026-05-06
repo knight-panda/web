@@ -47,9 +47,9 @@ const Navbar = () => {
     }))
   }
 
-  // const goToCart = () => {
-  //   navigate("/my-store/cart");
-  // };
+  const goToCart = () => {
+    navigate("/cart");
+  };
 
   const goToHome = () => {
     navigate("/");
@@ -59,20 +59,26 @@ const Navbar = () => {
     navigate("account");
   };
 
-  // const goToLogin = () => {
-  //   navigate("login");
-  // };
+  const goToOrders = () => {
+    navigate("account/my-orders");
+  };
+
+
+  const goToLogin = () => {
+    navigate("login");
+  };
 
   return (
     <>
       <div className="navbar"
         style={{ backgroundColor: settings.bgColor }}
-        onClick={() => setOpenModal(true)}>
+      // onClick={() => setOpenModal(true)}
+      >
 
         <div className="navbar-container">
           {/* LEFT */}
           <div className="navbar-left">
-             <img className="logo-img" src={settings.logo} alt="logo" onClick={() =>{goToHome()}}/>
+            <img className="logo-img" src={settings.logo} alt="logo" onClick={() => { goToHome() }} />
 
             {settings.showSearch && (
               <div className="search-box">
@@ -85,7 +91,7 @@ const Navbar = () => {
           {/* RIGHT */}
           <div className="navbar-right">
             {settings.showLogin && (
-              <div className="nav-item-user">
+              <div className="nav-item-user" onClick={() => { goToLogin() }}>
                 <FaRegCircleUser className="nav-item-icon" />
                 <span className="icon-text">Login</span>
               </div>
@@ -93,14 +99,14 @@ const Navbar = () => {
             )}
 
             {settings.showOrders && (
-              <div className="nav-item">
+              <div className="nav-item" onClick={() => { goToOrders() }}>
                 <MdOutlineShoppingBag className="nav-item-icon" />
-                <span className="icon-text">Order</span>
+                <span className="icon-text">Orders</span>
               </div>
             )}
 
             {settings.showCart && (
-              <div className="nav-item">
+              <div className="nav-item" onClick={() => { goToCart() }}>
                 <div className="nav-cart-inline" >
                   <BsCart3 className="nav-item-icon" />
                   <span className="nav-item-count">{cartCount}</span>
