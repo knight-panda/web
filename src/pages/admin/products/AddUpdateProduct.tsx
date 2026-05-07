@@ -39,7 +39,7 @@ const AddUpdateProduct = () => {
         price: product.price || 0,
         discountPrice: product.discountPrice || 0,
         stock: product.stock || 0,
-        maxOrderQuantity: product.maxOrderQuantity || 0,
+        maxOrderStock: product.maxOrderStock || 0,
         tags: product.tags || [],
       });
 
@@ -57,7 +57,7 @@ const AddUpdateProduct = () => {
     price: 0,
     discountPrice: 0,
     stock: 0,
-    maxOrderQuantity: 0,
+    maxOrderStock: 0,
     tags: [] as string[],
   });
 
@@ -163,7 +163,7 @@ const AddUpdateProduct = () => {
         price: Number(form.price),
         discountPrice: Number(form.discountPrice),
         stock: Number(form.stock),
-        maxOrderQuantity: Number(form.maxOrderQuantity),
+        maxOrderStock: Number(form.maxOrderStock),
         imageThumbnail: thumbnailUrl,
         imageUrls: finalImageUrls, // FIXED (merged)
         tags: form.tags,
@@ -381,7 +381,7 @@ const AddUpdateProduct = () => {
                 <label>Max Order Stock</label>
                 <input
                   type="number"
-                  value={form.maxOrderQuantity}
+                  value={form.maxOrderStock}
                   onChange={(e) => handleChange("maxOrderQuantity", e.target.value)}
                 />
               </div>
