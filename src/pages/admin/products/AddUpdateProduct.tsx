@@ -382,7 +382,7 @@ const AddUpdateProduct = () => {
                 <input
                   type="number"
                   value={form.maxOrderStock}
-                  onChange={(e) => handleChange("maxOrderQuantity", e.target.value)}
+                  onChange={(e) => handleChange("maxOrderStock", e.target.value)}
                 />
               </div>
             </div>
