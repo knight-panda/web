@@ -12,6 +12,7 @@ type ProductCardProps = {
   price: number;
   mrp: number;
   stock: number;
+  minimumStock: number;
   image: string;
   onProductClick?: (productId: string) => void;
 };
@@ -23,6 +24,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   price,
   mrp,
   stock,
+  minimumStock,
   image,
   onProductClick,
 }) => {
@@ -43,20 +45,34 @@ const ProductCard: React.FC<ProductCardProps> = ({
     e?.preventDefault();
     e?.stopPropagation();
 
-    // ✅ block multiple clicks
+    // prevent multiple clicks
     if (cartLoading) return;
-
-    // stock validation
-    if (stock > 0 && qty >= stock) {
-      alert("OUT OF STOCK");
-      return;
-    }
 
     try {
 
       setCartLoading(true);
 
       const newQty = qty + 1;
+
+      // ✅ user limit
+      if (newQty > minimumStock) {
+
+        alert(
+          `Maximum ${minimumStock} items allowed`
+        );
+
+        return;
+      }
+
+      // ✅ actual stock validation
+      if (newQty > stock) {
+
+        alert(
+          `Only ${stock} items available`
+        );
+
+        return;
+      }
 
       // optimistic update
       setQty(newQty);

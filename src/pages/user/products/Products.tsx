@@ -50,6 +50,7 @@ const Products = ({ storeId }: Props) => {
             price={product.discountPrice || product.price} // ✅ use discount if available
             mrp={product.price} // ✅ original price
             stock={product.stock}
+            minimumStock={product.minimumStock}
             image={product.imageThumbnail || product.imageUrls?.[0]} // ✅ thumbnail or first image
             onProductClick={handleProductClick}
           />
