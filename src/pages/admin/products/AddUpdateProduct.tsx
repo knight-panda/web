@@ -39,7 +39,7 @@ const AddUpdateProduct = () => {
         price: product.price || 0,
         discountPrice: product.discountPrice || 0,
         stock: product.stock || 0,
-        minimumStock: product.minimumStock || 0,
+        maxOrderQuantity: product.maxOrderQuantity || 0,
         tags: product.tags || [],
       });
 
@@ -57,7 +57,7 @@ const AddUpdateProduct = () => {
     price: 0,
     discountPrice: 0,
     stock: 0,
-    minimumStock: 0,
+    maxOrderQuantity: 0,
     tags: [] as string[],
   });
 
@@ -163,7 +163,7 @@ const AddUpdateProduct = () => {
         price: Number(form.price),
         discountPrice: Number(form.discountPrice),
         stock: Number(form.stock),
-        minimumStock: Number(form.minimumStock),
+        maxOrderQuantity: Number(form.maxOrderQuantity),
         imageThumbnail: thumbnailUrl,
         imageUrls: finalImageUrls, // FIXED (merged)
         tags: form.tags,
@@ -378,11 +378,11 @@ const AddUpdateProduct = () => {
               </div>
 
               <div className="au-product-form-group">
-                <label>Minimum Stock</label>
+                <label>Max Order Stock</label>
                 <input
                   type="number"
-                  value={form.minimumStock}
-                  onChange={(e) => handleChange("minimumStock", e.target.value)}
+                  value={form.maxOrderQuantity}
+                  onChange={(e) => handleChange("maxOrderQuantity", e.target.value)}
                 />
               </div>
             </div>

@@ -12,7 +12,7 @@ export interface Product {
   price: number;
   discountPrice: number;
   stock: number;
-  minimumStock: number;
+  maxOrderQuantity: number;
   categoryId: string | null;
   imageThumbnail: string;
   imageUrls: string[];

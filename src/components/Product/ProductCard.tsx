@@ -12,7 +12,7 @@ type ProductCardProps = {
   price: number;
   mrp: number;
   stock: number;
-  minimumStock: number;
+  maxOrderQuantity: number;
   image: string;
   onProductClick?: (productId: string) => void;
 };
@@ -24,7 +24,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   price,
   mrp,
   stock,
-  minimumStock,
+  maxOrderQuantity,
   image,
   onProductClick,
 }) => {
@@ -55,10 +55,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
       const newQty = qty + 1;
 
       // ✅ user limit
-      if (newQty > minimumStock) {
+      if (newQty > maxOrderQuantity) {
 
         alert(
-          `Maximum ${minimumStock} items allowed`
+          `Maximum ${maxOrderQuantity} items allowed`
         );
 
         return;

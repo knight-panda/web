@@ -4,7 +4,7 @@ export interface StoreProductRequest {
   price: number;
   discountPrice: number;
   stock: number;
-  minimumStock: number;
+  maxOrderQuantity: number;
   imageThumbnail: string;
   imageUrls: string[];
   tags: string[];
