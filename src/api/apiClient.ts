@@ -7,7 +7,7 @@ const apiClient = axios.create({
   },
 });
 
-// ✅ REQUEST INTERCEPTOR (Attach token)
+// REQUEST INTERCEPTOR (Attach token)
 apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
@@ -27,7 +27,7 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// ✅ RESPONSE INTERCEPTOR (Handle errors globally)
+// RESPONSE INTERCEPTOR (Handle errors globally)
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
