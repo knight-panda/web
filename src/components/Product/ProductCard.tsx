@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsPlus, BsDash } from "react-icons/bs";
 import { IoMdArrowDropdown } from "react-icons/io";
 
 import "./ProductCard.css";
+
 import { useAddToCart } from "../../hooks/user/cart/useAddToCart";
 
 type ProductCardProps = {
@@ -13,6 +14,7 @@ type ProductCardProps = {
   mrp: number;
   stock: number;
   maxOrderStock: number;
+  cartQuantity?: number;
   image: string;
   onProductClick?: (productId: string) => void;
 };
@@ -25,17 +27,37 @@ const ProductCard: React.FC<ProductCardProps> = ({
   mrp,
   stock,
   maxOrderStock,
+  cartQuantity = 0,
   image,
   onProductClick,
 }) => {
 
-  const [qty, setQty] = useState(0);
+  // ✅ sync cart quantity
+  const [qty, setQty] =
+    useState(cartQuantity);
+
+  useEffect(() => {
+    setQty(cartQuantity);
+  }, [cartQuantity]);
 
   const {
     addProductToCart,
     loading,
   } = useAddToCart();
-  const [cartLoading, setCartLoading] = useState(false);
+
+  const [cartLoading, setCartLoading] =
+    useState(false);
+
+  // ✅ logged in user
+  const storeTokens = JSON.parse(
+    localStorage.getItem("storeTokens") || "{}"
+  );
+
+  const activeStoreId =
+    localStorage.getItem("activeStoreId");
+
+  const userToken =
+    storeTokens[activeStoreId || ""];
 
   // ✅ increase qty
   const increase = async (
@@ -44,6 +66,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
     e?.preventDefault();
     e?.stopPropagation();
+
+    // login validation
+    if (!userToken) {
+
+      alert("Please login first");
+
+      return;
+    }
 
     // prevent multiple clicks
     if (cartLoading) return;
@@ -54,7 +84,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       const newQty = qty + 1;
 
-      // ✅ user limit
+      // max order validation
       if (newQty > maxOrderStock) {
 
         alert(
@@ -64,7 +94,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         return;
       }
 
-      // ✅ actual stock validation
+      // stock validation
       if (newQty > stock) {
 
         alert(
@@ -100,18 +130,24 @@ const ProductCard: React.FC<ProductCardProps> = ({
     e?: React.MouseEvent
   ) => {
 
+    e?.preventDefault();
     e?.stopPropagation();
+
+    if (!userToken) return;
+
+    if (cartLoading) return;
 
     if (qty <= 0) return;
 
     try {
+
+      setCartLoading(true);
 
       const newQty = qty - 1;
 
       // optimistic update
       setQty(newQty);
 
-      // ✅ API call
       await addProductToCart({
         productId: id,
         quantity: newQty,
@@ -119,19 +155,23 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
     } catch (err) {
 
-      console.error("REMOVE CART ERROR:", err);
+      console.error(err);
 
       // rollback
       setQty(qty);
+
+    } finally {
+
+      setCartLoading(false);
     }
   };
 
-  // ✅ product click
+  // product details
   const handleClick = () => {
     onProductClick?.(id);
   };
 
-  // ✅ discount %
+  // discount %
   const discount = Math.round(
     ((mrp - price) / mrp) * 100
   );
@@ -163,9 +203,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
               type="button"
               className="add-btn"
               onClick={(e) => increase(e)}
-              disabled={loading}
+              disabled={loading || cartLoading}
             >
-              {loading ? "..." : "ADD"}
+              {loading || cartLoading
+                ? "..."
+                : "ADD"}
             </button>
 
           ) : (
@@ -174,8 +216,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
               {/* MINUS */}
               <button
-                onClick={() => decrease()}
-                disabled={loading}
+                type="button"
+                onClick={(e) => decrease(e)}
+                disabled={loading || cartLoading}
               >
                 <BsDash />
               </button>
@@ -185,8 +228,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
               {/* PLUS */}
               <button
-                onClick={() => increase()}
-                disabled={loading}
+                type="button"
+                onClick={(e) => increase(e)}
+                disabled={loading || cartLoading}
               >
                 <BsPlus />
               </button>
