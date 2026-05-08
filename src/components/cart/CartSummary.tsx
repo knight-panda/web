@@ -1,29 +1,36 @@
+import type { UserAddressData } from "../../models/user/address/response/UserAddressResponse ";
 import "./Cart.css";
 
 import { FaAngleDown } from "react-icons/fa6";
 
 type CartSummaryProps = {
     addEditAddress: () => void;
+    addressData?: UserAddressData;
+    itemTotal: number;
+    totalDiscount: number;
+    packagingFee: number;
+    deliveryFee: number;
+    platformFee: number;
+    codFee: number;
+    gstAmount: number;
     grandTotal: number;
 };
 
 const CartSummary: React.FC<CartSummaryProps> = ({
     addEditAddress,
+    addressData,
+    itemTotal,
+    totalDiscount,
+    packagingFee,
+    deliveryFee,
+    platformFee,
+    codFee,
+    gstAmount,
     grandTotal,
 }) => {
 
-    // ✅ charges
-    const handlingFee = 9.8;
-
-    const gst = Number(
-        (grandTotal * 0.02).toFixed(2)
-    );
-
-    const finalTotal = Number(
-        (grandTotal + handlingFee + gst).toFixed(2)
-    );
-
     return (
+
         <div className="cart-right">
 
             {/* ADDRESS */}
@@ -48,19 +55,26 @@ const CartSummary: React.FC<CartSummaryProps> = ({
                 <div className="sc-address">
 
                     <div>
-                        Name - Debasish Sahoo
+                        Name - {addressData?.name || "N/A"}
                     </div>
 
                     <div>
-                        Number - 9437706875
+                        Number - {addressData?.phone || "N/A"}
                     </div>
 
                     <div>
-                        Address - Bajapura near tarini mandira,
-                        Bajapura mahanga cuttack - 754023
+                        Address -
+                        {
+                            `${addressData?.houseNo || ""}
+       ${addressData?.area || ""}
+       ${addressData?.city || ""}
+       ${addressData?.state || ""}
+       ${addressData?.pincode || ""}`
+                        }
                     </div>
 
                 </div>
+
             </div>
 
             {/* COUPON */}
@@ -95,43 +109,100 @@ const CartSummary: React.FC<CartSummaryProps> = ({
                     <span>Item Total</span>
 
                     <span>
-                        ₹{grandTotal.toFixed(2)}
+                        ₹{itemTotal.toFixed(2)}
                     </span>
 
                 </div>
 
-                {/* HANDLING */}
-                <div className="row">
+                {/* DISCOUNT */}
+                {totalDiscount > 0 && (
 
-                    <span>Handling Fee</span>
+                    <div className="row">
 
-                    <span>
-                        ₹{handlingFee.toFixed(2)}
-                    </span>
+                        <span>Discount</span>
 
-                </div>
+                        <span className="free">
+                            -₹{totalDiscount.toFixed(2)}
+                        </span>
+
+                    </div>
+                )}
+
+                {/* PACKAGING */}
+                {packagingFee > 0 && (
+
+                    <div className="row">
+
+                        <span>Packaging Fee</span>
+
+                        <span>
+                            ₹{packagingFee.toFixed(2)}
+                        </span>
+
+                    </div>
+                )}
 
                 {/* DELIVERY */}
                 <div className="row">
 
                     <span>Delivery Fee</span>
 
-                    <span className="free">
-                        FREE
-                    </span>
+                    {deliveryFee <= 0 ? (
+
+                        <span className="free">
+                            FREE
+                        </span>
+
+                    ) : (
+
+                        <span>
+                            ₹{deliveryFee.toFixed(2)}
+                        </span>
+                    )}
 
                 </div>
+
+                {/* PLATFORM */}
+                {platformFee > 0 && (
+
+                    <div className="row">
+
+                        <span>Platform Fee</span>
+
+                        <span>
+                            ₹{platformFee.toFixed(2)}
+                        </span>
+
+                    </div>
+                )}
+
+                {/* COD */}
+                {codFee > 0 && (
+
+                    <div className="row">
+
+                        <span>COD Fee</span>
+
+                        <span>
+                            ₹{codFee.toFixed(2)}
+                        </span>
+
+                    </div>
+                )}
 
                 {/* GST */}
-                <div className="row">
+                {gstAmount > 0 && (
 
-                    <span>GST</span>
+                    <div className="row">
 
-                    <span>
-                        ₹{gst.toFixed(2)}
-                    </span>
+                        <span>GST</span>
 
-                </div>
+                        <span>
+                            ₹{gstAmount.toFixed(2)}
+                        </span>
+
+                    </div>
+                )}
 
                 <hr />
 
@@ -141,7 +212,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
                     <span>To Pay</span>
 
                     <span>
-                        ₹{finalTotal.toFixed(2)}
+                        ₹{grandTotal.toFixed(2)}
                     </span>
 
                 </div>
@@ -151,7 +222,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
             {/* PAY */}
             <button className="pay-btn">
 
-                Pay ₹{finalTotal.toFixed(2)}
+                Pay ₹{grandTotal.toFixed(2)}
 
             </button>
 

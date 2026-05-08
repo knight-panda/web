@@ -7,6 +7,15 @@ export interface GetCartResponse {
 }
 
 export interface GetCartData {
+    // cart items
     items: CartItem[];
+    // totals
+    itemTotal: number;
+    totalDiscount: number;
+    packagingFee: number;
+    deliveryFee: number;
+    platformFee: number;
+    codFee: number;
+    gstAmount: number;
     grandTotal: number;
 }
