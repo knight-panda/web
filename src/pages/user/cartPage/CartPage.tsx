@@ -84,6 +84,8 @@ const CartPage = () => {
       {openAddress && (
         <AddressDialog
           onClose={closeAddressDialog}
+          addressData={addressData?.data}
+          fetchAddress={fetchAddress}
         />
       )}
 
