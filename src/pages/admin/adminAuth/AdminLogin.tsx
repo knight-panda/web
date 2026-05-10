@@ -61,7 +61,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onClose }) => {
             try {
                 const res = await verifyLogin({
                     phone: number,
-                    password: otp,
+                    otp: otp,
                 });
 
                 // if success
@@ -90,7 +90,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onClose }) => {
             try {
                 const res = await verifyAdmin({
                     phone: number,
-                    password: otp,
+                    otp: otp,
                 });
 
                 // if success
@@ -153,8 +153,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onClose }) => {
                 res = await register({
                     name,
                     email,
-                    phone: number,
-                    password: "123456",
+                    phone: number
                 });
             }
 
