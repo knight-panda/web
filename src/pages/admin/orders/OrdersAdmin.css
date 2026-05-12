@@ -101,7 +101,7 @@
 
 
 .order-card {
-    background: #f9fff9;
+    background: #fff;
     border-radius: 1rem;
     padding: 1rem;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
@@ -170,4 +170,73 @@
     object-fit: contain;
     border-radius: 0.5rem;
     border: 1px solid #eee;
+}
+
+/* =========================
+   SHIMMER
+========================= */
+
+.au-shimmer-card {
+    pointer-events: none;
+}
+
+.au-shimmer-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #e5e5e5;
+    animation: shimmer 1.5s infinite linear;
+}
+
+.au-shimmer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-left: 12px;
+}
+
+.au-shimmer-line {
+    height: 12px;
+    border-radius: 8px;
+    background: #e5e5e5;
+    animation: shimmer 1.5s infinite linear;
+}
+
+.au-shimmer-line.short {
+    width: 120px;
+}
+
+.au-shimmer-line.long {
+    width: 180px;
+}
+
+.au-shimmer-status {
+    width: 90px;
+    height: 24px;
+    border-radius: 20px;
+    background: #e5e5e5;
+    animation: shimmer 1.5s infinite linear;
+}
+
+.au-shimmer-image {
+    width: 72px;
+    height: 72px;
+    border-radius: 12px;
+    background: #e5e5e5;
+    animation: shimmer 1.5s infinite linear;
+}
+
+@keyframes shimmer {
+
+    0% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.5;
+    }
 }

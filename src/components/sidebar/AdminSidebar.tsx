@@ -36,10 +36,6 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ onTagClick }) => {
             id: "orders",
             label: "My Orders",
             icon: FaBox,
-            children: [
-                { id: "orders", label: "All Orders" },
-                { id: "pending-orders", label: "Pending Orders" },
-            ],
         },
 
         {

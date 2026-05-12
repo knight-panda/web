@@ -1,62 +1,200 @@
+import type { UserOrderDetailsModel } from "../../models/user/order/response/UserOrderDetailsModel";
 import "./OrderItemsDetails.css";
 
 import { FaAngleDown } from "react-icons/fa6";
 
-const OrderSummaryDetails = () => {
+type Props = {
+    order: UserOrderDetailsModel;
+};
+
+const OrderSummaryDetails = ({
+    order,
+}: Props) => {
+
     return (
         <div className="od-right">
+
+            {/* ADDRESS */}
             <div className="summary-card">
+
                 <div className="sc-address-title">
-                    <div>📍 Delivery Address</div>
-                    <div className="sc-add-edit-btn"
-                    >Add or Edit Address</div>
+
+                    <div>
+                        📍 Delivery Address
+                    </div>
+
+                    <div className="sc-add-edit-btn">
+                        Add or Edit Address
+                    </div>
+
                 </div>
 
                 <div className="sc-address">
-                    <div>Name - Debasish Sahoo</div>
-                    <div>Number - 9437706875</div>
-                    <div>Address - Bajapura near tarini mandira, Bajapura mahanga cuttack - 754023</div>
+
+                    <div>
+                        Name - {order.customerName}
+                    </div>
+
+                    <div>
+                        Number - {order.customerPhone}
+                    </div>
+
+                    <div>
+                        Address - {order.deliveryAddress}
+                        {
+                            order.city &&
+                            `, ${order.city}`
+                        }
+                        {
+                            order.state &&
+                            `, ${order.state}`
+                        }
+                        {
+                            order.pincode &&
+                            ` - ${order.pincode}`
+                        }
+                    </div>
+
                 </div>
+
             </div>
 
+            {/* COUPON */}
             <div className="summary-card clickable">
-                <div className="sc-apply-coupon-title">Apply Coupon</div>
+
+                <div className="sc-apply-coupon-title">
+                    Apply Coupon
+                </div>
+
                 <div className="sc-apply-coupon">
-                    <div>Save more with coupons</div>
+
+                    <div>
+                        Save more with coupons
+                    </div>
+
                     <FaAngleDown />
+
                 </div>
 
             </div>
 
+            {/* BILL DETAILS */}
             <div className="summary-card bill">
-                <div className="sc-bill-title">Bill Details</div>
 
-                <div className="row">
-                    <span>Item Total</span>
-                    <span>₹803</span>
+                <div className="sc-bill-title">
+                    Bill Details
                 </div>
 
+                {/* ITEM TOTAL */}
                 <div className="row">
-                    <span>Handling Fee</span>
-                    <span>₹9.80</span>
+
+                    <span>
+                        Item Total
+                    </span>
+
+                    <span>
+                        ₹{order.itemTotal}
+                    </span>
+
                 </div>
 
+                {/* DISCOUNT */}
                 <div className="row">
-                    <span>Delivery Fee</span>
-                    <span className="free">FREE</span>
+
+                    <span>
+                        Discount
+                    </span>
+
+                    <span className="free">
+                        - ₹{order.totalDiscount}
+                    </span>
+
                 </div>
 
+                {/* PACKAGING */}
                 <div className="row">
-                    <span>GST</span>
-                    <span>₹1.76</span>
+
+                    <span>
+                        Packaging Fee
+                    </span>
+
+                    <span>
+                        ₹{order.packagingFee}
+                    </span>
+
+                </div>
+
+                {/* PLATFORM */}
+                <div className="row">
+
+                    <span>
+                        Platform Fee
+                    </span>
+
+                    <span>
+                        ₹{order.platformFee}
+                    </span>
+
+                </div>
+
+                {/* DELIVERY */}
+                <div className="row">
+
+                    <span>
+                        Delivery Fee
+                    </span>
+
+                    <span>
+                        {
+                            order.deliveryFee === 0
+                                ? "FREE"
+                                : `₹${order.deliveryFee}`
+                        }
+                    </span>
+
+                </div>
+
+                {/* COD */}
+                <div className="row">
+
+                    <span>
+                        COD Fee
+                    </span>
+
+                    <span>
+                        ₹{order.codFee}
+                    </span>
+
+                </div>
+
+                {/* GST */}
+                <div className="row">
+
+                    <span>
+                        GST
+                    </span>
+
+                    <span>
+                        ₹{order.gstAmount}
+                    </span>
+
                 </div>
 
                 <hr />
 
+                {/* GRAND TOTAL */}
                 <div className="row total">
-                    <span>To Pay</span>
-                    <span>₹815</span>
+
+                    <span>
+                        To Pay
+                    </span>
+
+                    <span>
+                        ₹{order.grandTotal}
+                    </span>
+
                 </div>
+
             </div>
 
         </div>
