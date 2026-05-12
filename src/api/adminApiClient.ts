@@ -2,7 +2,7 @@ import axios from "axios";
 
 const adminApiClient = axios.create({
     baseURL:
-        "http://localhost:8080/api",
+        "https://crazoweb-api-309682237077.asia-south1.run.app/api",
 
     headers: {
         "Content-Type": "application/json",

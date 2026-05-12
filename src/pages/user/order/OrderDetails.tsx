@@ -4,16 +4,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./OrderDetails.css";
 
 import { MdOutlineArrowBack } from "react-icons/md";
-import { MdOutlineArrowDropDown } from "react-icons/md";
 
 import OrderSummaryDetails from "../../../components/order/OrderSummaryDetails";
 import OrderItemsDetails from "../../../components/order/OrderItemsDetails";
-import OrderStatusDialog, {
-  type OrderStatus
-} from "../../../components/order/OrderStatusDialog";
 
 import { useGetUserOrderDetails } from "../../../hooks/user/order/useGetUserOrderDetails";
 import type { UserOrderDetailsModel } from "../../../models/user/order/response/UserOrderDetailsModel";
+import type { OrderStatus } from "../../../components/order/OrderStatusDialog";
 
 const OrderDetails = () => {
 
@@ -26,9 +23,6 @@ const OrderDetails = () => {
     fetchOrderDetails,
     loading,
   } = useGetUserOrderDetails();
-
-  const [open, setOpen] =
-    useState(false);
 
   const [order, setOrder] =
     useState<UserOrderDetailsModel | null>(null);
@@ -126,7 +120,6 @@ const OrderDetails = () => {
 
           <div
             className={`od-status-badge ${orderStatus}`}
-            onClick={() => setOpen(true)}
           >
 
             {orderStatus}
