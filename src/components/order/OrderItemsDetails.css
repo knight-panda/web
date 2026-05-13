@@ -1,48 +1,101 @@
 /* LEFT */
-.od-left .od-free-banner {
-    background: #dff8ec;
-    color: #0f8f5c;
-    padding: 1rem;
-    border-radius: 0.75rem;
-    margin-bottom: 1rem;
+.od-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* SAVED BANNER */
+.od-free-banner {
+    background: #e7f8ee;
+    color: #0f9f5c;
+    padding: 0.9rem 1rem;
+    border-radius: 0.8rem;
+    font-size: 0.92rem;
     font-weight: 600;
 }
 
+/* CARD */
 .od-card {
     background: #fff;
     border-radius: 1rem;
+    padding: 1rem;
+    border: 1px solid #ececec;
 }
 
-.cart-item {
-    display: grid;
-    grid-template-columns: 4rem 1fr auto auto;
-    gap: 1rem;
-    align-items: center;
-    margin-top: 1rem;
-}
-
-.cart-item img {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 0.5rem;
-    object-fit: cover;
-}
-
-.ci-qantity {
-    font-size: 0.9rem;
-    font-weight: 400;
-    margin-top: 0.5rem;
-}
-
-.item-info .name {
+/* ITEM COUNT */
+.od-card > div:first-child {
+    font-size: 0.95rem;
     font-weight: 600;
+    color: #374151;
+    margin-bottom: 1rem;
 }
 
-.qty {
-    border: 1px solid #ddd;
-    padding: 0.4rem 0.8rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
+/* ITEM */
+.cart-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+/* IMAGE */
+.cart-item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    object-fit: cover;
+    background: #f8fafc;
+}
+
+/* INFO */
+.item-info {
+    flex: 1;
+}
+
+/* NAME */
+.item-info .name {
+    font-size: 0.96rem;
+    font-weight: 600;
+    color: #111827;
+    line-height: 1.4;
+    margin-bottom: 0.35rem;
+}
+
+/* QUANTITY */
+.ci-qantity {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+/* PRICE */
+.price {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111827;
+    white-space: nowrap;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+    .cart-item {
+        align-items: flex-start;
+    }
+
+    .cart-item img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .price {
+        font-size: 0.95rem;
+    }
 }
 
 /* RIGHT */

@@ -46,6 +46,10 @@ const OrderSummaryDetails = ({
                             `, ${order.state}`
                         }
                         {
+                            order.country &&
+                            `, ${order.country}`
+                        }
+                        {
                             order.pincode &&
                             ` - ${order.pincode}`
                         }

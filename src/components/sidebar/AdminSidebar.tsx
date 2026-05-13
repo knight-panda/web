@@ -45,6 +45,12 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ onTagClick }) => {
         },
 
         {
+            id: "store-settings",
+            label: "Store Settings",
+            icon: FaImages,
+        },
+
+        {
             id: "carousels",
             label: "Carousels",
             icon: FaImages,

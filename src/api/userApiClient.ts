@@ -61,22 +61,22 @@ userApiClient.interceptors.response.use(
                 localStorage.getItem("activeStoreId");
 
             // remove only current store token
-            // if (activeStoreId) {
+            if (activeStoreId) {
 
-            //     const storeTokens = JSON.parse(
-            //         localStorage.getItem("storeTokens") || "{}"
-            //     );
+                const storeTokens = JSON.parse(
+                    localStorage.getItem("storeTokens") || "{}"
+                );
 
-            //     delete storeTokens[activeStoreId];
+                delete storeTokens[activeStoreId];
 
-            //     localStorage.setItem(
-            //         "storeTokens",
-            //         JSON.stringify(storeTokens)
-            //     );
-            // }
+                localStorage.setItem(
+                    "storeTokens",
+                    JSON.stringify(storeTokens)
+                );
+            }
 
-            // // redirect home
-            // window.location.href = "/login";
+            // redirect home
+            window.location.href = "/login";
         }
 
         return Promise.reject(error);

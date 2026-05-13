@@ -36,6 +36,7 @@ const MyProfile = lazy(() => import("./pages/user/profile/MyProfile"));
 const AdminDashboard = lazy(() => import("./pages/admin/dashboard/AdminDashboard"));
 const OrdersAdmin = lazy(() => import("./pages/admin/orders/OrdersAdmin"));
 const OrderDetailsAdmin = lazy(() => import("./pages/admin/orders/OrderDetailsAdmin"));
+const StoreSettings = lazy(() => import("./pages/store/storeSettings/StoreSettings"));
 const CarouselAdmin = lazy(() => import("./pages/store/carousel/CarouselAdmin"));
 const ProductsAdmin = lazy(() => import("./pages/admin/products/ProductsAdmin"));
 const AddUpdateProduct = lazy(() => import("./pages/admin/products/AddUpdateProduct"));
@@ -114,6 +115,7 @@ function App() {
                 <Route index element={<AdminDashboard />} />
                 <Route path="orders" element={<OrdersAdmin />} />
                 <Route path="orders/:orderId" element={<OrderDetailsAdmin />} />
+                <Route path="store-settings" element={<StoreSettings />} />
                 <Route path="carousels" element={<CarouselAdmin />} />
                 <Route path="products" element={<ProductsAdmin />} />
                 <Route path="products/:productId" element={<AddUpdateProduct />} />
