@@ -30,7 +30,7 @@ const OrdersAdmin = () => {
 
   const filterOptions = [
     { value: "all", label: "All Orders" },
-    { value: "PENDING", label: "Pending" },
+    { value: "CONFIRMED", label: "Confirmed" },
     { value: "PACKED", label: "Packed" },
     { value: "SHIPPED", label: "Shipped" },
     { value: "DELIVERED", label: "Delivered" },

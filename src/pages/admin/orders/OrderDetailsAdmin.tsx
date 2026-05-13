@@ -37,7 +37,7 @@ const OrderDetailsAdmin: React.FC = () => {
     useState<UserOrderDetailsModel | null>(null);
 
   const [orderStatus, setOrderStatus] =
-    useState<OrderStatus>("PENDING");
+    useState<OrderStatus>("CONFIRMED");
 
   // FETCH ORDER DETAILS
   useEffect(() => {

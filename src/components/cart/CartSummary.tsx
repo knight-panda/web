@@ -1,4 +1,9 @@
+import { useState } from "react";
+import { useCreateRazorpayOrder } from "../../hooks/user/order/useCreateRazorpayOrder";
+import { useCreateUserOrder } from "../../hooks/user/order/useCreateUserOrder";
 import type { UserAddressData } from "../../models/user/address/response/UserAddressResponse ";
+import { loadRazorpayScript } from "../../utils/razorpay";
+import { useNavigate } from "react-router-dom";
 import "./Cart.css";
 
 import { FaAngleDown } from "react-icons/fa6";
@@ -28,6 +33,197 @@ const CartSummary: React.FC<CartSummaryProps> = ({
     gstAmount,
     grandTotal,
 }) => {
+
+    const navigate = useNavigate();
+    const [paymentMethod, setPaymentMethod] = useState<"COD" | "ONLINE">("ONLINE");
+    const finalPayableAmount = paymentMethod === "ONLINE"
+        ? grandTotal - codFee
+        : grandTotal;
+
+    const {
+        createOrder: createRazorpayOrderApi
+    } = useCreateRazorpayOrder();
+
+    const {
+        createOrder: createUserOrderApi
+    } = useCreateUserOrder();
+
+    const handlePayment = async () => {
+
+        // ADDRESS VALIDATION
+        if (
+            !addressData ||
+            !addressData.name ||
+            !addressData.phone ||
+            !addressData.houseNo ||
+            !addressData.area ||
+            !addressData.city ||
+            !addressData.state ||
+            !addressData.pincode
+        ) {
+
+            alert(
+                "Please add delivery address"
+            );
+
+            return;
+        }
+
+        // COD FLOW
+        if (paymentMethod === "COD") {
+
+            try {
+
+                const orderResponse =
+                    await createUserOrderApi({
+
+                        paymentMethod: "COD"
+                    });
+
+                if (orderResponse.success) {
+
+                    alert(orderResponse.message);
+
+                    navigate("/account/my-orders");
+                }
+
+                console.log(orderResponse);
+
+            } catch (error) {
+
+                console.log(error);
+
+                alert("Failed to place order");
+            }
+
+            return;
+        }
+
+        // ONLINE FLOW
+        try {
+
+            // LOAD SDK
+            const loaded =
+                await loadRazorpayScript();
+
+            if (!loaded) {
+
+                alert("Razorpay SDK failed");
+
+                return;
+            }
+
+            // CREATE RAZORPAY ORDER
+            const razorpayResponse =
+                await createRazorpayOrderApi({
+                    paymentMethod: "ONLINE"
+                });
+
+            const razorpayOrder =
+                razorpayResponse.data;
+
+            // OPTIONS
+            const options = {
+
+                key: razorpayOrder.key,
+
+                amount: razorpayOrder.amount,
+
+                currency:
+                    razorpayOrder.currency,
+
+                name: "My Store",
+
+                description:
+                    "Order Payment",
+
+                order_id:
+                    razorpayOrder
+                        .razorpayOrderId,
+
+                prefill: {
+
+                    name:
+                        addressData?.name || "",
+
+                    contact:
+                        addressData?.phone || ""
+                },
+
+                theme: {
+                    color: "#3399cc"
+                },
+
+                modal: {
+
+                    ondismiss: function () {
+
+                        console.log(
+                            "Payment popup closed"
+                        );
+                    }
+                },
+
+                handler: async function (
+                    paymentResponse: any
+                ) {
+
+                    try {
+
+                        const orderResponse =
+                            await createUserOrderApi({
+
+                                paymentMethod:
+                                    "ONLINE",
+
+                                razorpayOrderId:
+                                    paymentResponse
+                                        .razorpay_order_id,
+
+                                razorpayPaymentId:
+                                    paymentResponse
+                                        .razorpay_payment_id,
+
+                                razorpaySignature:
+                                    paymentResponse
+                                        .razorpay_signature
+                            });
+
+                        if (orderResponse.success) {
+
+                            alert(orderResponse.message);
+
+                            navigate("/account/my-orders");
+                        }
+
+                        console.log(
+                            orderResponse
+                        );
+
+                    } catch (error) {
+
+                        console.log(error);
+
+                        alert(
+                            "Failed to create order"
+                        );
+                    }
+                }
+            };
+
+            const paymentObject =
+                new (window as any)
+                    .Razorpay(options);
+
+            paymentObject.open();
+
+        } catch (error) {
+
+            console.log(error);
+
+            alert("Payment failed");
+        }
+    };
 
     return (
 
@@ -177,7 +373,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
                 )}
 
                 {/* COD */}
-                {codFee > 0 && (
+                {paymentMethod === "COD" && codFee > 0 && (
 
                     <div className="row">
 
@@ -212,17 +408,76 @@ const CartSummary: React.FC<CartSummaryProps> = ({
                     <span>To Pay</span>
 
                     <span>
-                        ₹{grandTotal.toFixed(2)}
+                        ₹{finalPayableAmount.toFixed(2)}
                     </span>
 
                 </div>
 
             </div>
 
-            {/* PAY */}
-            <button className="pay-btn">
+            {/* PAYMENT METHOD */}
+            <div className="summary-card">
 
-                Pay ₹{grandTotal.toFixed(2)}
+                <div className="sc-bill-title">
+                    Payment Method
+                </div>
+
+                <div className="sc-payment-methods">
+
+                    {/* ONLINE */}
+                    <label className="sc-payment-option">
+
+                        <input
+                            type="radio"
+                            name="paymentMethod"
+                            checked={
+                                paymentMethod === "ONLINE"
+                            }
+                            onChange={() =>
+                                setPaymentMethod(
+                                    "ONLINE"
+                                )
+                            }
+                        />
+
+                        <span>
+                            Online Payment
+                        </span>
+
+                    </label>
+
+                    {/* COD */}
+                    <label className="sc-payment-option">
+
+                        <input
+                            type="radio"
+                            name="paymentMethod"
+                            checked={
+                                paymentMethod === "COD"
+                            }
+                            onChange={() =>
+                                setPaymentMethod("COD")
+                            }
+                        />
+
+                        <span>
+                            Cash On Delivery
+                        </span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+            {/* PAY */}
+            <button
+                className="pay-btn"
+                onClick={handlePayment}
+            >
+                {paymentMethod === "COD"
+                    ? `Place Order ₹${finalPayableAmount.toFixed(2)}`
+                    : `Pay ₹${finalPayableAmount.toFixed(2)}`}
 
             </button>
 

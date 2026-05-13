@@ -75,7 +75,7 @@
 }
 
 .sc-add-edit-btn:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .sc-address {
@@ -131,6 +131,50 @@
 .bill .total {
     font-size: 1.1rem;
     font-weight: bold;
+}
+
+.sc-payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.sc-payment-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #fff;
+}
+
+.sc-payment-option:hover {
+    border-color: var(--primary-color);
+    background: #f8fbff;
+}
+
+.sc-payment-option input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+
+.sc-payment-option span {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1f2937;
+}
+
+/* ACTIVE */
+.sc-payment-option:has(input:checked) {
+    border-color: var(--primary-color);
+    background: #eef7fc;
+    box-shadow: 0 0 0 2px rgba(51, 153, 204, 0.1);
 }
 
 .pay-btn {

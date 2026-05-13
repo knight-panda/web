@@ -23,10 +23,6 @@ const OrderSummaryDetails = ({
                         📍 Delivery Address
                     </div>
 
-                    <div className="sc-add-edit-btn">
-                        Add or Edit Address
-                    </div>
-
                 </div>
 
                 <div className="sc-address">
@@ -54,25 +50,6 @@ const OrderSummaryDetails = ({
                             ` - ${order.pincode}`
                         }
                     </div>
-
-                </div>
-
-            </div>
-
-            {/* COUPON */}
-            <div className="summary-card clickable">
-
-                <div className="sc-apply-coupon-title">
-                    Apply Coupon
-                </div>
-
-                <div className="sc-apply-coupon">
-
-                    <div>
-                        Save more with coupons
-                    </div>
-
-                    <FaAngleDown />
 
                 </div>
 
@@ -192,6 +169,37 @@ const OrderSummaryDetails = ({
                     <span>
                         ₹{order.grandTotal}
                     </span>
+
+                </div>
+
+            </div>
+
+            {/* Payment Status */}
+            <div className="summary-card clickable">
+
+                <div className="sc-apply-coupon-title">
+                    Payment Status
+                </div>
+
+                <div className="sc-apply-coupon">
+
+                    <div
+                        className={`order-payment-status ${order.paymentStatus?.toLowerCase()}`}
+                    >
+
+                        {
+                            order.paymentStatus === "SUCCESS"
+                                ? "Payment Completed"
+                                : order.paymentStatus === "PENDING"
+                                    ? "Cash On Delivery"
+                                    : order.paymentStatus === "FAILED"
+                                        ? "Payment Failed"
+                                        : order.paymentStatus === "REFUNDED"
+                                            ? "Payment Refunded"
+                                            : order.paymentStatus
+                        }
+
+                    </div>
 
                 </div>
 

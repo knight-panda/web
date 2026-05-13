@@ -27,11 +27,13 @@ const Orders = () => {
 
   const filterOptions = [
     { value: "all", label: "All Orders" },
-    { value: "PENDING", label: "Pending" },
+    { value: "CONFIRMED", label: "Confirmed" },
     { value: "PACKED", label: "Packed" },
     { value: "SHIPPED", label: "Shipped" },
     { value: "DELIVERED", label: "Delivered" },
     { value: "CANCELLED", label: "Cancelled" },
+    { value: "RETURNED", label: "Returned" },
+    { value: "REFUNDED", label: "Refunded" },
   ];
 
   // FETCH ORDERS

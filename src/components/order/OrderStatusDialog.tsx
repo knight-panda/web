@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./OrderStatusDialog.css";
 
 export type OrderStatus =
-    | "PENDING"
+    | "CONFIRMED"
     | "PACKED"
     | "SHIPPED"
     | "DELIVERED"
@@ -47,7 +47,7 @@ const OrderStatusDialog: React.FC<Props> = ({
 }) => {
 
     const [status, setStatus] =
-        useState<OrderStatus>("PENDING");
+        useState<OrderStatus>("CONFIRMED");
 
     const [courier, setCourier] =
         useState("");
@@ -59,7 +59,7 @@ const OrderStatusDialog: React.FC<Props> = ({
         useState("");
 
     const [selectedPaymentStatus, setSelectedPaymentStatus] =
-        useState("PENDING");
+        useState("CONFIRMED");
 
     const [orderNote, setOrderNote] =
         useState("");
@@ -72,7 +72,7 @@ const OrderStatusDialog: React.FC<Props> = ({
             setStatus(orderStatus);
 
             setSelectedPaymentStatus(
-                paymentStatus || "PENDING"
+                paymentStatus || "SUCCESS"
             );
 
             setCourier(courierName || "");
@@ -147,8 +147,8 @@ const OrderStatusDialog: React.FC<Props> = ({
                         }
                     >
 
-                        <option value="PENDING">
-                            Pending
+                        <option value="CONFIRMED">
+                            Confirmed
                         </option>
 
                         <option value="PACKED">
@@ -193,7 +193,7 @@ const OrderStatusDialog: React.FC<Props> = ({
                             Pending
                         </option>
 
-                        <option value="PAID">
+                        <option value="SUCCESS">
                             Paid
                         </option>
 
