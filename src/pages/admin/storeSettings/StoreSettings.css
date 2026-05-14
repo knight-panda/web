@@ -112,6 +112,11 @@
     transition: 0.2s;
 }
 
+.disabled-btn {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 .save-btn:hover {
     opacity: 0.9;
 }

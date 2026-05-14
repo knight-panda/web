@@ -69,6 +69,8 @@ const CartPage = () => {
           codFee={data?.data.codFee || 0}
           gstAmount={data?.data.gstAmount || 0}
           grandTotal={data?.data.grandTotal || 0}
+          codEnabled={data?.data.codEnabled || false}
+          onlinePaymentEnabled={data?.data.onlinePaymentEnabled || false}
         />
 
       </div>

@@ -22,21 +22,28 @@
     margin-top: 1rem;
 }
 
+.ci-item-count {
+    font-size: 1rem;
+    font-weight: 400;
+    color: black;
+}
+
 .cart-item img {
-    width: 4rem;
-    height: 4rem;
+    width: 5rem;
+    height: 5rem;
     border-radius: 0.5rem;
     object-fit: cover;
 }
 
 .ci-qantity {
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 400;
-    margin-top: 0.5rem;
+    margin-top: 0.2rem;
 }
 
 .item-info .name {
     font-weight: 600;
+    font-size: 1.2rem;
 }
 
 .qty {
@@ -45,6 +52,41 @@
     border-radius: 0.5rem;
     cursor: pointer;
 }
+
+.ci-price {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: black;
+}
+
+/* QTY CONTROLLER */
+.ci-qty-controller {
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.4rem;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.7rem;
+}
+
+.ci-qty-controller button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 1.8rem;
+    padding: 0;
+}
+
+.ci-qty-controller span {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
 
 /* RIGHT */
 .cart-right {
@@ -185,6 +227,13 @@
     border-radius: 1rem;
     border: none;
     cursor: pointer;
+}
+
+.pay-btn:disabled {
+    background: #cfcfcf;
+    color: #666;
+    cursor: not-allowed;
+    opacity: 0.8;
 }
 
 /* 📱 Mobile */

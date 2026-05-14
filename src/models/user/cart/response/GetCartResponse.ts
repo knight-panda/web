@@ -18,4 +18,6 @@ export interface GetCartData {
     codFee: number;
     gstAmount: number;
     grandTotal: number;
+    codEnabled: boolean;
+    onlinePaymentEnabled: boolean;
 }

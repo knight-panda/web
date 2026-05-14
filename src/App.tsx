@@ -36,7 +36,7 @@ const MyProfile = lazy(() => import("./pages/user/profile/MyProfile"));
 const AdminDashboard = lazy(() => import("./pages/admin/dashboard/AdminDashboard"));
 const OrdersAdmin = lazy(() => import("./pages/admin/orders/OrdersAdmin"));
 const OrderDetailsAdmin = lazy(() => import("./pages/admin/orders/OrderDetailsAdmin"));
-const StoreSettings = lazy(() => import("./pages/store/storeSettings/StoreSettings"));
+const StoreSettings = lazy(() => import("./pages/admin/storeSettings/StoreSettings"));
 const CarouselAdmin = lazy(() => import("./pages/store/carousel/CarouselAdmin"));
 const ProductsAdmin = lazy(() => import("./pages/admin/products/ProductsAdmin"));
 const AddUpdateProduct = lazy(() => import("./pages/admin/products/AddUpdateProduct"));

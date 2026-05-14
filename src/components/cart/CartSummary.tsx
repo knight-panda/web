@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCreateRazorpayOrder } from "../../hooks/user/order/useCreateRazorpayOrder";
 import { useCreateUserOrder } from "../../hooks/user/order/useCreateUserOrder";
 import type { UserAddressData } from "../../models/user/address/response/UserAddressResponse ";
@@ -19,6 +19,8 @@ type CartSummaryProps = {
     codFee: number;
     gstAmount: number;
     grandTotal: number;
+    codEnabled: boolean;
+    onlinePaymentEnabled: boolean;
 };
 
 const CartSummary: React.FC<CartSummaryProps> = ({
@@ -32,10 +34,28 @@ const CartSummary: React.FC<CartSummaryProps> = ({
     codFee,
     gstAmount,
     grandTotal,
+    codEnabled,
+    onlinePaymentEnabled,
 }) => {
 
     const navigate = useNavigate();
-    const [paymentMethod, setPaymentMethod] = useState<"COD" | "ONLINE">("ONLINE");
+    const getDefaultPaymentMethod = (): "COD" | "ONLINE" => {
+
+        if (onlinePaymentEnabled) {
+            return "ONLINE";
+        }
+
+        if (codEnabled) {
+            return "COD";
+        }
+
+        return "ONLINE";
+    };
+
+    const [paymentMethod, setPaymentMethod] =
+        useState<"COD" | "ONLINE">(
+            getDefaultPaymentMethod()
+        );
     const finalPayableAmount = paymentMethod === "ONLINE"
         ? grandTotal - codFee
         : grandTotal;
@@ -47,6 +67,36 @@ const CartSummary: React.FC<CartSummaryProps> = ({
     const {
         createOrder: createUserOrderApi
     } = useCreateUserOrder();
+
+    useEffect(() => {
+
+        if (
+            !onlinePaymentEnabled &&
+            paymentMethod === "ONLINE"
+        ) {
+
+            if (codEnabled) {
+                setPaymentMethod("COD");
+            }
+
+            return;
+        }
+
+        if (
+            !codEnabled &&
+            paymentMethod === "COD"
+        ) {
+
+            if (onlinePaymentEnabled) {
+                setPaymentMethod("ONLINE");
+            }
+        }
+
+    }, [
+        codEnabled,
+        onlinePaymentEnabled,
+        paymentMethod
+    ]);
 
     const handlePayment = async () => {
 
@@ -64,6 +114,18 @@ const CartSummary: React.FC<CartSummaryProps> = ({
 
             alert(
                 "Please add delivery address"
+            );
+
+            return;
+        }
+
+        if (
+            !codEnabled &&
+            !onlinePaymentEnabled
+        ) {
+
+            alert(
+                "No payment method available"
             );
 
             return;
@@ -424,47 +486,61 @@ const CartSummary: React.FC<CartSummaryProps> = ({
 
                 <div className="sc-payment-methods">
 
-                    {/* ONLINE */}
-                    <label className="sc-payment-option">
+                    {
+                        onlinePaymentEnabled === true && (
+                            <label className="sc-payment-option">
 
-                        <input
-                            type="radio"
-                            name="paymentMethod"
-                            checked={
-                                paymentMethod === "ONLINE"
-                            }
-                            onChange={() =>
-                                setPaymentMethod(
-                                    "ONLINE"
-                                )
-                            }
-                        />
+                                <input
+                                    type="radio"
+                                    name="paymentMethod"
+                                    checked={
+                                        paymentMethod === "ONLINE"
+                                    }
+                                    onChange={() =>
+                                        setPaymentMethod("ONLINE")
+                                    }
+                                />
 
-                        <span>
-                            Online Payment
-                        </span>
+                                <span>
+                                    Online Payment
+                                </span>
 
-                    </label>
+                            </label>
+                        )
+                    }
 
-                    {/* COD */}
-                    <label className="sc-payment-option">
+                    {
+                        codEnabled === true && (
+                            <label className="sc-payment-option">
 
-                        <input
-                            type="radio"
-                            name="paymentMethod"
-                            checked={
-                                paymentMethod === "COD"
-                            }
-                            onChange={() =>
-                                setPaymentMethod("COD")
-                            }
-                        />
+                                <input
+                                    type="radio"
+                                    name="paymentMethod"
+                                    checked={
+                                        paymentMethod === "COD"
+                                    }
+                                    onChange={() =>
+                                        setPaymentMethod("COD")
+                                    }
+                                />
 
-                        <span>
-                            Cash On Delivery
-                        </span>
+                                <span>
+                                    Cash On Delivery
+                                </span>
 
-                    </label>
+                            </label>
+                        )
+                    }
+
+                    {
+                        !codEnabled &&
+                        !onlinePaymentEnabled && (
+
+                            <div className="no-payment-method">
+                                No payment methods available
+                            </div>
+                        )
+                    }
 
                 </div>
 
@@ -474,6 +550,10 @@ const CartSummary: React.FC<CartSummaryProps> = ({
             <button
                 className="pay-btn"
                 onClick={handlePayment}
+                disabled={
+                    !codEnabled &&
+                    !onlinePaymentEnabled
+                }
             >
                 {paymentMethod === "COD"
                     ? `Place Order ₹${finalPayableAmount.toFixed(2)}`
@@ -481,7 +561,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
 
             </button>
 
-        </div>
+        </div >
     );
 };
 

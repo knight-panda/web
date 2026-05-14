@@ -85,7 +85,7 @@ const CartItems = ({
             <div className="cart-card">
 
                 {/* ITEM COUNT */}
-                <div>
+                <div className="ci-item-count">
                     🛒 {items.length} Items
                 </div>
 
@@ -117,12 +117,12 @@ const CartItems = ({
                         </div>
 
                         {/* PRICE */}
-                        <div className="price">
+                        <div className="ci-price">
                             ₹{item.totalPrice}
                         </div>
 
                         {/* QTY CONTROLLER */}
-                        <div className="qty-controller">
+                        <div className="ci-qty-controller">
 
                             {/* MINUS */}
                             <button
