@@ -9,175 +9,418 @@ interface Props {
 }
 
 const CreateStoreDialog: React.FC<Props> = ({ onClose }) => {
+
     const navigate = useNavigate();
+
     const { createStore } = useCreateStore();
     const { updateProfile } = useUpdateAdminProfile();
 
     const [storeName, setStoreName] = useState("");
-    const [storeImage, setStoreImage] = useState<File | null>(null);
-    const [preview, setPreview] = useState<string | null>(null);
+    const [storeDescription, setStoreDescription] = useState("");
 
-    const [primaryColor, setPrimaryColor] = useState("#ff6b00");
-    const [secondaryColor, setSecondaryColor] = useState("#ffffff");
+    // Store Logo
+    const [storeImage, setStoreImage] =
+        useState<File | null>(null);
+
+    const [preview, setPreview] =
+        useState<string | null>(null);
+
+    // Favicon
+    const [faviconImage, setFaviconImage] =
+        useState<File | null>(null);
+
+    const [faviconPreview, setFaviconPreview] =
+        useState<string | null>(null);
+
+    const [primaryColor, setPrimaryColor] =
+        useState("#ff6b00");
+
+    const [secondaryColor, setSecondaryColor] =
+        useState("#ffffff");
 
     const [loading, setLoading] = useState(false);
-    const [logoError, setLogoError] = useState<string | null>(null);
+
+    const [logoError, setLogoError] =
+        useState<string | null>(null);
 
     const generateSlug = (name: string) =>
         name.toLowerCase().trim().replace(/\s+/g, "-");
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (
+        e: React.FormEvent
+    ) => {
+
         e.preventDefault();
 
-        // ✅ Store name validation
         if (!storeName.trim()) {
             alert("Store name is required");
             return;
         }
 
-        // ✅ Logo validation (MANDATORY)
         if (!storeImage) {
             setLogoError("Store logo is required");
             return;
         }
 
         try {
+
             setLoading(true);
             setLogoError(null);
 
-            console.log(storeName);
+            const storeSlug =
+                generateSlug(storeName);
 
-            const storeSlug = generateSlug(storeName);
+            // Upload Store Logo
+            const uploadedLogoUrl =
+                await updateProfile(storeImage);
 
-            // ✅ Upload logo first
-            console.log("Uploading logo...");
-            const uploadedUrl = await updateProfile(storeImage);
+            if (!uploadedLogoUrl) {
+                throw new Error(
+                    "Store logo upload failed"
+                );
+            }
 
-            console.log("Uploaded URL:", uploadedUrl);
+            // Upload Favicon
+            let uploadedFaviconUrl =
+                uploadedLogoUrl;
 
-            if (!uploadedUrl) {
-                throw new Error("Logo upload failed");
+            if (faviconImage) {
+
+                uploadedFaviconUrl =
+                    await updateProfile(
+                        faviconImage
+                    );
             }
 
             const payload = {
+
                 storeName,
+                storeDescription,
+
                 storeSlug,
-                logo: uploadedUrl,
+
+                logoUrl: uploadedLogoUrl,
+
+                faviconUrl:
+                    uploadedFaviconUrl,
+
                 domain: "",
+
                 subdomain: storeSlug,
+
                 currency: "INR",
+
                 timezone: "Asia/Kolkata",
+
                 primaryColor,
+
                 secondaryColor,
+
                 themeName: "default",
             };
 
-            console.log("Final Payload:", payload);
+            console.log(
+                "Store Payload:",
+                payload
+            );
 
-            // ✅ Create store
-            const res = await createStore(payload);
+            const res =
+                await createStore(payload);
 
             if (res?.success) {
-                navigate("/admin-dashboard", { replace: true });
+
+                navigate(
+                    "/admin-dashboard",
+                    {
+                        replace: true
+                    }
+                );
+
                 window.location.reload();
+
             } else {
-                alert("Failed to create store");
+
+                alert(
+                    "Failed to create store"
+                );
             }
+
         } catch (error) {
+
             console.error(error);
+
             alert("Something went wrong");
+
         } finally {
+
             setLoading(false);
         }
     };
 
     return (
+
         <div className="store-dialog-wrapper">
+
             <div className="store-dialog">
+
                 {/* Header */}
                 <div className="dialog-header">
-                    <h2>Create Your Store</h2>
-                    <button onClick={onClose}>✕</button>
+
+                    <h2>
+                        Create Your Store
+                    </h2>
+
+                    <button
+                        onClick={onClose}
+                    >
+                        ✕
+                    </button>
+
                 </div>
 
                 {/* Form */}
-                <form onSubmit={handleSubmit} className="store-form">
+                <form
+                    onSubmit={handleSubmit}
+                    className="store-form"
+                >
+
                     {/* Store Name */}
                     <input
                         type="text"
                         placeholder="Store Name"
                         value={storeName}
-                        onChange={(e) => setStoreName(e.target.value)}
+                        onChange={(e) =>
+                            setStoreName(
+                                e.target.value
+                            )
+                        }
                         required
                     />
 
-                    {/* Logo Upload */}
+                    {/* Description */}
+                    <textarea
+                        placeholder="Store Description"
+                        value={
+                            storeDescription
+                        }
+                        onChange={(e) =>
+                            setStoreDescription(
+                                e.target.value
+                            )
+                        }
+                        rows={4}
+                        maxLength={500}
+                        className="store-description"
+                    />
+
+                    <p className="description-count">
+                        {
+                            storeDescription.length
+                        }
+                        /500
+                    </p>
+
+                    {/* Store Logo Upload */}
                     <div className="file-input">
-                        <label>Store Logo (required)</label>
+
+                        <label>
+                            Store Logo
+                        </label>
+
                         <input
                             type="file"
                             accept="image/*"
                             onChange={(e) => {
-                                const file = e.target.files?.[0];
+
+                                const file =
+                                    e.target
+                                        .files?.[0];
+
                                 if (file) {
-                                    setStoreImage(file);
-                                    setPreview(URL.createObjectURL(file));
-                                    setLogoError(null);
+
+                                    setStoreImage(
+                                        file
+                                    );
+
+                                    setPreview(
+                                        URL.createObjectURL(
+                                            file
+                                        )
+                                    );
+
+                                    setLogoError(
+                                        null
+                                    );
                                 }
                             }}
                         />
 
-                        {/* Error Message */}
+                        <p className="upload-note">
+                            Recommended:
+                            transparent or
+                            rectangle logo
+                        </p>
+
                         {logoError && (
-                            <p style={{ color: "red", fontSize: "12px" }}>
+                            <p className="logo-error">
                                 {logoError}
                             </p>
                         )}
+
+                    </div>
+
+                    {/* Favicon Upload */}
+                    <div className="file-input">
+
+                        <label>
+                            Favicon Icon
+                        </label>
+
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+
+                                const file =
+                                    e.target
+                                        .files?.[0];
+
+                                if (file) {
+
+                                    setFaviconImage(
+                                        file
+                                    );
+
+                                    setFaviconPreview(
+                                        URL.createObjectURL(
+                                            file
+                                        )
+                                    );
+                                }
+                            }}
+                        />
+
+                        <p className="upload-note">
+                            Recommended:
+                            square 1:1 icon
+                        </p>
+
                     </div>
 
                     {/* Preview */}
-                    {preview && (
-                        <img
-                            src={preview}
-                            alt="preview"
-                            style={{
-                                width: 100,
-                                marginTop: 10,
-                                borderRadius: 8,
-                            }}
-                        />
-                    )}
+                    <div className="logo-preview-wrapper">
+
+                        {/* Store Logo */}
+                        {preview && (
+
+                            <div>
+
+                                <p className="preview-title">
+                                    Store Logo
+                                </p>
+
+                                <img
+                                    src={preview}
+                                    alt="preview"
+                                    className="store-logo-preview"
+                                />
+
+                            </div>
+                        )}
+
+                        {/* Favicon */}
+                        {(faviconPreview ||
+                            preview) && (
+
+                                <div>
+
+                                    <p className="preview-title">
+                                        Favicon
+                                    </p>
+
+                                    <div className="favicon-preview-box">
+
+                                        <img
+                                            src={
+                                                faviconPreview ||
+                                                preview ||
+                                                ""
+                                            }
+                                            alt="favicon"
+                                            className="favicon-preview"
+                                        />
+
+                                    </div>
+
+                                </div>
+                            )}
+
+                    </div>
 
                     {/* Colors */}
                     <div className="color-picker">
-                        <label>Primary Color</label>
+
+                        <label>
+                            Primary Color
+                        </label>
+
                         <input
                             type="color"
-                            value={primaryColor}
-                            onChange={(e) => setPrimaryColor(e.target.value)}
+                            value={
+                                primaryColor
+                            }
+                            onChange={(e) =>
+                                setPrimaryColor(
+                                    e.target.value
+                                )
+                            }
                         />
+
                     </div>
 
                     <div className="color-picker">
-                        <label>Secondary Color</label>
+
+                        <label>
+                            Secondary Color
+                        </label>
+
                         <input
                             type="color"
-                            value={secondaryColor}
-                            onChange={(e) => setSecondaryColor(e.target.value)}
+                            value={
+                                secondaryColor
+                            }
+                            onChange={(e) =>
+                                setSecondaryColor(
+                                    e.target.value
+                                )
+                            }
                         />
+
                     </div>
 
                     {/* Submit */}
                     <button
                         type="submit"
                         className="create-store-btn"
-                        style={{ background: primaryColor }}
-                        disabled={loading || !storeName || !storeImage}
+                        style={{
+                            background:
+                                primaryColor
+                        }}
+                        disabled={
+                            loading ||
+                            !storeName ||
+                            !storeImage
+                        }
                     >
-                        {loading ? "Creating..." : "Create Store"}
+                        {loading
+                            ? "Creating..."
+                            : "Create Store"}
                     </button>
+
                 </form>
+
             </div>
+
         </div>
     );
 };

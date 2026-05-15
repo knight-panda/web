@@ -2,8 +2,10 @@
 
 export interface StoreRequest {
   storeName: string;
+  storeDescription: string;
   storeSlug: string;
-  logo: string;
+  logoUrl: string;
+  faviconUrl: string;
   domain: string;
   subdomain: string;
   currency: string;

@@ -1,51 +1,62 @@
-import { useState } from "react"
-import "./Navbar.css"
-import logo from "../../assets/Knight Panda Logo.png" // put your logo image here
+import { useState } from "react";
+import "./Navbar.css";
+import defaultLogo from "../../assets/Knight Panda Logo.png";
 import { useNavigate } from "react-router-dom";
-
 import { CiSearch } from "react-icons/ci";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { BsCart3 } from "react-icons/bs";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { IoMdMore } from "react-icons/io";
 
-interface NavbarSettings {
-  logo: string
-  bgColor: string
-  showSearch: boolean
-  showLogin: boolean
-  showOrders: boolean
-  showCart: boolean
+/* ================= TYPES ================= */
+
+interface NavbarProps {
+  logoUrl?: string;
+  storeName?: string;
 }
 
-const Navbar = () => {
-  const [openModal, setOpenModal] = useState<boolean>(false)
+interface NavbarSettings {
+  bgColor: string;
+  showSearch: boolean;
+  showLogin: boolean;
+  showOrders: boolean;
+  showCart: boolean;
+}
+
+/* ================= COMPONENT ================= */
+
+const Navbar: React.FC<NavbarProps> = ({
+  logoUrl,
+  storeName
+}) => {
+
+  const [openModal, setOpenModal] =
+    useState<boolean>(false);
   const navigate = useNavigate();
-  const cartCount: number = 3
+  const cartCount: number = 3;
+  const [settings, setSettings] =
+    useState<NavbarSettings>({
+      bgColor: "#ffffff",
+      showSearch: true,
+      showLogin: true,
+      showOrders: true,
+      showCart: true,
+    });
 
-  const [settings, setSettings] = useState<NavbarSettings>({
-    logo: logo,
-    bgColor: "#ffffff",
-    showSearch: true,
-    showLogin: true,
-    showOrders: true,
-    showCart: true,
-  })
+  /* ================= TOGGLE ================= */
 
-  const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      const imageUrl = URL.createObjectURL(file)
-      setSettings(prev => ({ ...prev, logo: imageUrl }))
-    }
-  }
+  const handleToggle = (
+    key: keyof NavbarSettings
+  ) => {
 
-  const handleToggle = (key: keyof NavbarSettings) => {
     setSettings((prev) => ({
       ...prev,
-      [key]: !prev[key] as boolean,
-    }))
-  }
+      [key]:
+        !prev[key] as boolean,
+    }));
+  };
+
+  /* ================= NAVIGATION ================= */
 
   const goToCart = () => {
     navigate("/cart");
@@ -63,130 +74,235 @@ const Navbar = () => {
     navigate("account/my-orders");
   };
 
-
   const goToLogin = () => {
     navigate("login");
   };
 
+  /* ================= UI ================= */
+
   return (
+
     <>
-      <div className="navbar"
-        style={{ backgroundColor: settings.bgColor }}
-      // onClick={() => setOpenModal(true)}
+
+      <div
+        className="navbar"
+        style={{
+          backgroundColor:
+            settings.bgColor
+        }}
       >
 
         <div className="navbar-container">
+
           {/* LEFT */}
           <div className="navbar-left">
-            <img className="logo-img" src={settings.logo} alt="logo" onClick={() => { goToHome() }} />
 
+            {/* LOGO */}
+            <img
+              className="logo-img"
+              src={
+                logoUrl ||
+                defaultLogo
+              }
+              alt={
+                storeName ||
+                "logo"
+              }
+              onClick={goToHome}
+            />
+
+            {/* SEARCH */}
             {settings.showSearch && (
+
               <div className="search-box">
-                <CiSearch />
-                <input type="text" placeholder="Search products" />
+
+                <CiSearch
+                  className="search-icon"
+                />
+
+                <input
+                  type="text"
+                  placeholder="Search products"
+                />
+
               </div>
             )}
+
           </div>
 
           {/* RIGHT */}
           <div className="navbar-right">
+
+            {/* LOGIN */}
             {settings.showLogin && (
-              <div className="nav-item-user" onClick={() => { goToLogin() }}>
-                <FaRegCircleUser className="nav-item-icon" />
-                <span className="icon-text">Login</span>
-              </div>
 
+              <div
+                className="nav-item-user"
+                onClick={goToLogin}
+              >
+
+                <FaRegCircleUser
+                  className="nav-item-icon"
+                />
+
+                <span className="icon-text">
+                  Login
+                </span>
+
+              </div>
             )}
 
+            {/* ORDERS */}
             {settings.showOrders && (
-              <div className="nav-item" onClick={() => { goToOrders() }}>
-                <MdOutlineShoppingBag className="nav-item-icon" />
-                <span className="icon-text">Orders</span>
+
+              <div
+                className="nav-item"
+                onClick={goToOrders}
+              >
+
+                <MdOutlineShoppingBag
+                  className="nav-item-icon"
+                />
+
+                <span className="icon-text">
+                  Orders
+                </span>
+
               </div>
             )}
 
+            {/* CART */}
             {settings.showCart && (
-              <div className="nav-item" onClick={() => { goToCart() }}>
-                <div className="nav-cart-inline" >
-                  <BsCart3 className="nav-item-icon" />
-                  <span className="nav-item-count">{cartCount}</span>
+
+              <div
+                className="nav-item"
+                onClick={goToCart}
+              >
+
+                <div className="nav-cart-inline">
+
+                  <BsCart3
+                    className="nav-item-icon"
+                  />
+
+                  <span className="nav-item-count">
+                    {cartCount}
+                  </span>
+
                 </div>
-                <span className="icon-text">Cart</span>
+
+                <span className="icon-text">
+                  Cart
+                </span>
+
               </div>
             )}
 
-            <div className="nav-item" onClick={goToAccount}>
-              <IoMdMore className="nav-item-icon" />
+            {/* MORE */}
+            <div
+              className="nav-item"
+              onClick={goToAccount}
+            >
+
+              <IoMdMore
+                className="nav-item-icon"
+              />
+
             </div>
+
           </div>
 
         </div>
+
       </div>
 
-      {/* ================= POPUP DIALOG ================= */}
+      {/* ================= POPUP ================= */}
+
       {openModal && (
+
         <div className="modal-overlay">
           <div className="modal-box">
             <div className="modal-header">
-              <h3>Edit Navbar</h3>
-              <button onClick={() => setOpenModal(false)}>✕</button>
+              <h3>
+                Edit Navbar
+              </h3>
+
+              <button
+                onClick={() => setOpenModal(false) }
+              >
+                ✕
+              </button>
+
             </div>
 
             <div className="modal-body">
-              {/* Upload Logo */}
-              <label>
-                Upload Logo
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleLogoChange}
-                />
-              </label>
 
               {/* Background Color */}
               <label>
+
                 Navbar Background Color
+
                 <input
                   type="color"
-                  value={settings.bgColor}
+                  value={
+                    settings.bgColor
+                  }
                   onChange={(e) =>
                     setSettings((prev) => ({
                       ...prev,
-                      bgColor: e.target.value,
+                      bgColor:
+                        e.target.value,
                     }))
                   }
                 />
+
               </label>
 
-              {/* Toggles */}
+              {/* TOGGLES */}
+
               <label>
                 <input
                   type="checkbox"
-                  checked={settings.showSearch}
-                  onChange={() => handleToggle("showSearch")}
+                  checked={
+                    settings.showSearch
+                  }
+                  onChange={() =>
+                    handleToggle(
+                      "showSearch"
+                    )
+                  }
                 />
                 Show Search
               </label>
 
               <label>
+
                 <input
                   type="checkbox"
-                  checked={settings.showLogin}
-                  onChange={() => handleToggle("showLogin")}
+                  checked={
+                    settings.showLogin
+                  }
+                  onChange={() =>
+                    handleToggle(
+                      "showLogin"
+                    )
+                  }
                 />
                 Show Login
               </label>
 
               <label>
+
                 <input
                   type="checkbox"
-                  checked={settings.showOrders}
-                  onChange={() => handleToggle("showOrders")}
+                  checked={ settings.showOrders }
+                  onChange={() => handleToggle("showOrders") }
                 />
                 Show Orders
               </label>
 
               <label>
+
                 <input
                   type="checkbox"
                   checked={settings.showCart}
@@ -194,18 +310,32 @@ const Navbar = () => {
                 />
                 Show Cart
               </label>
+
             </div>
 
             <div className="modal-footer">
-              <button className="model-close-btn" onClick={() => setOpenModal(false)}>Close</button>
-              <button className="model-save-btn" onClick={() => setOpenModal(false)}>Save</button>
+
+              <button
+                className="model-close-btn"
+                onClick={() => setOpenModal(false) }
+              >
+                Close
+              </button>
+
+              <button
+                className="model-save-btn"
+                onClick={() => setOpenModal(false) }
+              >
+                Save
+              </button>
+
             </div>
           </div>
         </div>
       )}
+
     </>
+  );
+};
 
-  )
-}
-
-export default Navbar
+export default Navbar;

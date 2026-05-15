@@ -9,9 +9,11 @@ export interface SingleStoreResponse {
 export interface Store {
   id: string;
   storeName: string;
+  storeDescription: string;
   storeSlug: string;
 
-  logo: string;
+  logoUrl: string;
+  faviconUrl: string;
   domain: string;
   subdomain: string;
 
