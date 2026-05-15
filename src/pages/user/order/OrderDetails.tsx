@@ -27,8 +27,7 @@ const OrderDetails = () => {
   const [order, setOrder] =
     useState<UserOrderDetailsModel | null>(null);
 
-  const [orderStatus, setOrderStatus] =
-    useState<OrderStatus>("PENDING");
+  const [orderStatus, setOrderStatus] = useState<OrderStatus>("PENDING" as OrderStatus);
 
   // FETCH ORDER DETAILS
   useEffect(() => {

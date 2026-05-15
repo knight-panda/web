@@ -1,8 +1,6 @@
 import type { UserOrderDetailsModel } from "../../models/user/order/response/UserOrderDetailsModel";
 import "./OrderItemsDetails.css";
 
-import { FaAngleDown } from "react-icons/fa6";
-
 type Props = {
     order: UserOrderDetailsModel;
 };
