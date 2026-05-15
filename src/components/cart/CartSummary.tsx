@@ -39,6 +39,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
 }) => {
 
     const navigate = useNavigate();
+    const isCartEmpty = itemTotal <= 0;
     const getDefaultPaymentMethod = (): "COD" | "ONLINE" => {
 
         if (onlinePaymentEnabled) {
@@ -51,6 +52,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
 
         return "ONLINE";
     };
+    console.log(isCartEmpty)
 
     const [paymentMethod, setPaymentMethod] =
         useState<"COD" | "ONLINE">(
@@ -551,14 +553,20 @@ const CartSummary: React.FC<CartSummaryProps> = ({
                 className="pay-btn"
                 onClick={handlePayment}
                 disabled={
-                    !codEnabled &&
-                    !onlinePaymentEnabled
+                    isCartEmpty ||
+                    (
+                        !codEnabled &&
+                        !onlinePaymentEnabled
+                    )
                 }
             >
-                {paymentMethod === "COD"
-                    ? `Place Order ₹${finalPayableAmount.toFixed(2)}`
-                    : `Pay ₹${finalPayableAmount.toFixed(2)}`}
-
+                {
+                    isCartEmpty
+                        ? "Cart is Empty"
+                        : paymentMethod === "COD"
+                            ? `Place Order ₹${finalPayableAmount.toFixed(2)}`
+                            : `Pay ₹${finalPayableAmount.toFixed(2)}`
+                }
             </button>
 
         </div >

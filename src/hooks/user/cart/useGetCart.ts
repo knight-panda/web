@@ -36,7 +36,23 @@ export const useGetCart = () => {
                 throw new Error(res.message);
             }
 
-            setData(res);
+            setData({
+                ...res,
+                data: {
+                    ...res.data,
+                    items: [...(res.data?.items || [])],
+                    itemTotal: res.data?.itemTotal || 0,
+                    totalDiscount: res.data?.totalDiscount || 0,
+                    packagingFee: res.data?.packagingFee || 0,
+                    deliveryFee: res.data?.deliveryFee || 0,
+                    platformFee: res.data?.platformFee || 0,
+                    codFee: res.data?.codFee || 0,
+                    gstAmount: res.data?.gstAmount || 0,
+                    grandTotal: res.data?.grandTotal || 0,
+                    codEnabled: res.data?.codEnabled || false,
+                    onlinePaymentEnabled: res.data?.onlinePaymentEnabled || false,
+                }
+            });
 
             return res;
 

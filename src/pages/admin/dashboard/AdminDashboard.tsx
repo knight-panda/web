@@ -114,14 +114,6 @@ const AdminDashboard = () => {
 
             </div>
 
-            {/* Search */}
-            <div className="search-bar">
-                <input
-                    type="text"
-                    placeholder="Search"
-                />
-            </div>
-
             {/* Stats */}
             <div className="stats-grid">
 
@@ -245,21 +237,20 @@ const AdminDashboard = () => {
                                 strokeDasharray="3 3"
                             />
 
-                            <XAxis dataKey="date" />
-
-                            <YAxis yAxisId="left" />
+                            <XAxis
+                                dataKey="date"
+                            />
 
                             <YAxis
-                                yAxisId="customers"
-                                orientation="right"
-                                domain={[0, 5]}
+                                yAxisId="left"
+                                domain={[0, (dataMax: number) => dataMax + 1]}
                             />
 
                             <Tooltip />
 
                             <Line
-                                yAxisId="customers"
-                                type="natural"
+                                yAxisId="left"
+                                type="monotone"
                                 dataKey="customers"
                                 stroke="#8884d8"
                                 strokeWidth={3}
@@ -268,7 +259,7 @@ const AdminDashboard = () => {
 
                             <Line
                                 yAxisId="left"
-                                type="natural"
+                                type="monotone"
                                 dataKey="orders"
                                 stroke="#82ca9d"
                                 strokeWidth={3}
@@ -277,7 +268,7 @@ const AdminDashboard = () => {
 
                             <Line
                                 yAxisId="left"
-                                type="natural"
+                                type="monotone"
                                 dataKey="visitors"
                                 stroke="#ff7300"
                                 strokeWidth={3}
