@@ -1,0 +1,133 @@
+.store-info-page {
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.store-info-container {
+    width: 100%;
+    max-width: 75rem;
+    margin: auto;
+}
+
+.store-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.si-title {
+    font-size: 1.5rem;
+    color: black;
+    font-weight: 600;
+}
+
+.si-desc {
+    font-size: 1rem;
+    color: #777;
+    font-weight: 400;
+}
+
+.save-btn {
+    border: none;
+    outline: none;
+    background: #111827;
+    color: white;
+    padding: 0.95rem 1.6rem;
+    border-radius: 0.8rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.save-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.save-btn:hover {
+    opacity: 0.9;
+}
+
+.store-info-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.info-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.info-card h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.store-info-form input,
+.store-info-form textarea {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border-radius: 0.8rem;
+    border: 0.08rem solid #d1d5db;
+    outline: none;
+    font-size: 0.92rem;
+    font-family: inherit;
+    transition: 0.2s;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.store-info-form input:focus,
+.store-info-form textarea:focus {
+    border-color: #111827;
+}
+
+.store-info-form textarea {
+    resize: vertical;
+    min-height: 6rem;
+}
+
+@media (max-width: 768px) {
+
+    .store-info-page {
+        padding: 1rem;
+    }
+
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .info-card {
+        padding: 1rem;
+    }
+
+    .store-info-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .save-btn {
+        width: 100%;
+    }
+}
