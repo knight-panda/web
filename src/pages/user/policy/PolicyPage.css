@@ -1,0 +1,27 @@
+.policy-page {
+    width: 100%;
+    min-height: 100vh;
+    padding: 3rem 1rem;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.policy-container {
+    width: 100%;
+    max-width: 60rem;
+    margin: auto;
+}
+
+.policy-container h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #111827;
+}
+
+.policy-content {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: #4b5563;
+    white-space: pre-wrap;
+}

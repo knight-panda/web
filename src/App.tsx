@@ -31,6 +31,7 @@ const AccountPage = lazy(() => import("./pages/user/account/AccountPage"));
 const Orders = lazy(() => import("./pages/user/order/Orders"));
 const OrderDetails = lazy(() => import("./pages/user/order/OrderDetails"));
 const MyProfile = lazy(() => import("./pages/user/profile/MyProfile"));
+const PrivacyPolicyPage = lazy(() => import("./pages/user/policy/PrivacyPolicyPage"));
 
 /* admin */
 const AdminDashboard = lazy(() => import("./pages/admin/dashboard/AdminDashboard"));
@@ -192,6 +193,7 @@ function App() {
                 <Route path="my-orders" element={<Orders />} />
                 <Route path="my-orders/:orderId" element={<OrderDetails />} />
               </Route>
+              <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
             </Route>
           )}
 

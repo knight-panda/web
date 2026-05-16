@@ -1,3 +1,4 @@
+import type { AdminStoreInformationResponse } from "../../models/admin/storeInformation/response/AdminStoreInformationResponse";
 import type { SingleStoreResponse } from "../../models/store/response/SingleStoreResponse";
 import type { PublicCarouselsResponse } from "../../models/user/public/response/PublicCarouselsResponse";
 import type { PublicProductsResponse } from "../../models/user/public/response/PublicProductsResponse";
@@ -24,5 +25,13 @@ export const getPublicProduct = async (
   storeId: string
 ): Promise<PublicProductsResponse> => {
   const response = await apiClient.get(`/public/store-products/${storeId}`);
+  return response.data;
+};
+
+// GET Store Info
+export const getPublicStoreInfo = async (
+  storeId: string
+): Promise<AdminStoreInformationResponse> => {
+  const response = await apiClient.get(`/public/store-info/${storeId}`);
   return response.data;
 };
