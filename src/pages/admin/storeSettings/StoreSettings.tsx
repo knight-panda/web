@@ -12,6 +12,7 @@ const StoreSettings = () => {
         fetchStoreSettings,
         updateStoreSettings,
         loading,
+        data,
     } = useAdminStoreSettings();
 
     const [settings, setSettings] =
@@ -136,6 +137,76 @@ const StoreSettings = () => {
                 <div className="sp-desc">
                     Manage your ecommerce store configuration
                 </div>
+            </div>
+
+            {/* STORE PAYMENT */}
+            <div className="settings-card">
+
+                <h2>
+                    Store Payment
+                </h2>
+
+                <div className="payment-summary">
+
+                    <div className="payment-box">
+
+                        <span>
+                            Total Revenue
+                        </span>
+
+                        <h3>
+                            ₹ {
+                                Number(
+                                    data?.data?.withdrawAmount ?? 0
+                                ).toFixed(2)
+                            }
+                        </h3>
+
+                    </div>
+
+                    <div className="payment-box">
+
+                        <span>
+                            Withdraw Amount
+                        </span>
+
+                        <h3>
+                            ₹ {
+                                Number(
+                                    data?.data?.withdrawAmount || 0
+                                ).toFixed(2)
+                            }
+                        </h3>
+
+                    </div>
+
+                </div>
+
+                <div className="withdraw-note">
+
+                    {
+                        data?.data?.withdrawNote ||
+                        "Only online payment orders are eligible for withdrawal."
+                    }
+
+                </div>
+
+            </div>
+
+            <div className="save-section">
+
+                <button
+                    className={`save-btn ${!hasChanges ? "disabled-btn" : ""}`}
+                    onClick={handleSave}
+                    disabled={!hasChanges || loading}
+                >
+                    {
+                        loading
+                            ? "Updating..."
+                            : "Update Settings"
+                    }
+                </button>
+
             </div>
 
             <div className="settings-grid">
@@ -345,21 +416,6 @@ const StoreSettings = () => {
 
             </div>
 
-            <div className="save-section">
-
-                <button
-                    className={`save-btn ${!hasChanges ? "disabled-btn" : ""}`}
-                    onClick={handleSave}
-                    disabled={!hasChanges || loading}
-                >
-                    {
-                        loading
-                            ? "Updating..."
-                            : "Update Settings"
-                    }
-                </button>
-
-            </div>
         </div>
     );
 };

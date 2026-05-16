@@ -6,6 +6,9 @@ export interface AdminStoreSettingsResponse {
 
 export interface StoreSettingsData {
     id: string;
+    totalRevenue: number;
+    withdrawAmount: number;
+    withdrawNote: string;
     deliveryFee: number;
     freeDeliveryAbove: number;
     minimumOrderAmount: number;

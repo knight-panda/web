@@ -209,7 +209,7 @@ const CreateStoreDialog: React.FC<Props> = ({ onClose }) => {
                             )
                         }
                         rows={4}
-                        maxLength={500}
+                        maxLength={200}
                         className="store-description"
                     />
 
@@ -217,7 +217,7 @@ const CreateStoreDialog: React.FC<Props> = ({ onClose }) => {
                         {
                             storeDescription.length
                         }
-                        /500
+                        /200
                     </p>
 
                     {/* Store Logo Upload */}
