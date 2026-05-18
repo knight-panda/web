@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ProductDetails.css";
 import { BsPlus, BsDash } from "react-icons/bs";
-import type { Product } from "../../models/user/public/response/PublicProductsResponse";
 import { useAddToCart } from "../../hooks/user/cart/useAddToCart";
+import type { Product } from "../../models/user/products/response/UserProductDetailsResponse";
 
 type ProductInfoProps = {
     product: Product;
@@ -15,7 +15,9 @@ const ProductInfo = ({
 
     const navigate = useNavigate();
 
-    const [qty, setQty] = useState(0);
+    const [qty, setQty] = useState(
+        product.cartQuantity || 0
+    );
 
     const {
         addProductToCart,
@@ -35,6 +37,10 @@ const ProductInfo = ({
 
     const userToken =
         storeTokens[activeStoreId || ""];
+
+    useEffect(() => {
+        setQty(product.cartQuantity || 0);
+    }, [product]);
 
     // increase qty
     const increase = async () => {

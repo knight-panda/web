@@ -1,60 +1,112 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import {
+  useOutletContext,
+  useParams,
+} from "react-router-dom";
 
 import ProductGallery from "../../../components/Product/ProductGallery";
 import ProductInfo from "../../../components/Product/ProductInfo";
 import "./ProductDetailsPage.css";
 import { usePublicProductDetails } from "../../../hooks/user/usePublicProductDetails";
-import { useOutletContext } from "react-router-dom";
-// import Products from "./Products";
+import { useUserProductDetails } from "../../../hooks/user/products/useUserProductDetails";
 
+// import Products from "./Products";
 type OutletContextType = {
   storeId: string;
-  store: any; // replace with proper type if available
+  store: any;
 };
 
 const ProductDetailsPage = () => {
-  const { storeId } = useOutletContext<OutletContextType>();
+
+  const { storeId } =
+    useOutletContext<OutletContextType>();
 
   const { productId } = useParams();
 
+  // PUBLIC PRODUCT
   const {
-    fetchProductDetails,
-    data,
-    loading,
-    error,
+    fetchProductDetails:
+    fetchPublicProductDetails,
+    data: publicData,
+    loading: publicLoading,
+    error: publicError,
   } = usePublicProductDetails();
+
+  // USER PRODUCT
+  const {
+    fetchProductDetails:
+    fetchUserProductDetails,
+    data: userData,
+    loading: userLoading,
+    error: userError,
+  } = useUserProductDetails();
+
+  // active store token
+  const storeTokens = JSON.parse(
+    localStorage.getItem("storeTokens") || "{}"
+  );
+
+  const activeStoreId =
+    localStorage.getItem("activeStoreId");
+
+  const userToken =
+    storeTokens[activeStoreId || ""];
 
   useEffect(() => {
 
-    if (storeId && productId) {
-      fetchProductDetails(storeId, productId);
+    if (!productId) return;
+
+    // if logged in
+    if (userToken) {
+
+      fetchUserProductDetails(productId);
+
+    } else if (storeId) {
+
+      // public api
+      fetchPublicProductDetails(
+        storeId,
+        productId
+      );
     }
 
   }, [storeId, productId]);
 
-  if (loading) {
+  // loading
+  if (publicLoading || userLoading) {
     return <p>Loading...</p>;
   }
 
-  if (error) {
-    return <p>{error}</p>;
+  // error
+  if (publicError || userError) {
+    return (
+      <p>
+        {publicError || userError}
+      </p>
+    );
   }
 
-  if (!data?.data) {
+  // final product
+  const product =
+    userData?.data ||
+    publicData?.data;
+
+  if (!product) {
     return <p>Product not found</p>;
   }
-
-  const product = data.data;
 
   return (
     <div className="product-page">
 
       <div className="product-container">
 
-        <ProductGallery product={product} />
+        <ProductGallery
+          product={product}
+        />
 
-        <ProductInfo product={product} />
+        <ProductInfo
+          product={product}
+        />
 
       </div>
 
