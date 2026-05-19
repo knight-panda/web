@@ -1,4 +1,5 @@
 import type { UserAddressRequest } from "../../models/user/address/request/UserAddressRequest";
+import type { UserProfileRequest } from "../../models/user/address/request/UserProfileRequest";
 import type { UserAddressResponse } from "../../models/user/address/response/UserAddressResponse ";
 import userApiClient from "../userApiClient";
 
@@ -26,3 +27,16 @@ export const updateUserAddress =
 
         return response.data;
     };
+
+export const updateUserProfile = async (
+    request: UserProfileRequest
+): Promise<UserAddressResponse> => {
+
+    const response =
+        await userApiClient.put(
+            "/user/update-profile",
+            request
+        );
+
+    return response.data;
+};

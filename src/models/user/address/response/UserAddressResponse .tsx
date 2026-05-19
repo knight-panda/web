@@ -9,6 +9,7 @@ export interface UserAddressData {
     name: string;
     email: string;
     phone: string;
+    profile: string;
     houseNo: string;
     area: string;
     landmark: string;

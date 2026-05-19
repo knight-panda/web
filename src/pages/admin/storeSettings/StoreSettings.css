@@ -32,7 +32,6 @@
 }
 
 /* GRID */
-
 .settings-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(21.25rem, 1fr));
@@ -40,7 +39,6 @@
 }
 
 /* CARD */
-
 .settings-card {
     background: #ffffff;
     border-radius: 1.5rem;
@@ -64,7 +62,6 @@
 }
 
 /* PAYMENT SUMMARY */
-
 .payment-summary {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(13.75rem, 1fr));
@@ -100,7 +97,6 @@
 }
 
 /* FORM */
-
 .form-group {
     display: flex;
     flex-direction: column;
@@ -136,7 +132,6 @@
 }
 
 /* TOGGLE */
-
 .toggle-group {
     display: flex;
     align-items: center;
@@ -161,12 +156,9 @@
 }
 
 /* SAVE SECTION */
-
 .save-section {
     bottom: 0;
     backdrop-filter: blur(0.625rem);
-    border-top: 0.0625rem solid #e5e7eb;
-    padding: 1.125rem 0;
     display: flex;
     justify-content: flex-end;
     z-index: 10;
