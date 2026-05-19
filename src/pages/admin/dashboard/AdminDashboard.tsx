@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import {
     LineChart,
@@ -12,9 +12,12 @@ import {
 
 import "./AdminDashboard.css";
 import { useStoreAnalytics } from "../../../hooks/admin/adminStoreAnalytics/useAdminStoreAnalytics";
+import { useAdminProfile } from "../../../hooks/admin/auth/useAdminProfile";
 
 const AdminDashboard = () => {
 
+    const [name, setName] = useState("");
+    const [profile, setProfile] = useState("");
     const {
         analytics,
         fetchAnalytics,
@@ -22,9 +25,40 @@ const AdminDashboard = () => {
         error
     } = useStoreAnalytics();
 
+    const {
+        fetchAdminProfile,
+        updateAdminProfile,
+        data,
+        adminProfileloading,
+    } = useAdminProfile();
+
+    useEffect(() => {
+        fetchAnalytics(30);
+
+    }, []);
+
     useEffect(() => {
 
-        fetchAnalytics(30);
+        const fetchData = async () => {
+
+            try {
+
+                const res =
+                    await fetchAdminProfile();
+
+                setName(res.data.name || "");
+
+                setProfile(
+                    res.data.profile || ""
+                );
+
+            } catch (error) {
+
+                console.log(error);
+            }
+        };
+
+        fetchData();
 
     }, []);
 
@@ -86,21 +120,24 @@ const AdminDashboard = () => {
                         📅 Date
                     </button>
 
-                    <button className="export-btn">
-                        ⬇ Export
-                    </button>
-
                     <div className="profile">
 
                         <img
-                            src="https://i.pravatar.cc/40"
-                            alt="profile"
-                            className="profile-img"
+                            src={
+                                profile ||
+                                "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                            }
+                            alt="Profile"
+                            className="ad-profile-img"
+                            onError={(e) => {
+                                e.currentTarget.src =
+                                    "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+                            }}
                         />
 
                         <div>
                             <div className="profile-name">
-                                Gulraiz Khan
+                                {data?.data.name}
                             </div>
 
                             <span className="profile-role">

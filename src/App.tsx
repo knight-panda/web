@@ -45,6 +45,7 @@ const StoreInformation = lazy(() => import("./pages/admin/storeInformation/Store
 const CarouselAdmin = lazy(() => import("./pages/store/carousel/CarouselAdmin"));
 const ProductsAdmin = lazy(() => import("./pages/admin/products/ProductsAdmin"));
 const AddUpdateProduct = lazy(() => import("./pages/admin/products/AddUpdateProduct"));
+const AdminProfile = lazy(() => import("./pages/admin/adminProfile/AdminProfile"));
 
 /* ========================= */
 
@@ -118,6 +119,7 @@ function App() {
                 }
               >
                 <Route index element={<AdminDashboard />} />
+                <Route path="profile" element={<AdminProfile />} />
                 <Route path="orders" element={<OrdersAdmin />} />
                 <Route path="orders/:orderId" element={<OrderDetailsAdmin />} />
                 <Route path="store-settings" element={<StoreSettings />} />

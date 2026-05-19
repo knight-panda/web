@@ -121,7 +121,17 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ onTagClick }) => {
             );
 
             if (isConfirm) {
-                window.location.href = "/login";
+
+                // ⭐ clear token
+                localStorage.removeItem("token");
+
+                // optional
+                localStorage.removeItem("refreshToken");
+
+                // or clear all storage
+                // localStorage.clear();
+
+                window.location.href = "/";
             }
 
             return;
