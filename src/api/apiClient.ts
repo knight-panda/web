@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "http://64.227.148.177:8080/api",
+  baseURL: "https://api.crazoweb.com/api",
   headers: {
     "Content-Type": "application/json",
   },

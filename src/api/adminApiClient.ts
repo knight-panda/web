@@ -2,7 +2,7 @@ import axios from "axios";
 
 const adminApiClient = axios.create({
     baseURL:
-        "http://64.227.148.177:8080/api",
+        "https://api.crazoweb.com/api",
 
     headers: {
         "Content-Type": "application/json",
