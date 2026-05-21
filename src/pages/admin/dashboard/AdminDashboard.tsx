@@ -16,7 +16,6 @@ import { useAdminProfile } from "../../../hooks/admin/auth/useAdminProfile";
 
 const AdminDashboard = () => {
 
-    const [name, setName] = useState("");
     const [profile, setProfile] = useState("");
     const {
         analytics,
@@ -27,9 +26,7 @@ const AdminDashboard = () => {
 
     const {
         fetchAdminProfile,
-        updateAdminProfile,
         data,
-        adminProfileloading,
     } = useAdminProfile();
 
     useEffect(() => {
@@ -45,8 +42,6 @@ const AdminDashboard = () => {
 
                 const res =
                     await fetchAdminProfile();
-
-                setName(res.data.name || "");
 
                 setProfile(
                     res.data.profile || ""
