@@ -170,12 +170,6 @@ const CreateStoreDialog: React.FC<Props> = ({ onClose }) => {
                         Create Your Store
                     </h2>
 
-                    <button
-                        onClick={onClose}
-                    >
-                        ✕
-                    </button>
-
                 </div>
 
                 {/* Form */}
