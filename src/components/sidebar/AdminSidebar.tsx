@@ -8,7 +8,8 @@ import {
     FaChevronDown,
     FaChevronRight,
     FaImages,
-    FaStore
+    FaStore,
+    FaGlobe
 } from "react-icons/fa";
 
 import { useLocation } from "react-router-dom";
@@ -97,6 +98,12 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ onTagClick }) => {
             id: "products",
             label: "Products",
             icon: FaFileMedical,
+        },
+
+        {
+            id: "store-domain",
+            label: "Store Domain",
+            icon: FaGlobe,
         },
 
         {

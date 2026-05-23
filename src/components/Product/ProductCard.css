@@ -59,7 +59,7 @@
 
 /* ADD BUTTON */
 .add-btn {
-  padding: 0.55rem 1rem;
+  padding: 0.7rem 1rem;
   border: 1px solid var(--primary-color);
   background: #fff;
   color: var(--primary-color);
@@ -85,10 +85,10 @@
 .qty-controller {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.3rem;
   background: var(--primary-color);
   border-radius: 0.5rem;
-  padding: 0.2rem 0.5rem;
+  padding: 0.5rem 0.5rem;
 }
 
 .qty-controller button {
@@ -214,6 +214,10 @@
 
   .add-btn {
     font-size: 0.85rem;
-    padding: 0.45rem 0.8rem;
+    padding: 0.6rem 0.8rem;
+  }
+
+  .qty-controller {
+    padding: 0.4rem 0.5rem;
   }
 }
