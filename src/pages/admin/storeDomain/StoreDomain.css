@@ -1,241 +1,281 @@
-.connect-domain {
+.sd-connect-domain {
     width: 100%;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    box-sizing: border-box;
 }
 
-.domain-container {
-    margin: auto;
+.sd-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-.domain-header {
+.sd-header {
     display: flex;
     flex-direction: column;
     gap: 0.375rem;
 }
 
-.domain-title {
+.sd-title {
+    margin: 0;
+    padding: 0;
     font-size: 1.875rem;
     font-weight: 700;
     color: #111827;
     letter-spacing: -0.03125rem;
 }
 
-.domain-desc {
+.sd-desc {
+    margin: 0;
+    padding: 0;
     font-size: 0.9375rem;
     color: #6b7280;
     font-weight: 400;
 }
 
-.domain-grid {
+.sd-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
-.domain-card {
+.sd-card {
     background: #ffffff;
     padding: 2rem;
     border-radius: 1.5rem;
     border: 0.0625rem solid #e2e8f0;
     box-shadow: 0 0.25rem 1rem rgba(15, 23, 42, 0.05);
+    box-sizing: border-box;
 }
 
-.domain-card h2 {
-    font-size: 1.6rem;
-    margin-bottom: 2rem;
-    color: #0f172a;
+.sd-card-title {
+    margin: 0 0 2rem 0;
+    padding: 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #111827;
 }
 
-.input-group {
+.sd-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
     margin-bottom: 1.5rem;
 }
 
-.input-group label {
-    display: block;
-    margin-bottom: 0.6rem;
-    color: #475569;
-    font-size: 0.95rem;
+.sd-label {
+    font-size: 0.9375rem;
     font-weight: 500;
+    color: #374151;
 }
 
-.input-group input {
+.sd-input {
     width: 100%;
+    height: 3.25rem;
+    padding: 0 1rem;
+    border-radius: 1rem;
+    border: 0.0625rem solid #d1d5db;
     background: #ffffff;
-    border: 0.0625rem solid #cbd5e1;
-    border-radius: 1rem;
-    padding: 1rem;
-    color: #0f172a;
-    outline: none;
-    font-size: 1rem;
-    transition: 0.3s;
-}
-
-.input-group input:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.1);
-}
-
-.ssl-box {
-    background: rgba(34, 197, 94, 0.08);
-    border: 0.0625rem solid rgba(34, 197, 94, 0.2);
-    padding: 1rem;
-    border-radius: 1rem;
-    margin-bottom: 2rem;
-}
-
-.ssl-box h3 {
-    color: #16a34a;
-    margin-bottom: 0.5rem;
-}
-
-.ssl-box p {
-    color: #475569;
     font-size: 0.95rem;
+    color: #111827;
+    outline: none;
+    transition: 0.2s ease;
+    box-sizing: border-box;
 }
 
-.domain-save-btn {
-    width: 100%;
-    border: none;
-    background: #2563eb;
+.sd-input:focus {
+    border-color: #111827;
+}
+
+.sd-ssl-box {
     padding: 1rem;
     border-radius: 1rem;
-    color: white;
+    background: #ecfdf5;
+    border: 0.0625rem solid #bbf7d0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+}
+
+.sd-ssl-title {
+    margin: 0;
     font-size: 1rem;
     font-weight: 600;
+    color: #15803d;
+}
+
+.sd-ssl-desc {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #166534;
+    line-height: 1.5;
+}
+
+.sd-save-btn {
+    height: 3.25rem;
+    padding: 0 1.75rem;
+    border: none;
+    border-radius: 0.875rem;
+    background: #111827;
+    color: white;
+    font-size: 0.9375rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.2s ease;
 }
 
-.domain-save-btn:hover {
-    background: #1d4ed8;
+.sd-save-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
-.dns-box {
+.sd-save-btn:hover {
+    transform: translateY(-0.0625rem);
+    opacity: 0.95;
+}
+
+.sd-dns-box {
     background: #f8fafc;
     border: 0.0625rem solid #e2e8f0;
     border-radius: 1rem;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.dns-top {
+    padding: 1.25rem;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
     margin-bottom: 1rem;
 }
 
-.dns-top h3 {
-    font-size: 1.1rem;
-    color: #0f172a;
+.sd-dns-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.dns-top button {
-    background: #e2e8f0;
+.sd-dns-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.sd-copy-btn {
+    height: 2.25rem;
+    padding: 0 1rem;
     border: none;
-    color: #0f172a;
-    padding: 0.6rem 1rem;
-    border-radius: 0.7rem;
+    border-radius: 0.75rem;
+    background: #e5e7eb;
+    color: #111827;
     cursor: pointer;
-    transition: 0.3s;
+    font-size: 0.875rem;
     font-weight: 500;
 }
 
-.dns-top button:hover {
-    background: #cbd5e1;
-}
-
-.dns-row {
+.sd-dns-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 0.8rem;
-    font-size: 0.95rem;
+    align-items: center;
 }
 
-.dns-row span:first-child {
-    color: #64748b;
+.sd-dns-key {
+    color: #6b7280;
+    font-size: 0.9rem;
 }
 
-.dns-row span:last-child {
-    color: #0f172a;
+.sd-dns-value {
+    color: #111827;
+    font-size: 0.9rem;
     font-weight: 500;
 }
 
-.info-box {
-    background: rgba(37, 99, 235, 0.08);
-    border: 0.0625rem solid rgba(37, 99, 235, 0.2);
+.sd-info-box {
     padding: 1rem;
     border-radius: 1rem;
-    color: #334155;
-    font-size: 0.95rem;
+    background: #eff6ff;
+    border: 0.0625rem solid #bfdbfe;
+    color: #1d4ed8;
+    font-size: 0.9rem;
+    line-height: 1.5;
 }
 
-.steps-card {
-    margin-top: 3rem;
+.sd-steps-card {
     background: #ffffff;
-    border: 0.0625rem solid #e2e8f0;
-    border-radius: 1.5rem;
     padding: 2rem;
+    border-radius: 1.5rem;
+    border: 0.0625rem solid #e2e8f0;
     box-shadow: 0 0.25rem 1rem rgba(15, 23, 42, 0.05);
 }
 
-.steps-card h2 {
-    font-size: 1.8rem;
-    margin-bottom: 2rem;
-    color: #0f172a;
+.sd-steps-title {
+    margin: 0 0 2rem 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
 }
 
-.step {
+.sd-step {
     display: flex;
-    gap: 1.2rem;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.sd-step:not(:last-child) {
     margin-bottom: 2rem;
 }
 
-.step-number {
+.sd-step-number {
+    min-width: 3rem;
     width: 3rem;
     height: 3rem;
-    background: #2563eb;
-    color: white;
     border-radius: 50%;
+    background: #111827;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1rem;
     font-weight: 700;
-    flex-shrink: 0;
 }
 
-.step h3 {
-    margin-bottom: 0.5rem;
-    color: #0f172a;
+.sd-step-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
 }
 
-.step p {
-    color: #64748b;
+.sd-step-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.sd-step-desc {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.92rem;
     line-height: 1.6;
 }
 
 @media (max-width: 62rem) {
 
-    .domain-grid {
+    .sd-grid {
         grid-template-columns: 1fr;
     }
 }
 
 @media (max-width: 40rem) {
 
-    .connect-domain {
-        padding: 1rem;
+    .sd-card,
+    .sd-steps-card {
+        padding: 1.25rem;
     }
 
-    .domain-card,
-    .steps-card {
-        padding: 1.5rem;
-    }
-
-    .domain-header h1 {
-        font-size: 2rem;
+    .sd-title {
+        font-size: 1.5rem;
     }
 }

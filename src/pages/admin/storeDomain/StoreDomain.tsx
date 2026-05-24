@@ -1,184 +1,365 @@
+import { useEffect, useState } from "react";
 import "./StoreDomain.css";
+import { useAdminStoreDomain } from "../../../hooks/admin/storeDomain/useAdminStoreDomain";
 
 const StoreDomain = () => {
+
+    const {
+        fetchStoreDomain,
+        updateStoreDomain,
+        loading,
+    } = useAdminStoreDomain();
+
+    const [domain, setDomain] =
+        useState("");
+
+    const [initialDomain, setInitialDomain] =
+        useState("");
+
+    // FETCH DOMAIN
+    useEffect(() => {
+
+        const fetchData = async () => {
+
+            try {
+
+                const response =
+                    await fetchStoreDomain();
+
+                if (response.data?.domain) {
+
+                    setDomain(
+                        response.data.domain
+                    );
+
+                    setInitialDomain(
+                        response.data.domain
+                    );
+                }
+
+            } catch (e) {
+
+                console.log(e);
+            }
+        };
+
+        fetchData();
+
+    }, []);
+
+    // CHECK DOMAIN CHANGED
+    const isChanged =
+        domain.trim() !==
+        initialDomain.trim();
+
+    // SAVE DOMAIN
+    const handleSave = async () => {
+
+        try {
+
+            const response =
+                await fetchStoreDomain();
+
+            const currentData =
+                response.data;
+
+            if (!currentData) {
+                return;
+            }
+
+            await updateStoreDomain({
+                storeName:
+                    currentData.storeName,
+
+                storeDescription:
+                    currentData.storeDescription,
+
+                domain,
+
+                subdomain:
+                    currentData.subdomain,
+
+                logoUrl:
+                    currentData.logoUrl,
+
+                faviconUrl:
+                    currentData.faviconUrl,
+
+                primaryColor:
+                    currentData.primaryColor,
+
+                secondaryColor:
+                    currentData.secondaryColor,
+            });
+
+            // UPDATE INITIAL DOMAIN
+            setInitialDomain(domain);
+
+            alert(
+                "Domain updated successfully"
+            );
+
+        } catch (e: any) {
+
+            alert(
+                e?.message ||
+                "Failed to update domain"
+            );
+        }
+    };
+
     return (
-        <div className="connect-domain">
+        <div className="sd-connect-domain">
 
-            {/* HEADER */}
-            <div className="domain-header">
-                <div className="domain-title">Connect Your Domain</div>
+            <div className="sd-container">
 
-                <div className="domain-desc">
-                    Connect your custom domain to your ecommerce store
-                    and start selling with your own brand identity.
-                </div>
-            </div>
+                {/* HEADER */}
+                <div className="sd-header">
 
-            {/* CONTENT */}
-            <div className="domain-grid">
-
-                {/* LEFT SIDE */}
-                <div className="domain-card">
-
-                    <h2>Store Domain Setup</h2>
-
-                    <div className="input-group">
-                        <label>Custom Domain</label>
-
-                        <input
-                            type="text"
-                            placeholder="example.com"
-                        />
+                    <div className="sd-title">
+                        Connect Your Domain
                     </div>
 
-                    <div className="ssl-box">
-                        <h3>Free SSL Certificate</h3>
-
-                        <p>
-                            SSL will automatically activate after
-                            successful domain verification.
-                        </p>
-                    </div>
-
-                    <button className="domain-save-btn">
-                        Save & Verify Domain
-                    </button>
-                </div>
-
-                {/* RIGHT SIDE */}
-                <div className="domain-card">
-
-                    <h2>DNS Configuration</h2>
-
-                    {/* A RECORD */}
-                    <div className="dns-box">
-
-                        <div className="dns-top">
-                            <h3>A Record</h3>
-
-                            <button>
-                                Copy
-                            </button>
-                        </div>
-
-                        <div className="dns-row">
-                            <span>Type</span>
-                            <span>A</span>
-                        </div>
-
-                        <div className="dns-row">
-                            <span>Host</span>
-                            <span>@</span>
-                        </div>
-
-                        <div className="dns-row">
-                            <span>Value</span>
-                            <span>64.227.148.177</span>
-                        </div>
-                    </div>
-
-                    {/* CNAME */}
-                    <div className="dns-box">
-
-                        <div className="dns-top">
-                            <h3>CNAME Record</h3>
-
-                            <button>
-                                Copy
-                            </button>
-                        </div>
-
-                        <div className="dns-row">
-                            <span>Type</span>
-                            <span>CNAME</span>
-                        </div>
-
-                        <div className="dns-row">
-                            <span>Host</span>
-                            <span>www</span>
-                        </div>
-
-                        <div className="dns-row">
-                            <span>Value</span>
-                            <span>app.yourstore.com</span>
-                        </div>
-                    </div>
-
-                    <div className="info-box">
-                        DNS changes may take 5 minutes to 24 hours
-                        depending on your domain provider.
-                    </div>
-
-                </div>
-            </div>
-
-            {/* STEPS */}
-            <div className="steps-card">
-
-                <h2>How To Connect Domain</h2>
-
-                <div className="step">
-
-                    <div className="step-number">
-                        1
-                    </div>
-
-                    <div>
-                        <h3>Buy Domain</h3>
-
-                        <p>
-                            Purchase a domain from Hostinger,
-                            GoDaddy, Namecheap or Cloudflare.
-                        </p>
+                    <div className="sd-desc">
+                        Connect your custom domain to your ecommerce
+                        store and start selling with your own brand identity.
                     </div>
                 </div>
 
-                <div className="step">
+                {/* GRID */}
+                <div className="sd-grid">
 
-                    <div className="step-number">
-                        2
+                    {/* LEFT */}
+                    <div className="sd-card">
+
+                        <div className="sd-card-title">
+                            Store Domain Setup
+                        </div>
+
+                        <div className="sd-input-group">
+
+                            <label className="sd-label">
+                                Custom Domain
+                            </label>
+
+                            <input
+                                className="sd-input"
+                                type="text"
+                                value={domain}
+                                onChange={(e) =>
+                                    setDomain(e.target.value)
+                                }
+                                placeholder="example.com"
+                            />
+                        </div>
+
+                        <div className="sd-ssl-box">
+
+                            <div className="sd-ssl-title">
+                                Free SSL Certificate
+                            </div>
+
+                            <div className="sd-ssl-desc">
+                                SSL will automatically activate after
+                                successful domain verification.
+                            </div>
+                        </div>
+
+                        <button
+                            className="sd-save-btn"
+                            onClick={handleSave}
+                            disabled={
+                                loading ||
+                                !isChanged
+                            }
+                        >
+                            {
+                                loading
+                                    ? "Saving..."
+                                    : "Save & Verify Domain"
+                            }
+                        </button>
                     </div>
 
-                    <div>
-                        <h3>Open DNS Settings</h3>
+                    {/* RIGHT */}
+                    <div className="sd-card">
 
-                        <p>
-                            Login to your domain provider and
-                            open DNS Management.
-                        </p>
+                        <div className="sd-card-title">
+                            DNS Configuration
+                        </div>
+
+                        {/* A RECORD */}
+                        <div className="sd-dns-box">
+
+                            <div className="sd-dns-top">
+
+                                <div className="sd-dns-title">
+                                    A Record
+                                </div>
+                            </div>
+
+                            <div className="sd-dns-row">
+                                <div className="sd-dns-key">
+                                    Type
+                                </div>
+
+                                <div className="sd-dns-value">
+                                    A
+                                </div>
+                            </div>
+
+                            <div className="sd-dns-row">
+                                <div className="sd-dns-key">
+                                    Host
+                                </div>
+
+                                <div className="sd-dns-value">
+                                    @
+                                </div>
+                            </div>
+
+                            <div className="sd-dns-row">
+                                <div className="sd-dns-key">
+                                    Value
+                                </div>
+
+                                <div className="sd-dns-value">
+                                    64.227.148.177
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* CNAME */}
+                        <div className="sd-dns-box">
+
+                            <div className="sd-dns-top">
+
+                                <div className="sd-dns-title">
+                                    CNAME Record
+                                </div>
+                            </div>
+
+                            <div className="sd-dns-row">
+                                <div className="sd-dns-key">
+                                    Type
+                                </div>
+
+                                <div className="sd-dns-value">
+                                    CNAME
+                                </div>
+                            </div>
+
+                            <div className="sd-dns-row">
+                                <div className="sd-dns-key">
+                                    Host
+                                </div>
+
+                                <div className="sd-dns-value">
+                                    www
+                                </div>
+                            </div>
+
+                            <div className="sd-dns-row">
+                                <div className="sd-dns-key">
+                                    Value
+                                </div>
+
+                                <div className="sd-dns-value">
+                                    yourstore.crazoweb.com
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="sd-info-box">
+                            DNS changes may take 5 minutes to 24 hours
+                            depending on your domain provider.
+                        </div>
                     </div>
                 </div>
 
-                <div className="step">
+                {/* STEPS */}
+                <div className="sd-steps-card">
 
-                    <div className="step-number">
-                        3
+                    <div className="sd-steps-title">
+                        How To Connect Domain
                     </div>
 
-                    <div>
-                        <h3>Add DNS Records</h3>
+                    <div className="sd-step">
 
-                        <p>
-                            Add the A Record and CNAME Record
-                            provided above.
-                        </p>
+                        <div className="sd-step-number">
+                            1
+                        </div>
+
+                        <div className="sd-step-content">
+
+                            <div className="sd-step-title">
+                                Buy Domain
+                            </div>
+
+                            <div className="sd-step-desc">
+                                Purchase a domain from Hostinger,
+                                GoDaddy, Namecheap or Cloudflare.
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div className="step">
+                    <div className="sd-step">
 
-                    <div className="step-number">
-                        4
+                        <div className="sd-step-number">
+                            2
+                        </div>
+
+                        <div className="sd-step-content">
+
+                            <div className="sd-step-title">
+                                Open DNS Settings
+                            </div>
+
+                            <div className="sd-step-desc">
+                                Login to your domain provider and
+                                open DNS Management.
+                            </div>
+                        </div>
                     </div>
 
-                    <div>
-                        <h3>Wait For Verification</h3>
+                    <div className="sd-step">
 
-                        <p>
-                            DNS propagation may take some time.
-                            SSL activates automatically.
-                        </p>
+                        <div className="sd-step-number">
+                            3
+                        </div>
+
+                        <div className="sd-step-content">
+
+                            <div className="sd-step-title">
+                                Add DNS Records
+                            </div>
+
+                            <div className="sd-step-desc">
+                                Add the A Record and CNAME Record
+                                provided above.
+                            </div>
+                        </div>
                     </div>
+
+                    <div className="sd-step">
+
+                        <div className="sd-step-number">
+                            4
+                        </div>
+
+                        <div className="sd-step-content">
+
+                            <div className="sd-step-title">
+                                Wait For Verification
+                            </div>
+
+                            <div className="sd-step-desc">
+                                DNS propagation may take some time.
+                                SSL activates automatically.
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
