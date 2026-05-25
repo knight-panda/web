@@ -46,6 +46,29 @@ const CreateStoreDialog: React.FC<Props> = ({ onClose }) => {
     const generateSlug = (name: string) =>
         name.toLowerCase().trim().replace(/\s+/g, "-");
 
+    const validateImage = (file: File) => {
+
+        // only images
+        if (!file.type.startsWith("image/")) {
+
+            alert("Please upload a valid image");
+
+            return false;
+        }
+
+        // 7MB limit
+        const maxSize = 7 * 1024 * 1024;
+
+        if (file.size > maxSize) {
+
+            alert("Image size must be less than 7MB");
+
+            return false;
+        }
+
+        return true;
+    };
+
     const handleSubmit = async (
         e: React.FormEvent
     ) => {
@@ -227,25 +250,27 @@ const CreateStoreDialog: React.FC<Props> = ({ onClose }) => {
                             onChange={(e) => {
 
                                 const file =
-                                    e.target
-                                        .files?.[0];
+                                    e.target.files?.[0];
 
-                                if (file) {
+                                if (!file) return;
 
-                                    setStoreImage(
-                                        file
-                                    );
+                                const isValid =
+                                    validateImage(file);
 
-                                    setPreview(
-                                        URL.createObjectURL(
-                                            file
-                                        )
-                                    );
+                                if (!isValid) {
 
-                                    setLogoError(
-                                        null
-                                    );
+                                    e.target.value = "";
+
+                                    return;
                                 }
+
+                                setStoreImage(file);
+
+                                setPreview(
+                                    URL.createObjectURL(file)
+                                );
+
+                                setLogoError(null);
                             }}
                         />
 
@@ -276,21 +301,25 @@ const CreateStoreDialog: React.FC<Props> = ({ onClose }) => {
                             onChange={(e) => {
 
                                 const file =
-                                    e.target
-                                        .files?.[0];
+                                    e.target.files?.[0];
 
-                                if (file) {
+                                if (!file) return;
 
-                                    setFaviconImage(
-                                        file
-                                    );
+                                const isValid =
+                                    validateImage(file);
 
-                                    setFaviconPreview(
-                                        URL.createObjectURL(
-                                            file
-                                        )
-                                    );
+                                if (!isValid) {
+
+                                    e.target.value = "";
+
+                                    return;
                                 }
+
+                                setFaviconImage(file);
+
+                                setFaviconPreview(
+                                    URL.createObjectURL(file)
+                                );
                             }}
                         />
 

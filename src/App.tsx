@@ -6,6 +6,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
 import UserProtectedRoute from "./routes/UserProtectedRoute";
 import UserPublicRoute from "./routes/UserPublicRoute";
+import AppShimmer from "./components/shimmer/AppShimmer";
 
 /* =========================
    Lazy Imports
@@ -96,7 +97,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Suspense fallback={<div className="app-loader">Loading...</div>}>
+      <Suspense fallback={<AppShimmer />}>
         <Routes>
 
           {/* ================= MAIN DOMAIN (xyz.com) ================= */}

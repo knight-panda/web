@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import ScrollToTop from "../../utils/ScrollToTop";
 import { useEffect, useMemo } from "react";
 import { usePublicStore } from "../../hooks/user/usePublicStore";
+import AppShimmer from "../../components/shimmer/AppShimmer";
 
 /* ================= STORE DETECTION ================= */
 const getStoreName = () => {
@@ -150,16 +151,7 @@ const MainLayout = () => {
   if (loading) {
 
     return (
-      <div
-        style={{
-          textAlign: "center",
-          marginTop: "6rem"
-        }}
-      >
-        <h2>
-          Loading store...
-        </h2>
-      </div>
+      <AppShimmer />
     );
   }
 

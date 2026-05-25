@@ -31,9 +31,32 @@ const AddCarouselDialog: React.FC<Props> = ({
   const isLoading = uploading || createLoading || updateLoading;
 
   const handleImage = (file: File | null) => {
+
     if (!file) return;
+
+    // only image
+    if (!file.type.startsWith("image/")) {
+
+      alert("Please upload a valid image");
+
+      return;
+    }
+
+    // 7MB limit
+    const maxSize = 7 * 1024 * 1024;
+
+    if (file.size > maxSize) {
+
+      alert("Image size must be less than 7MB");
+
+      return;
+    }
+
     setFile(file);
-    setPreview(URL.createObjectURL(file));
+
+    setPreview(
+      URL.createObjectURL(file)
+    );
   };
 
   const handleSave = async (e: React.FormEvent) => {

@@ -74,6 +74,28 @@ const AdminProfile = () => {
 
             if (!file) return;
 
+            // allow only images
+            if (!file.type.startsWith("image/")) {
+
+                alert("Please upload a valid image");
+
+                return;
+            }
+
+            // 7MB limit
+            const maxSize = 7 * 1024 * 1024;
+
+            if (file.size > maxSize) {
+
+                alert("Image size must be less than 7MB");
+
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = "";
+                }
+
+                return;
+            }
+
             setUploading(true);
 
             const uploadedUrl =
