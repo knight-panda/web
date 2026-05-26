@@ -8,7 +8,7 @@ interface Props {
     onClose: () => void;
 }
 
-const CreateStoreDialog: React.FC<Props> = ({ onClose }) => {
+const CreateStoreDialog: React.FC<Props> = () => {
 
     const navigate = useNavigate();
 
