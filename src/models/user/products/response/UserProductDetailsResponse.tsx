@@ -1,7 +1,7 @@
 export interface UserProductDetailsResponse {
-    success: boolean;
-    message: string;
-    data: Product;
+  success: boolean;
+  message: string;
+  data: Product;
 }
 
 export interface Product {
@@ -9,18 +9,31 @@ export interface Product {
   storeId: string;
   name: string;
   description: string;
-  price: number;
-  discountPrice: number;
-  stock: number;
-  maxOrderStock: number;
-  cartQuantity: number;
+  category: string;
   categoryId: string | null;
   imageThumbnail: string;
   imageUrls: string[];
   tags: string[];
   rating: number | null;
   reviewCount: number | null;
+  variants: ProductVariant[];
   isActive: boolean | null;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface ProductVariant {
+  variantId: string;
+  variantName: string;
+  size?: string;
+  color?: string;
+  unitValue?: number;
+  unitType?: string;
+  sku: string;
+  price: number;
+  discountPrice?: number;
+  quantity: number;
+  cartQuantity: number;
+  maxOrderQuantity: number;
+  createdAt: string;
 }

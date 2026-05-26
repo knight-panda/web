@@ -3,53 +3,117 @@ import { BsPlus, BsDash } from "react-icons/bs";
 import "./ProductCardAdmin.css";
 import { IoMdArrowDropdown } from "react-icons/io";
 
+type Variant = {
+  variantId: string;
+
+  variantName: string;
+
+  price: number;
+
+  discountPrice?: number;
+
+  quantity: number;
+
+  unitValue?: number;
+
+  unitType?: string;
+};
+
 type Props = {
   title: string;
+
   description?: string;
-  price: number;
-  mrp: number;
-  stock: number;
+
   image: string;
+
+  variants: Variant[];
 };
 
 const ProductCardAdmin: React.FC<Props> = ({
   title,
   description,
-  price,
-  mrp,
-  stock,
   image,
+  variants,
 }) => {
+
   const [qty, setQty] = useState(0);
 
+  const [selectedVariantIndex, setSelectedVariantIndex] =
+    useState(0);
+
+  const selectedVariant =
+    variants[selectedVariantIndex];
+
+  const price =
+    selectedVariant?.discountPrice ||
+    selectedVariant?.price ||
+    0;
+
+  const mrp =
+    selectedVariant?.price || 0;
+
+  const stock =
+    selectedVariant?.quantity || 0;
+
+  // increase
   const increase = () => {
-    if (qty < stock) setQty(qty + 1);
+
+    if (qty < stock) {
+
+      setQty((prev) => prev + 1);
+    }
   };
 
+  // decrease
   const decrease = () => {
-    if (qty > 0) setQty(qty - 1);
+
+    if (qty > 0) {
+
+      setQty((prev) => prev - 1);
+    }
   };
 
-  // calculate discount %
-  const discount = Math.round(((mrp - price) / mrp) * 100);
+  // discount %
+  const discount =
+    mrp > price
+      ? Math.round(
+          ((mrp - price) / mrp) * 100
+        )
+      : 0;
 
   return (
     <div className="admin-product-card-modern">
+
       {/* IMAGE */}
       <div className="product-img">
-        {mrp > price && (
-          <div className="product-discount">{discount}% Off</div>
+
+        {discount > 0 && (
+
+          <div className="product-discount">
+            {discount}% Off
+          </div>
         )}
 
-        <img src={image} alt={title} />
+        <img
+          src={image}
+          alt={title}
+        />
 
         <div className="product-add-to-cart">
+
           {qty === 0 ? (
-            <div className="add-btn" onClick={increase}>
+
+            <div
+              className="add-btn"
+              onClick={increase}
+            >
               ADD
             </div>
+
           ) : (
+
             <div className="qty-controller">
+
               <button onClick={decrease}>
                 <BsDash />
               </button>
@@ -66,25 +130,75 @@ const ProductCardAdmin: React.FC<Props> = ({
 
       {/* INFO */}
       <div className="product-details">
-        <div className="product-name">{title}</div>
+
+        <div className="product-name">
+          {title}
+        </div>
 
         {description && (
-          <div className="product-desc">{description}</div>
+
+          <div className="product-desc">
+            {description}
+          </div>
         )}
 
+        {/* PRICE */}
         <div className="product-price-row">
-          <span className="price">₹{price}</span>
-          {mrp > price && <span className="mrp">₹{mrp}</span>}
+
+          <span className="price">
+            ₹{price}
+          </span>
+
+          {mrp > price && (
+
+            <span className="mrp">
+              ₹{mrp}
+            </span>
+          )}
         </div>
 
         {/* STOCK */}
         <div className="product-stock">
-          Stock: {stock > 0 ? stock : "Out of stock"}
+
+          {stock > 0
+            ? `${stock} in stock`
+            : "Out of stock"}
         </div>
 
-        {/* ACTION */}
+        {/* VARIANT SELECT */}
         <div className="product-quantity-box">
-          <div className="product-quantity">1 Package</div>
+
+          <select
+            value={selectedVariantIndex}
+            onChange={(e) => {
+
+              setSelectedVariantIndex(
+                Number(e.target.value)
+              );
+
+              setQty(0);
+            }}
+          >
+
+            {variants.map(
+              (variant, index) => (
+
+                <option
+                  key={variant.variantId}
+                  value={index}
+                >
+
+                  {variant.variantName}
+
+                  {variant.unitValue &&
+                    variant.unitType
+                    ? ` (${variant.unitValue}${variant.unitType})`
+                    : ""}
+                </option>
+              )
+            )}
+          </select>
+
           <IoMdArrowDropdown />
         </div>
       </div>

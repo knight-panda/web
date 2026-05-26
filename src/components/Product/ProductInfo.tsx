@@ -1,9 +1,26 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {
+    useEffect,
+    useState
+} from "react";
+
+import {
+    useNavigate
+} from "react-router-dom";
+
 import "./ProductDetails.css";
-import { BsPlus, BsDash } from "react-icons/bs";
-import { useAddToCart } from "../../hooks/user/cart/useAddToCart";
-import type { Product } from "../../models/user/products/response/UserProductDetailsResponse";
+
+import {
+    BsPlus,
+    BsDash
+} from "react-icons/bs";
+
+import {
+    useAddToCart
+} from "../../hooks/user/cart/useAddToCart";
+
+import type {
+    Product
+} from "../../models/user/products/response/UserProductDetailsResponse";
 
 type ProductInfoProps = {
     product: Product;
@@ -13,47 +30,111 @@ const ProductInfo = ({
     product,
 }: ProductInfoProps) => {
 
-    const navigate = useNavigate();
+    const navigate =
+        useNavigate();
 
-    const [qty, setQty] = useState(
-        product.cartQuantity || 0
-    );
+    // ================= VARIANT =================
+
+    const [
+        selectedVariantIndex,
+        setSelectedVariantIndex,
+    ] = useState(0);
+
+    const selectedVariant =
+        product.variants?.[
+        selectedVariantIndex
+        ];
+
+    const variantId =
+        selectedVariant
+            ?.variantId || "";
+
+    const price =
+        selectedVariant
+            ?.discountPrice ||
+        selectedVariant?.price ||
+        0;
+
+    const mrp =
+        selectedVariant?.price || 0;
+
+    const stock =
+        selectedVariant?.quantity ||
+        0;
+
+    const maxOrderStock =
+        selectedVariant
+            ?.maxOrderQuantity || 0;
+
+    // ================= QTY =================
+
+    const [qty, setQty] =
+        useState(
+            selectedVariant
+                ?.cartQuantity || 0
+        );
+
+    useEffect(() => {
+
+        setQty(
+            selectedVariant
+                ?.cartQuantity || 0
+        );
+
+    }, [selectedVariant]);
+
+    // ================= CART =================
 
     const {
         addProductToCart,
         loading,
     } = useAddToCart();
 
-    const [cartLoading, setCartLoading] =
-        useState(false);
+    const [
+        cartLoading,
+        setCartLoading
+    ] = useState(false);
 
-    // logged in user
+    // ================= LOGIN =================
+
     const storeTokens = JSON.parse(
-        localStorage.getItem("storeTokens") || "{}"
+        localStorage.getItem(
+            "storeTokens"
+        ) || "{}"
     );
 
     const activeStoreId =
-        localStorage.getItem("activeStoreId");
+        localStorage.getItem(
+            "activeStoreId"
+        );
 
     const userToken =
-        storeTokens[activeStoreId || ""];
+        storeTokens[
+        activeStoreId || ""
+        ];
 
-    useEffect(() => {
-        setQty(product.cartQuantity || 0);
-    }, [product]);
+    // ================= INCREASE =================
 
-    // increase qty
     const increase = async () => {
 
-        // login validation
         if (!userToken) {
 
-            alert("Please login first");
+            alert(
+                "Please login first"
+            );
 
             return;
         }
 
-        // prevent multiple clicks
+        if (!variantId) {
+
+            alert(
+                "Variant not found"
+            );
+
+            return;
+        }
+
         if (cartLoading) return;
 
         try {
@@ -64,22 +145,23 @@ const ProductInfo = ({
 
             // max order validation
             if (
+                maxOrderStock > 0 &&
                 newQty >
-                product.maxOrderStock
+                maxOrderStock
             ) {
 
                 alert(
-                    `Maximum ${product.maxOrderStock} items allowed`
+                    `Maximum ${maxOrderStock} items allowed`
                 );
 
                 return;
             }
 
             // stock validation
-            if (newQty > product.stock) {
+            if (newQty > stock) {
 
                 alert(
-                    `Only ${product.stock} items available`
+                    `Only ${stock} items available`
                 );
 
                 return;
@@ -89,7 +171,11 @@ const ProductInfo = ({
             setQty(newQty);
 
             await addProductToCart({
+
                 productId: product.id,
+
+                variantId,
+
                 quantity: newQty,
             });
 
@@ -97,8 +183,10 @@ const ProductInfo = ({
 
             console.error(err);
 
-            // rollback
-            setQty(qty);
+            setQty(
+                selectedVariant
+                    ?.cartQuantity || 0
+            );
 
         } finally {
 
@@ -106,10 +194,13 @@ const ProductInfo = ({
         }
     };
 
-    // decrease qty
+    // ================= DECREASE =================
+
     const decrease = async () => {
 
         if (!userToken) return;
+
+        if (!variantId) return;
 
         if (cartLoading) return;
 
@@ -125,7 +216,11 @@ const ProductInfo = ({
             setQty(newQty);
 
             await addProductToCart({
+
                 productId: product.id,
+
+                variantId,
+
                 quantity: newQty,
             });
 
@@ -133,8 +228,10 @@ const ProductInfo = ({
 
             console.error(err);
 
-            // rollback
-            setQty(qty);
+            setQty(
+                selectedVariant
+                    ?.cartQuantity || 0
+            );
 
         } finally {
 
@@ -142,41 +239,125 @@ const ProductInfo = ({
         }
     };
 
+    // ================= STOCK =================
+
     const isOutOfStock =
-        product.stock <= 0;
+        stock <= 0;
+
+    // ================= DISCOUNT =================
+
+    const discount =
+        mrp > price
+            ? Math.round(
+                ((mrp - price) / mrp) *
+                100
+            )
+            : 0;
 
     return (
         <div className="product-info">
 
             <h1>{product.name}</h1>
 
+            {/* VARIANT */}
+            {/* VARIANT */}
+            <div className="pd-variant-list">
+
+                {product.variants?.map(
+                    (variant, index) => {
+
+                        const isSelected =
+                            selectedVariantIndex === index;
+
+                        return (
+
+                            <div
+                                key={variant.variantId}
+
+                                className={`pd-variant-item ${isSelected
+                                        ? "active"
+                                        : ""
+                                    }`}
+
+                                onClick={() => {
+
+                                    setSelectedVariantIndex(
+                                        index
+                                    );
+
+                                    setQty(
+                                        variant.cartQuantity || 0
+                                    );
+                                }}
+                            >
+
+                                <div className="pd-variant-left">
+
+                                    <div className="pd-variant-name">
+                                        {variant.variantName}
+                                    </div>
+
+                                    <div className="pd-variant-subtitle">
+
+                                        {variant.unitValue &&
+                                            variant.unitType
+                                            ? `${variant.unitValue}${variant.unitType}`
+                                            : "Package"}
+
+                                    </div>
+                                </div>
+
+                                <div className="pd-variant-right">
+
+                                    <div className="pd-variant-price">
+
+                                        ₹
+                                        {variant.discountPrice ||
+                                            variant.price}
+                                    </div>
+
+                                    {variant.discountPrice &&
+                                        variant.discountPrice <
+                                        variant.price && (
+
+                                            <div className="pd-variant-mrp">
+                                                ₹{variant.price}
+                                            </div>
+                                        )}
+                                </div>
+                            </div>
+                        );
+                    }
+                )}
+            </div>
+
+            {/* PRICE */}
             <div className="price-row">
 
-                {product.discountPrice > 0 && (
+                {mrp > price && (
+
                     <span className="old-price">
-                        ₹{product.price}
+                        ₹{mrp}
                     </span>
                 )}
 
                 <span className="new-price">
-                    ₹
-                    {product.discountPrice > 0
-                        ? product.discountPrice
-                        : product.price}
+                    ₹{price}
                 </span>
 
-                {product.discountPrice > 0 && (
+                {discount > 0 && (
+
                     <span className="badge">
-                        Sale
+                        {discount}% OFF
                     </span>
                 )}
-
             </div>
 
             <p className="shipping">
                 Shipping calculated at checkout
             </p>
 
+            {/* STOCK */}
             {isOutOfStock ? (
 
                 <div className="pd-add-btn out-stock">
@@ -208,28 +389,32 @@ const ProductInfo = ({
                     >
                         <BsPlus />
                     </button>
-
                 </div>
-
             )}
 
+            {/* BUTTON */}
             <button
                 className="add-to-cart"
                 disabled={isOutOfStock}
                 onClick={() => {
 
                     if (qty > 0) {
+
                         navigate("/cart");
+
                     } else {
+
                         increase();
                     }
                 }}
             >
+
                 {qty > 0
                     ? "Go to cart"
                     : "Add to cart"}
             </button>
 
+            {/* DESCRIPTION */}
             <div className="description">
 
                 <p>
@@ -237,7 +422,6 @@ const ProductInfo = ({
                 </p>
 
             </div>
-
         </div>
     );
 };

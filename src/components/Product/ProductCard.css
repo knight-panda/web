@@ -169,25 +169,73 @@
 /* PACKAGE BOX */
 .product-quantity-box {
   margin-top: 1rem;
-  padding: 0.65rem 0.8rem;
-  background: var(--search-bg-color);
-  border-radius: 0.5rem;
+
+  position: relative;
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
 
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+  background: #f8fafc;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 0.7rem;
+
+  padding: 0.75rem 0.9rem;
+
+  transition: all 0.2s ease;
+
+  cursor: pointer;
+
+  overflow: hidden;
 }
 
-.product-quantity {
-  font-size: 0.95rem;
-  font-weight: 500;
+.product-quantity-box:hover {
+  border-color: var(--primary-color);
+  background: #fff;
+}
 
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.product-quantity-box select {
+  width: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  appearance: none;
+
+  cursor: pointer;
+
+  font-size: 0.92rem;
+  font-weight: 600;
+
+  color: #111827;
+
+  padding-right: 2rem;
+}
+
+.product-quantity-box select option {
+  font-size: 0.9rem;
+}
+
+.product-dropdown-icon {
+  position: absolute;
+
+  right: 0.8rem;
+
+  font-size: 1.2rem;
+
+  color: #6b7280;
+
+  pointer-events: none;
+
+  transition: 0.2s ease;
+}
+
+.product-quantity-box:hover .product-dropdown-icon {
+
+  color: var(--primary-color);
 }
 
 /* MOBILE */

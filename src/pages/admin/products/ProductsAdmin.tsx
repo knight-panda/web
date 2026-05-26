@@ -7,37 +7,57 @@ import { useNavigate } from "react-router-dom";
 import { useGetStoreProducts } from "../../../hooks/store/useStoreProduct";
 
 const ProductsAdmin = () => {
-  const navigate = useNavigate();
-  const [filterOpen, setFilterOpen] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState("all");
 
-  const { fetchStoreProducts, data, loading, error } = useGetStoreProducts();
+  const navigate = useNavigate();
+
+  const [filterOpen, setFilterOpen] = useState(false);
+
+  const [selectedFilter, setSelectedFilter] =
+    useState("all");
+
+  const {
+    fetchStoreProducts,
+    data,
+    loading,
+    error
+  } = useGetStoreProducts();
 
   const filterOptions = [
-    { value: "all", label: "All Orders" },
-    { value: "pending", label: "Pending" },
-    { value: "confirmed", label: "Confirmed" },
-    { value: "shipping", label: "Shipping" },
-    { value: "delivered", label: "Delivered" },
-    { value: "cancelled", label: "Cancelled" },
+    { value: "all", label: "All Products" },
+    { value: "active", label: "Active" },
+    { value: "inactive", label: "Inactive" },
   ];
 
   useEffect(() => {
+
     fetchStoreProducts();
+
   }, []);
 
   useEffect(() => {
+
     const close = () => setFilterOpen(false);
+
     window.addEventListener("click", close);
-    return () => window.removeEventListener("click", close);
+
+    return () =>
+      window.removeEventListener("click", close);
+
   }, []);
 
   return (
     <div className="admin-product">
-      <div className="admin-product-title-box">
-        <div className="admin-product-title">Products</div>
 
-        <div className="admin-add-product" onClick={() => navigate("add")}>
+      <div className="admin-product-title-box">
+
+        <div className="admin-product-title">
+          Products
+        </div>
+
+        <div
+          className="admin-add-product"
+          onClick={() => navigate("add")}
+        >
           Add Product +
         </div>
 
@@ -45,59 +65,100 @@ const ProductsAdmin = () => {
           className="admin-product-filter-container"
           onClick={(e) => e.stopPropagation()}
         >
+
           <span>Filter</span>
+
           <IoFilter
             className="admin-product-filter"
-            onClick={() => setFilterOpen(!filterOpen)}
+            onClick={() =>
+              setFilterOpen(!filterOpen)
+            }
           />
 
           {filterOpen && (
+
             <div className="admin-product-filter-dropdown">
+
               <select
                 className="admin-product-filter-select"
                 value={selectedFilter}
                 onChange={(e) => {
-                  setSelectedFilter(e.target.value);
+
+                  setSelectedFilter(
+                    e.target.value
+                  );
+
                   setFilterOpen(false);
                 }}
               >
+
                 {filterOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
+
+                  <option
+                    key={option.value}
+                    value={option.value}
+                  >
                     {option.label}
                   </option>
+
                 ))}
+
               </select>
+
             </div>
           )}
         </div>
       </div>
 
-      {/* ✅ LOADING */}
-      {loading && <div>Loading products...</div>}
+      {/* LOADING */}
+      {loading && (
+        <div>
+          Loading products...
+        </div>
+      )}
 
-      {/* ❌ ERROR */}
-      {error && <div style={{ color: "red" }}>{error}</div>}
+      {/* ERROR */}
+      {error && (
+        <div style={{ color: "red" }}>
+          {error}
+        </div>
+      )}
 
-      {/* ✅ PRODUCT GRID */}
+      {/* PRODUCT GRID */}
       <div className="admin-products-grid">
-        {data?.data?.map((product) => (
-          <div
-            key={product.id}
-            onClick={() =>
-              navigate(`/admin-dashboard/products/${product.id}`, {
-                state: { product }, // pass full product
-              })
-            }
-          >
-            <ProductCardAdmin
-              title={product.name}
-              price={product.price}
-              mrp={product.discountPrice}
-              stock={product.stock}
-              image={product.imageThumbnail}
-            />
-          </div>
-        ))}
+
+        {data?.data?.map((product) => {
+
+          const firstVariant =
+            product?.variants?.[0];
+
+          return (
+
+            <div
+              key={product.id}
+              onClick={() =>
+                navigate(
+                  `/admin-dashboard/products/${product.id}`,
+                  {
+                    state: { product }
+                  }
+                )
+              }
+            >
+
+              <ProductCardAdmin
+                title={product.name}
+
+                description={product.description}
+
+                image={product.imageThumbnail}
+
+                variants={product.variants || []}
+              />
+
+            </div>
+          );
+        })}
       </div>
     </div>
   );

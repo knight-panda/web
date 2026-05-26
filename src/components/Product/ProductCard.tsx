@@ -1,293 +1,474 @@
 import { useEffect, useState } from "react";
-import { BsPlus, BsDash } from "react-icons/bs";
-import { IoMdArrowDropdown } from "react-icons/io";
+
+import {
+  BsPlus,
+  BsDash
+} from "react-icons/bs";
+
+import {
+  IoMdArrowDropdown
+} from "react-icons/io";
 
 import "./ProductCard.css";
 
-import { useAddToCart } from "../../hooks/user/cart/useAddToCart";
+import {
+  useAddToCart
+} from "../../hooks/user/cart/useAddToCart";
 
-type ProductCardProps = {
-  id: string;
-  title: string;
-  description?: string;
+type Variant = {
+
+  variantId: string;
+
+  variantName: string;
+
+  size?: string;
+
+  color?: string;
+
+  unitValue?: number;
+
+  unitType?: string;
+
+  sku: string;
+
   price: number;
-  mrp: number;
-  stock: number;
-  maxOrderStock: number;
+
+  discountPrice?: number;
+
+  quantity: number;
+
   cartQuantity?: number;
-  image: string;
-  onProductClick?: (productId: string) => void;
+
+  maxOrderQuantity: number;
 };
 
-const ProductCard: React.FC<ProductCardProps> = ({
+type ProductCardProps = {
+
+  id: string;
+
+  title: string;
+
+  description?: string;
+
+  image: string;
+
+  variants: Variant[];
+
+  onProductClick?: (
+    productId: string
+  ) => void;
+};
+
+const ProductCard: React.FC<
+  ProductCardProps
+> = ({
   id,
   title,
   description,
-  price,
-  mrp,
-  stock,
-  maxOrderStock,
-  cartQuantity = 0,
   image,
+  variants,
   onProductClick,
 }) => {
 
-  // ✅ sync cart quantity
-  const [qty, setQty] =
-    useState(cartQuantity);
+    // ================= VARIANT =================
 
-  useEffect(() => {
-    setQty(cartQuantity);
-  }, [cartQuantity]);
+    const [
+      selectedVariantIndex,
+      setSelectedVariantIndex,
+    ] = useState(0);
 
-  const {
-    addProductToCart,
-    loading,
-  } = useAddToCart();
+    const selectedVariant =
+      variants?.[
+      selectedVariantIndex
+      ];
 
-  const [cartLoading, setCartLoading] =
-    useState(false);
+    const variantId =
+      selectedVariant
+        ?.variantId || "";
 
-  // ✅ logged in user
-  const storeTokens = JSON.parse(
-    localStorage.getItem("storeTokens") || "{}"
-  );
+    const price =
+      selectedVariant
+        ?.discountPrice ||
+      selectedVariant?.price ||
+      0;
 
-  const activeStoreId =
-    localStorage.getItem("activeStoreId");
+    const mrp =
+      selectedVariant?.price || 0;
 
-  const userToken =
-    storeTokens[activeStoreId || ""];
+    const stock =
+      selectedVariant?.quantity ||
+      0;
 
-  // ✅ increase qty
-  const increase = async (
-    e?: React.MouseEvent
-  ) => {
+    const maxOrderStock =
+      selectedVariant
+        ?.maxOrderQuantity || 0;
 
-    e?.preventDefault();
-    e?.stopPropagation();
+    // ================= QTY =================
 
-    // login validation
-    if (!userToken) {
+    const [qty, setQty] =
+      useState(
+        selectedVariant
+          ?.cartQuantity || 0
+      );
 
-      alert("Please login first");
+    useEffect(() => {
 
-      return;
-    }
+      setQty(
+        selectedVariant
+          ?.cartQuantity || 0
+      );
 
-    // prevent multiple clicks
-    if (cartLoading) return;
+    }, [selectedVariant]);
 
-    try {
+    // ================= CART =================
 
-      setCartLoading(true);
+    const {
+      addProductToCart,
+      loading,
+    } = useAddToCart();
 
-      const newQty = qty + 1;
+    const [
+      cartLoading,
+      setCartLoading
+    ] = useState(false);
 
-      // max order validation
-      if (newQty > maxOrderStock) {
+    // ================= LOGIN =================
+
+    const storeTokens = JSON.parse(
+      localStorage.getItem(
+        "storeTokens"
+      ) || "{}"
+    );
+
+    const activeStoreId =
+      localStorage.getItem(
+        "activeStoreId"
+      );
+
+    const userToken =
+      storeTokens[
+      activeStoreId || ""
+      ];
+
+    // ================= INCREASE =================
+
+    const increase = async (
+      e?: React.MouseEvent
+    ) => {
+
+      e?.preventDefault();
+
+      e?.stopPropagation();
+
+      if (!userToken) {
 
         alert(
-          `Maximum ${maxOrderStock} items allowed`
+          "Please login first"
         );
 
         return;
       }
 
-      // stock validation
-      if (newQty > stock) {
+      if (!variantId) {
 
         alert(
-          `Only ${stock} items available`
+          "Variant not found"
         );
 
         return;
       }
 
-      // optimistic update
-      setQty(newQty);
+      if (cartLoading) return;
 
-      await addProductToCart({
-        productId: id,
-        quantity: newQty,
-      });
+      try {
 
-    } catch (err) {
+        setCartLoading(true);
 
-      console.error(err);
+        const newQty = qty + 1;
 
-      // rollback
-      setQty(qty);
+        // MAX ORDER
+        if (
+          maxOrderStock > 0 &&
+          newQty >
+          maxOrderStock
+        ) {
 
-    } finally {
+          alert(
+            `Maximum ${maxOrderStock} items allowed`
+          );
 
-      setCartLoading(false);
-    }
-  };
+          return;
+        }
 
-  // ✅ decrease qty
-  const decrease = async (
-    e?: React.MouseEvent
-  ) => {
+        // STOCK
+        if (newQty > stock) {
 
-    e?.preventDefault();
-    e?.stopPropagation();
+          alert(
+            `Only ${stock} items available`
+          );
 
-    if (!userToken) return;
+          return;
+        }
 
-    if (cartLoading) return;
+        // optimistic update
+        setQty(newQty);
 
-    if (qty <= 0) return;
+        await addProductToCart({
 
-    try {
+          productId: id,
 
-      setCartLoading(true);
+          variantId,
 
-      const newQty = qty - 1;
+          quantity: newQty,
+        });
 
-      // optimistic update
-      setQty(newQty);
+      } catch (err) {
 
-      await addProductToCart({
-        productId: id,
-        quantity: newQty,
-      });
+        console.error(err);
 
-    } catch (err) {
+        setQty(
+          selectedVariant
+            ?.cartQuantity || 0
+        );
 
-      console.error(err);
+      } finally {
 
-      // rollback
-      setQty(qty);
+        setCartLoading(false);
+      }
+    };
 
-    } finally {
+    // ================= DECREASE =================
 
-      setCartLoading(false);
-    }
-  };
+    const decrease = async (
+      e?: React.MouseEvent
+    ) => {
 
-  // product details
-  const handleClick = () => {
-    onProductClick?.(id);
-  };
+      e?.preventDefault();
 
-  // discount %
-  const discount = Math.round(
-    ((mrp - price) / mrp) * 100
-  );
+      e?.stopPropagation();
 
-  return (
-    <div className="product-card-modern">
+      if (!userToken) return;
 
-      {/* IMAGE */}
-      <div className="product-img">
+      if (!variantId) return;
 
-        {mrp > price && (
-          <div className="product-discount">
-            {discount}% Off
-          </div>
-        )}
+      if (cartLoading) return;
 
-        <img
-          src={image}
-          alt={title}
-          onClick={handleClick}
-        />
+      if (qty <= 0) return;
 
-        {/* ADD TO CART */}
-        <div className="product-add-to-cart">
+      try {
 
-          {qty === 0 ? (
+        setCartLoading(true);
 
-            <button
-              type="button"
-              className="add-btn"
-              onClick={(e) => increase(e)}
-              disabled={loading || cartLoading}
-            >
-              {loading || cartLoading
-                ? "..."
-                : "ADD"}
-            </button>
+        const newQty = qty - 1;
 
-          ) : (
+        // optimistic update
+        setQty(newQty);
 
-            <div className="qty-controller">
+        await addProductToCart({
 
-              {/* MINUS */}
-              <button
-                type="button"
-                onClick={(e) => decrease(e)}
-                disabled={loading || cartLoading}
-              >
-                <BsDash />
-              </button>
+          productId: id,
 
-              {/* QTY */}
-              <span>{qty}</span>
+          variantId,
 
-              {/* PLUS */}
-              <button
-                type="button"
-                onClick={(e) => increase(e)}
-                disabled={loading || cartLoading}
-              >
-                <BsPlus />
-              </button>
+          quantity: newQty,
+        });
 
+      } catch (err) {
+
+        console.error(err);
+
+        setQty(
+          selectedVariant
+            ?.cartQuantity || 0
+        );
+
+      } finally {
+
+        setCartLoading(false);
+      }
+    };
+
+    // ================= NAVIGATE =================
+
+    const handleClick = () => {
+      onProductClick?.(id);
+    };
+
+    // ================= DISCOUNT =================
+
+    const discount =
+      mrp > price
+        ? Math.round(
+          ((mrp - price) / mrp) *
+          100
+        )
+        : 0;
+
+    return (
+      <div className="product-card-modern">
+
+        {/* IMAGE */}
+        <div className="product-img">
+
+          {discount > 0 && (
+
+            <div className="product-discount">
+              {discount}% Off
             </div>
           )}
 
-        </div>
-      </div>
+          <img
+            src={image}
+            alt={title}
+            onClick={handleClick}
+          />
 
-      {/* INFO */}
-      <div
-        className="product-details"
-        onClick={handleClick}
-      >
+          {/* CART */}
+          <div className="product-add-to-cart">
 
-        {/* TITLE */}
-        <div className="product-name">
-          {title}
-        </div>
+            {qty === 0 ? (
 
-        {/* DESCRIPTION */}
-        {description && (
-          <div className="product-desc">
-            {description}
+              <button
+                type="button"
+                className="add-btn"
+                onClick={(e) =>
+                  increase(e)
+                }
+                disabled={
+                  loading ||
+                  cartLoading
+                }
+              >
+
+                {loading ||
+                  cartLoading
+                  ? "..."
+                  : "ADD"}
+              </button>
+
+            ) : (
+
+              <div className="qty-controller">
+
+                <button
+                  type="button"
+                  onClick={(e) =>
+                    decrease(e)
+                  }
+                  disabled={
+                    loading ||
+                    cartLoading
+                  }
+                >
+                  <BsDash />
+                </button>
+
+                <span>{qty}</span>
+
+                <button
+                  type="button"
+                  onClick={(e) =>
+                    increase(e)
+                  }
+                  disabled={
+                    loading ||
+                    cartLoading
+                  }
+                >
+                  <BsPlus />
+                </button>
+              </div>
+            )}
           </div>
-        )}
+        </div>
 
-        {/* PRICE */}
-        <div className="product-price-row">
+        {/* DETAILS */}
+        <div
+          className="product-details"
+          onClick={handleClick}
+        >
 
-          <span className="price">
-            ₹{price}
-          </span>
+          {/* TITLE */}
+          <div className="product-name">
+            {title}
+          </div>
 
-          {mrp > price && (
-            <span className="mrp">
-              ₹{mrp}
-            </span>
+          {/* DESCRIPTION */}
+          {description && (
+
+            <div className="product-desc">
+              {description}
+            </div>
           )}
 
-        </div>
+          {/* PRICE */}
+          <div className="product-price-row">
 
-        {/* PACKAGE */}
-        <div className="product-quantity-box">
+            <span className="price">
+              ₹{price}
+            </span>
 
-          <div className="product-quantity">
-            1 Package
+            {mrp > price && (
+
+              <span className="mrp">
+                ₹{mrp}
+              </span>
+            )}
           </div>
 
-          <IoMdArrowDropdown />
+          {/* VARIANT */}
+          <div
+            className="product-quantity-box"
+            onClick={(e) =>
+              e.stopPropagation()
+            }
+          >
 
+            <select
+              value={selectedVariantIndex}
+              onChange={(e) => {
+
+                const index = Number(
+                  e.target.value
+                );
+
+                setSelectedVariantIndex(
+                  index
+                );
+
+                setQty(
+                  variants[index]
+                    ?.cartQuantity || 0
+                );
+              }}
+            >
+
+              {variants?.map(
+                (variant, index) => (
+
+                  <option
+                    key={variant.variantId}
+                    value={index}
+                  >
+
+                    {variant.variantName}
+
+                    {variant.unitValue &&
+                      variant.unitType
+                      ? ` (${variant.unitValue}${variant.unitType})`
+                      : ""}
+                  </option>
+                )
+              )}
+            </select>
+
+            <IoMdArrowDropdown
+              className="product-dropdown-icon"
+            />
+          </div>
         </div>
-
       </div>
-    </div>
-  );
-};
+    );
+  };
 
 export default ProductCard;

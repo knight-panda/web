@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 import ProductCard from "../../../components/Product/ProductCard";
 
 import "./Products.css";
-import { usePublicProducts } from "../../../hooks/user/usePublicStore";
-import { useUserProducts } from "../../../hooks/user/products/useUserProducts";
 
+import { usePublicProducts } from "../../../hooks/user/usePublicStore";
+
+import { useUserProducts } from "../../../hooks/user/products/useUserProducts";
 
 type Props = {
   storeId: string;
@@ -16,7 +17,8 @@ const Products = ({ storeId }: Props) => {
 
   const navigate = useNavigate();
 
-  // ✅ public api
+  // ================= PUBLIC API =================
+
   const {
     fetchProducts: fetchPublicProducts,
     data: publicData,
@@ -24,7 +26,8 @@ const Products = ({ storeId }: Props) => {
     error: publicError,
   } = usePublicProducts();
 
-  // ✅ user api
+  // ================= USER API =================
+
   const {
     fetchProducts: fetchUserProducts,
     data: userData,
@@ -32,18 +35,26 @@ const Products = ({ storeId }: Props) => {
     error: userError,
   } = useUserProducts();
 
-  // ✅ detect login
+  // ================= LOGIN CHECK =================
+
   const storeTokens = JSON.parse(
-    localStorage.getItem("storeTokens") || "{}"
+    localStorage.getItem(
+      "storeTokens"
+    ) || "{}"
   );
 
   const activeStoreId =
-    localStorage.getItem("activeStoreId");
+    localStorage.getItem(
+      "activeStoreId"
+    );
 
   const userToken =
-    storeTokens[activeStoreId || ""];
+    storeTokens[
+    activeStoreId || ""
+    ];
 
-  // ✅ fetch correct api
+  // ================= FETCH =================
+
   useEffect(() => {
 
     if (!storeId) return;
@@ -58,22 +69,32 @@ const Products = ({ storeId }: Props) => {
     // public user
     else {
 
-      fetchPublicProducts(storeId);
+      fetchPublicProducts(
+        storeId
+      );
     }
 
   }, [storeId]);
 
-  // ✅ choose correct response
+  // ================= RESPONSE =================
+
   const data =
-    userToken ? userData : publicData;
+    userToken
+      ? userData
+      : publicData;
 
   const loading =
-    userToken ? userLoading : publicLoading;
+    userToken
+      ? userLoading
+      : publicLoading;
 
   const error =
-    userToken ? userError : publicError;
+    userToken
+      ? userError
+      : publicError;
 
-  // ✅ navigate product
+  // ================= NAVIGATE =================
+
   const handleProductClick = (
     id: string
   ) => {
@@ -81,8 +102,10 @@ const Products = ({ storeId }: Props) => {
     navigate(`/product/${id}`);
   };
 
-  // loading
+  // ================= LOADING =================
+
   if (loading) {
+
     return (
       <div className="product">
         Loading products...
@@ -90,8 +113,10 @@ const Products = ({ storeId }: Props) => {
     );
   }
 
-  // error
+  // ================= ERROR =================
+
   if (error) {
+
     return (
       <div className="product">
         Error: {error}
@@ -99,8 +124,10 @@ const Products = ({ storeId }: Props) => {
     );
   }
 
-  // no products
+  // ================= EMPTY =================
+
   if (!data?.data?.length) {
+
     return (
       <div className="product">
         No products available
@@ -113,45 +140,40 @@ const Products = ({ storeId }: Props) => {
 
       <div className="products-grid">
 
-        {data.data.map((product: any) => (
+        {data.data.map(
+          (product: any) => {
 
-          <ProductCard
-            key={product.id}
+            return (
 
-            id={product.id}
+              <ProductCard
+                key={product.id}
 
-            title={product.name}
+                id={product.id}
 
-            description={product.description}
+                title={product.name}
 
-            price={
-              product.discountPrice ||
-              product.price
-            }
+                description={
+                  product.description
+                }
 
-            mrp={product.price}
+                // image
+                image={
+                  product.imageThumbnail ||
+                  product.imageUrls?.[0]
+                }
 
-            stock={product.stock}
+                // variants
+                variants={
+                  product.variants || []
+                }
 
-            maxOrderStock={
-              product.maxOrderStock
-            }
-
-            // ✅ only user api has this
-            cartQuantity={
-              product.cartQuantity || 0
-            }
-
-            image={
-              product.imageThumbnail ||
-              product.imageUrls?.[0]
-            }
-
-            onProductClick={
-              handleProductClick
-            }
-          />
-        ))}
+                onProductClick={
+                  handleProductClick
+                }
+              />
+            );
+          }
+        )}
 
       </div>
     </div>
