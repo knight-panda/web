@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
+
 import { useAddToCart } from "../../hooks/user/cart/useAddToCart";
+
 import type { CartItem } from "../../models/user/cart/response/CartItem";
+
 import type { GetCartResponse } from "../../models/user/cart/response/GetCartResponse";
+
 import "./Cart.css";
 
 type Props = {
     items: CartItem[];
+
     loading?: boolean;
+
     fetchCart: () => Promise<GetCartResponse>;
+
     setCartData: React.Dispatch<any>;
 };
 
@@ -18,21 +25,27 @@ const CartItems = ({
     setCartData
 }: Props) => {
 
-    const { addProductToCart } =
-        useAddToCart();
+    const {
+        addProductToCart
+    } = useAddToCart();
 
-    // LOCAL STATE
-    const [localItems, setLocalItems] =
-        useState<CartItem[]>(items);
+    // ================= LOCAL STATE =================
 
-    // SYNC PROPS TO STATE
+    const [
+        localItems,
+        setLocalItems
+    ] = useState<CartItem[]>(items);
+
+    // ================= SYNC =================
+
     useEffect(() => {
 
         setLocalItems(items);
 
     }, [items]);
 
-    // LOADING
+    // ================= LOADING =================
+
     if (loading) {
 
         return (
@@ -42,8 +55,10 @@ const CartItems = ({
         );
     }
 
-    // EMPTY CART
-    if (!localItems ||
+    // ================= EMPTY =================
+
+    if (
+        !localItems ||
         localItems.length === 0
     ) {
 
@@ -54,41 +69,74 @@ const CartItems = ({
         );
     }
 
-    // INCREASE
+    // ================= INCREASE =================
+
     const handleIncrease = async (
         item: CartItem
     ) => {
 
         try {
 
-            // OPTIMISTIC REMOVE
+            // stock validation
+            if (
+                item.quantity + 1 >
+                item.productStock
+            ) {
+
+                alert(
+                    `Only ${item.productStock} items available`
+                );
+
+                return;
+            }
+
+            // max order validation
+            if (
+                item.productMaxOrderStock > 0 &&
+                item.quantity + 1 >
+                item.productMaxOrderStock
+            ) {
+
+                alert(
+                    `Maximum ${item.productMaxOrderStock} items allowed`
+                );
+
+                return;
+            }
+
+            // optimistic update
             setLocalItems(prev =>
-                prev.filter(
-                    cartItem =>
-                        cartItem.cartId !==
-                        item.cartId
+                prev.map(cartItem =>
+                    cartItem.cartId === item.cartId
+                        ? {
+                            ...cartItem,
+                            quantity:
+                                cartItem.quantity + 1,
+
+                            totalPrice:
+                                (
+                                    cartItem.discountPrice ||
+                                    cartItem.productPrice
+                                ) *
+                                (
+                                    cartItem.quantity + 1
+                                )
+                        }
+                        : cartItem
                 )
             );
 
-            // UPDATE PARENT CART
-            setCartData((prev: any) => ({
-                ...prev,
-                items: [],
-                itemTotal: 0,
-                totalDiscount: 0,
-                packagingFee: 0,
-                deliveryFee: 0,
-                platformFee: 0,
-                codFee: 0,
-                gstAmount: 0,
-                grandTotal: 0,
-                codEnabled: false,
-                onlinePaymentEnabled: false,
-            }));
-
+            // API CALL
             await addProductToCart({
-                productId: item.productId,
-                quantity: item.quantity + 1,
+
+                productId:
+                    item.productId,
+
+                variantId:
+                    item.variantId,
+
+                quantity:
+                    item.quantity + 1,
             });
 
             await fetchCart();
@@ -99,7 +147,8 @@ const CartItems = ({
         }
     };
 
-    // DECREASE
+    // ================= DECREASE =================
+
     const handleDecrease = async (
         item: CartItem
     ) => {
@@ -109,7 +158,7 @@ const CartItems = ({
             // REMOVE ITEM
             if (item.quantity <= 1) {
 
-                // OPTIMISTIC REMOVE
+                // optimistic remove
                 setLocalItems(prev =>
                     prev.filter(
                         cartItem =>
@@ -118,7 +167,7 @@ const CartItems = ({
                     )
                 );
 
-                // UPDATE PARENT CART
+                // update parent
                 setCartData((prev: any) => ({
                     ...prev,
                     items: [],
@@ -134,8 +183,15 @@ const CartItems = ({
                     onlinePaymentEnabled: false,
                 }));
 
+                // API CALL
                 await addProductToCart({
-                    productId: item.productId,
+
+                    productId:
+                        item.productId,
+
+                    variantId:
+                        item.variantId,
+
                     quantity: 0,
                 });
 
@@ -144,14 +200,23 @@ const CartItems = ({
                 return;
             }
 
-            // OPTIMISTIC DECREASE
+            // optimistic decrease
             setLocalItems(prev =>
                 prev.map(cartItem =>
                     cartItem.cartId === item.cartId
                         ? {
                             ...cartItem,
                             quantity:
-                                cartItem.quantity - 1
+                                cartItem.quantity - 1,
+
+                            totalPrice:
+                                (
+                                    cartItem.discountPrice ||
+                                    cartItem.productPrice
+                                ) *
+                                (
+                                    cartItem.quantity - 1
+                                )
                         }
                         : cartItem
                 )
@@ -159,8 +224,15 @@ const CartItems = ({
 
             // API CALL
             await addProductToCart({
-                productId: item.productId,
-                quantity: item.quantity - 1,
+
+                productId:
+                    item.productId,
+
+                variantId:
+                    item.variantId,
+
+                quantity:
+                    item.quantity - 1,
             });
 
             await fetchCart();
@@ -186,7 +258,7 @@ const CartItems = ({
                     🛒 {localItems.length} Items
                 </div>
 
-                {/* CART ITEMS */}
+                {/* ITEMS */}
                 {localItems.map((item) => (
 
                     <div
@@ -203,10 +275,43 @@ const CartItems = ({
                         {/* INFO */}
                         <div className="item-info">
 
+                            {/* PRODUCT NAME */}
                             <div className="name">
                                 {item.productName}
                             </div>
 
+                            {/* VARIANT */}
+                            <div className="ci-variant">
+
+                                {item.variantName}
+
+                                {item.unitValue &&
+                                    item.unitType
+                                    ? ` • ${item.unitValue}${item.unitType}`
+                                    : ""}
+
+                            </div>
+
+                            {/* OPTIONAL */}
+                            {(item.size ||
+                                item.color) && (
+
+                                    <div className="ci-extra">
+
+                                        {item.size &&
+                                            `Size: ${item.size}`}
+
+                                        {item.size &&
+                                            item.color &&
+                                            " • "}
+
+                                        {item.color &&
+                                            `Color: ${item.color}`}
+
+                                    </div>
+                                )}
+
+                            {/* QTY */}
                             <div className="ci-qantity">
                                 Qty × {item.quantity}
                             </div>

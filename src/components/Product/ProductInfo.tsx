@@ -257,9 +257,8 @@ const ProductInfo = ({
     return (
         <div className="product-info">
 
-            <h1>{product.name}</h1>
+            <div className="pd-name">{product.name}</div>
 
-            {/* VARIANT */}
             {/* VARIANT */}
             <div className="pd-variant-list">
 

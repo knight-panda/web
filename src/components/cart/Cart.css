@@ -1,90 +1,151 @@
-/* LEFT */
 .cart-left .free-banner {
-    background: #dff8ec;
-    color: #0f8f5c;
-    padding: 1rem;
-    border-radius: 0.75rem;
-    margin-bottom: 1rem;
-    font-weight: 600;
+  background: #dff8ec;
+  color: #0f8f5c;
+  padding: 1rem 1.2rem;
+  border-radius: 0.9rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: 1px solid #b8efd3;
 }
+
+/* ================= CARD ================= */
 
 .cart-card {
-    background: #fff;
-    padding: 1.5rem;
-    border-radius: 1rem;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 1.2rem;
 }
 
-.cart-item {
-    display: grid;
-    grid-template-columns: 4rem 1fr auto auto;
-    gap: 1rem;
-    align-items: center;
-    margin-top: 1rem;
-}
+/* ================= ITEM COUNT ================= */
 
 .ci-item-count {
-    font-size: 1rem;
-    font-weight: 400;
-    color: black;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1rem;
 }
 
+/* ================= CART ITEM ================= */
+
+.cart-item {
+  display: grid;
+  grid-template-columns:
+    5.5rem
+    1fr
+    auto
+    auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom:
+    1px solid #f1f1f1;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+/* ================= IMAGE ================= */
 .cart-item img {
-    width: 5rem;
-    height: 5rem;
-    border-radius: 0.5rem;
-    object-fit: cover;
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 1rem;
+  object-fit: cover;
+  background: #f9fafb;
+  padding: 0.3rem;
+  box-sizing: border-box;
+  border: 1px solid #f3f4f6;
 }
 
-.ci-qantity {
-    font-size: 1rem;
-    font-weight: 400;
-    margin-top: 0.2rem;
+/* ================= PRODUCT INFO ================= */
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
 .item-info .name {
-    font-weight: 600;
-    font-size: 1.2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.qty {
-    border: 1px solid #ddd;
-    padding: 0.4rem 0.8rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
+/* ================= VARIANT ================= */
+
+.ci-variant {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #4b5563;
 }
 
+/* ================= EXTRA ================= */
+
+.ci-extra {
+  font-size: 0.82rem;
+  color: #6b7280;
+}
+
+/* ================= QUANTITY ================= */
+
+.ci-qantity {
+  font-size: 0.88rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* ================= PRICE ================= */
 .ci-price {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: black;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #111827;
+  white-space: nowrap;
 }
 
-/* QTY CONTROLLER */
+/* ================= QTY CONTROLLER ================= */
+
 .ci-qty-controller {
-    padding: 0.2rem 0.5rem;
-    border-radius: 0.4rem;
-    background: var(--primary-color);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: var(--search-bg-color);
+  border: 1px solid var(--search-bg-color);
+  border-radius: 0.8rem;
+  padding: 0.4rem 0.7rem;
 }
 
 .ci-qty-controller button {
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    font-size: 1.8rem;
-    padding: 0;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.ci-qty-controller button:hover {
+  transform: scale(1.05);
 }
 
 .ci-qty-controller span {
-    color: white;
-    font-size: 1.2rem;
-    font-weight: 600;
+  min-width: 1.5rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
 }
 
 

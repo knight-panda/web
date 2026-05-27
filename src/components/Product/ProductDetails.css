@@ -1,42 +1,53 @@
 .gallery {
   display: flex;
-  justify-content: space-around;
+  gap: 1rem;
+  align-items: flex-start;
 }
 
-.main-image {
-  width: 70%;
-  aspect-ratio: 1/1;
-  border-radius: 1rem;
-}
-
-.thumbnail {
-  cursor: pointer;
-  border: 0.1rem solid transparent;
-  transition: 0.2s ease;
-}
+/* THUMBNAILS */
 
 .thumbnail-row {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin-top: 1rem;
-}
-
-.thumbnail.active {
-  border-color: #000;
 }
 
 .thumbnail-row img {
   width: 5rem;
   height: 5rem;
-  border-radius: 0.5rem;
+  border-radius: 0.7rem;
   cursor: pointer;
   object-fit: cover;
+  border: 2px solid transparent;
+  transition: 0.2s ease;
+}
+
+.thumbnail.active {
+  border-color: var(--primary-color);
+}
+
+/* MAIN IMAGE */
+.main-image-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.main-image {
+  width: 100%;
+  max-width: 38rem;
+  max-height: 45rem;
+  object-fit: contain;
+  border-radius: 1rem;
 }
 
 /* ================= PRODUCT INFO ================= */
-
-.product-info h1 {
+.pd-name {
   font-size: 2rem;
   font-weight: 700;
   line-height: 1.3;
@@ -45,7 +56,6 @@
 }
 
 /* ================= VARIANT LIST ================= */
-
 .pd-variant-list {
   display: flex;
   flex-direction: column;
@@ -55,22 +65,15 @@
 
 .pd-variant-item {
   position: relative;
-
   border: 1px solid #e5e7eb;
   border-radius: 1rem;
-
   padding: 1rem 1.1rem;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 1rem;
-
   cursor: pointer;
-
   background: #fff;
-
   transition:
     all 0.2s ease,
     transform 0.2s ease;
@@ -80,25 +83,17 @@
 
 .pd-variant-item:hover {
   border-color: var(--primary-color);
-
   transform: translateY(-1px);
-
   box-shadow:
     0 6px 18px rgba(0, 0, 0, 0.06);
 }
 
 .pd-variant-item.active {
   border: 2px solid var(--primary-color);
-
-  background:
-    rgba(255, 107, 0, 0.04);
-
-  box-shadow:
-    0 8px 20px rgba(255, 107, 0, 0.12);
+  background: var(--search-bg-color);
 }
 
 /* LEFT SIDE */
-
 .pd-variant-left {
   display: flex;
   flex-direction: column;
@@ -138,31 +133,23 @@
 }
 
 /* ACTIVE INDICATOR */
-
 .pd-variant-item.active::after {
   content: "";
-
   position: absolute;
-
   top: 0.8rem;
   right: 0.8rem;
-
   width: 0.8rem;
   height: 0.8rem;
-
   border-radius: 50%;
-
   background: var(--primary-color);
 }
 
 /* ================= PRICE ================= */
-
 .price-row {
   display: flex;
   align-items: center;
   gap: 0.9rem;
   flex-wrap: wrap;
-
   margin-top: 1.5rem;
 }
 
@@ -180,92 +167,62 @@
 
 .badge {
   background: var(--primary-color);
-
   color: #fff;
-
   padding: 0.35rem 0.8rem;
-
   border-radius: 999px;
-
   font-size: 0.78rem;
   font-weight: 700;
 }
 
 /* ================= SHIPPING ================= */
-
 .shipping {
   margin: 1rem 0;
-
   font-size: 0.92rem;
   color: #6b7280;
 }
 
 /* ================= OUT OF STOCK ================= */
-
 .pd-add-btn {
   width: 10rem;
-
   padding: 0.85rem 1rem;
-
   border: none;
-
   background: #d1d5db;
-
   color: white;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 0.7rem;
-
   font-size: 0.95rem;
   font-weight: 700;
 }
 
 /* ================= QTY CONTROLLER ================= */
-
 .pd-qty-controller {
   width: 10rem;
-
   margin-top: 1rem;
-
   padding: 0.35rem;
-
+  box-sizing: border-box;
   border-radius: 0.8rem;
-
   background: var(--primary-color);
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 0.5rem;
-
-  box-shadow:
-    0 8px 20px rgba(255, 107, 0, 0.2);
+  box-shadow: var(--search-bg-color);
 }
 
 .pd-qty-controller button {
   width: 2.4rem;
   height: 2.4rem;
-
   background: transparent;
-
   border: none;
-
   color: white;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-size: 1.5rem;
-
   border-radius: 0.6rem;
-
   cursor: pointer;
-
   transition: 0.2s ease;
 }
 
@@ -276,36 +233,26 @@
 
 .pd-qty-controller span {
   color: white;
-
   font-size: 1rem;
   font-weight: 700;
 }
 
 /* ================= BUTTONS ================= */
-
 .add-to-cart,
 .buy-now {
   width: 70%;
-
   padding: 1rem;
-
   font-size: 1rem;
   font-weight: 700;
-
   border-radius: 999px;
-
   cursor: pointer;
-
   transition: 0.2s ease;
 }
 
 .add-to-cart {
   border: 2px solid var(--primary-color);
-
   color: var(--primary-color);
-
   background: transparent;
-
   margin-top: 2rem;
   margin-bottom: 0.8rem;
 }
@@ -313,31 +260,24 @@
 .add-to-cart:hover {
   background:
     var(--primary-color);
-
   color: white;
 }
 
 .buy-now {
   background:
     var(--primary-color);
-
   color: white;
-
   border: none;
 }
 
 /* ================= NOTE ================= */
-
 .note {
   margin-top: 1rem;
-
   color: var(--primary-color);
-
   font-size: 0.9rem;
 }
 
 /* ================= DESCRIPTION ================= */
-
 .description {
   margin-top: 2rem;
 }
@@ -348,11 +288,45 @@
   color: #374151;
 }
 
+@media (max-width: 1024px) {
+
+  .gallery {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .thumbnail-row {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .main-image {
+    max-height: 24rem;
+  }
+
+  .pd-name {
+    font-size: 1.5rem;
+  }
+}
+
 /* ================= MOBILE ================= */
 
 @media (max-width: 48rem) {
+  .gallery {
+    flex-direction: column-reverse;
+  }
 
-  .product-info h1 {
+  .thumbnail-row {
+    flex-direction: row;
+
+    overflow-x: auto;
+  }
+
+  .main-image {
+    max-height: 24rem;
+  }
+
+  .pd-name {
     font-size: 1.5rem;
   }
 
