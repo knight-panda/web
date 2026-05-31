@@ -3,11 +3,13 @@ import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/Knight Panda Logo.png";
 import { useUserLogin } from "../../hooks/user/useUserLogin";
+import { useUserForgotPassword } from "../../hooks/user/useUserForgotPassword";
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
 
     const { login, loading, error } = useUserLogin();
+    const { forgotPassword, loading: forgotLoading, error: forgotError, } = useUserForgotPassword();
 
     const [number, setNumber] = useState("");
     const [password, setPassword] = useState("");
@@ -55,8 +57,30 @@ const LoginPage: React.FC = () => {
         navigate("/register");
     };
 
-    const goToNewPasswordPage = () => {
-        navigate("/my-store/new-password");
+    const goToForgotPasswordPage = async () => {
+        setFormError(null);
+
+        if (!validatePhone(number)) {
+            setFormError("Enter your registered mobile number first");
+            return;
+        }
+
+        try {
+            const res = await forgotPassword({
+                phone: number,
+                storeId: localStorage.getItem("activeStoreId") || "",
+            });
+
+            navigate("/verify-otp", {
+                state: {
+                    phone: number,
+                    storeId: res.data.storeId,
+                    isForgotPassword: true,
+                },
+            });
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     return (
@@ -114,14 +138,30 @@ const LoginPage: React.FC = () => {
                             Remember for 30 days
                         </label>
 
-                        <span className="link" onClick={goToNewPasswordPage}>
+                        <span className="link" onClick={goToForgotPasswordPage}>
                             Forgot password
                         </span>
                     </div>
 
                     {/* Button */}
-                    <button type="submit" className="login-btn" disabled={loading}>
-                        {loading ? "Logging in..." : "Login"}
+                    <button
+                        type="submit"
+                        className="login-btn"
+                        disabled={loading || forgotLoading}
+                    >
+                        {loading ? (
+                            <>
+                                <span className="btn-spinner"></span>
+                                Logging in...
+                            </>
+                        ) : forgotLoading ? (
+                            <>
+                                <span className="btn-spinner"></span>
+                                Sending OTP...
+                            </>
+                        ) : (
+                            "Login"
+                        )}
                     </button>
 
                     {/* Footer */}

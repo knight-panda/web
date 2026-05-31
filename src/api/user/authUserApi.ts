@@ -1,3 +1,4 @@
+import type { ForgotPasswordUserRequest } from "../../models/user/auth/request/ForgotPasswordUserRequest";
 import type { LoginUserRequest } from "../../models/user/auth/request/LoginUserRequest";
 import type { RegisterUserRequest } from "../../models/user/auth/request/RegisterUserRequest";
 import type { VerifyUserRequest } from "../../models/user/auth/request/VerifyUserRequest";
@@ -17,6 +18,13 @@ export const loginUser = async (
   payload: LoginUserRequest
 ): Promise<VerifyUserResponse> => {
   const response = await userApiClient.post("/auth/user/login", payload);
+  return response.data;
+};
+
+export const forgotPasswordUser = async (
+  payload: ForgotPasswordUserRequest
+): Promise<RegisterUserResponse> => {
+  const response = await userApiClient.post("/auth/user/forgot-password", payload);
   return response.data;
 };
 

@@ -111,9 +111,37 @@
     cursor: pointer;
     transition: 0.2s;
     margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
-.login-btn:hover {
+.login-btn:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+}
+
+.btn-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.login-btn:hover:not(:disabled) {
     background: #c5621b;
 }
 
