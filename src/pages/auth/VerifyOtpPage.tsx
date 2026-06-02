@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Login.css";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -10,15 +10,33 @@ const VerifyOtpPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // ✅ include clearError
   const { verify, loading, error, clearError } = useUserVerify();
 
-  // ✅ Get data from register page
   const phone = location.state?.phone || "";
   const storeId = location.state?.storeId || "";
 
   const [otp, setOtp] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
+
+  // 5 minutes timer
+  const [timeLeft, setTimeLeft] = useState(300);
+
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,9 +44,13 @@ const VerifyOtpPage = () => {
     setFormError(null);
     clearError();
 
-    // ✅ OTP validation
     if (!/^[0-9]{6}$/.test(otp)) {
       setFormError("OTP must be 6 digits");
+      return;
+    }
+
+    if (timeLeft <= 0) {
+      setFormError("OTP has expired. Please request a new OTP.");
       return;
     }
 
@@ -41,15 +63,25 @@ const VerifyOtpPage = () => {
 
       console.log("OTP verified:", res);
 
-      // ✅ Redirect after success
       navigate("/");
     } catch (err) {
       console.error(err);
     }
   };
 
-  const goToBack = () => {
+  const handleResendOtp = () => {
+    if (timeLeft > 0) return;
+
+    // Go back to registration page
     navigate(-1);
+
+    // If you have a resend API, call it here instead:
+    // resendOtp(phone);
+
+    setTimeLeft(300);
+    setOtp("");
+    setFormError(null);
+    clearError();
   };
 
   return (
@@ -59,8 +91,11 @@ const VerifyOtpPage = () => {
 
         <div className="login-title">Verify OTP</div>
 
+        <div className="otp-info-text">
+          Enter the OTP sent to your email
+        </div>
+
         <form onSubmit={handleSubmit} className="login-form">
-          {/* OTP */}
           <input
             type="tel"
             placeholder="123456"
@@ -68,14 +103,11 @@ const VerifyOtpPage = () => {
             onChange={(e) => {
               const value = e.target.value;
 
-              // ✅ clear errors while typing
               setFormError(null);
               clearError();
 
-              // only digits
               if (!/^\d*$/.test(value)) return;
 
-              // max 6 digits
               if (value.length > 6) return;
 
               setOtp(value);
@@ -86,38 +118,47 @@ const VerifyOtpPage = () => {
             required
           />
 
-          {/* Form Error */}
           {formError && (
             <div className="error-text">
               {formError}
             </div>
           )}
 
-          {/* API Error */}
           {error && (
             <div className="error-text">
               {error}
             </div>
           )}
 
-          {/* Button */}
           <button
             type="submit"
             className="login-btn"
-            disabled={loading}
+            disabled={loading || timeLeft <= 0}
           >
             {loading ? "Verifying..." : "Verify OTP"}
           </button>
 
-          {/* Footer */}
           <p className="register-footer">
-            Didn’t receive the OTP?{" "}
-            <span
-              className="register-link"
-              onClick={goToBack}
-            >
-              Resend OTP
-            </span>
+            {timeLeft > 0 ? (
+              <>OTP expires in{": "}
+                <span
+                  className={`register-link ${timeLeft > 0 ? "disabled-link" : ""
+                    }`}
+                  onClick={handleResendOtp}
+                >
+                  {formatTime(timeLeft)}
+                </span></>
+            ) : (
+              <> Didn’t receive the OTP?{" "}
+                <span
+                  className={`register-link ${timeLeft > 0 ? "disabled-link" : ""
+                    }`}
+                  onClick={handleResendOtp}
+                >
+                  Resend OTP
+                </span></>
+            )}
+
           </p>
         </form>
       </div>

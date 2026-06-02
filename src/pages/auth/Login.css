@@ -38,6 +38,14 @@
     color: var(--primary-color);
 }
 
+.otp-info-text {
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 400;
+    margin-top: 0.5rem;
+    color: gray;
+}
+
 .login-logo-img {
     display: block;
     margin: 0 auto;
