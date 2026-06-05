@@ -1,57 +1,73 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./AdminBlogSection.css";
 import AddBlogDialog from "./AddBlogDialog";
-
-export interface BlogModel {
-    blogId: string;
-    tagline: string;
-    title: string;
-    description: string;
-    imageUrl: string;
-}
+import { useStoreBlogs } from "../../../hooks/admin/adminStoreBlogs/useStoreBlogs";
+import { useDeleteStoreBlog } from "../../../hooks/admin/adminStoreBlogs/useDeleteStoreBlog";
+import type { StoreBlogsData } from "../../../models/admin/storeBlogs/response/StoreBlogsData";
 
 const AdminBlogSection = () => {
+
     const [showDialog, setShowDialog] = useState(false);
-    const blogs: BlogModel[] = [
-        {
-            blogId: "1",
-            tagline: "BEHIND THE BRAND",
-            title:
-                "How We Craft Every Product With Care. From selecting the finest materials to the final finishing touches, discover the passion and care behind everything we create.",
-            description:
-                "From selecting the finest materials to the final finishing touches, discover the passion and care behind everything we create. From selecting the finest materials to the final finishing touches, discover the passion and care behind everything we create.",
-            imageUrl:
-                "https://images.unsplash.com/photo-1517841905240-472988babdf9"
-        },
-        {
-            blogId: "2",
-            tagline: "OUR JOURNEY",
-            title: "From Small Idea To Trusted Brand.",
-            description:
-                "Learn how our brand started and the values that guide every decision we make.",
-            imageUrl:
-                "https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
-        },
-        {
-            blogId: "3",
-            tagline: "CRAFTSMANSHIP",
-            title: "Every Detail Matters.",
-            description:
-                "Discover the process and dedication that goes into every product we create.",
-            imageUrl:
-                "https://images.unsplash.com/photo-1441986300917-64674bd600d8"
+    const [selectedBlog, setSelectedBlog] = useState<StoreBlogsData | null>(null);
+
+    const {
+        loading,
+        error,
+        blogs,
+        fetchBlogs
+    } = useStoreBlogs();
+    const {
+        removeBlog,
+        loading: deleting
+    } = useDeleteStoreBlog();
+
+    useEffect(() => {
+        fetchBlogs();
+    }, []);
+
+    const handleDelete = async (
+        blogId: string
+    ) => {
+
+        const confirmed =
+            window.confirm(
+                "Are you sure you want to delete this blog?"
+            );
+
+        if (!confirmed) return;
+
+        const success =
+            await removeBlog(blogId);
+
+        if (success) {
+
+            fetchBlogs();
         }
-    ];
+    };
 
     return (
         <div className="admin-blogs-container">
+
             <AddBlogDialog
                 isOpen={showDialog}
-                onClose={() => setShowDialog(false)}
-                onSave={(blog) => {
-                    console.log(blog);
+                editMode={selectedBlog !== null}
+                initialData={selectedBlog}
+                onClose={() => {
+
+                    setShowDialog(false);
+
+                    setSelectedBlog(null);
+                }}
+                onSave={() => {
+
+                    setShowDialog(false);
+
+                    setSelectedBlog(null);
+
+                    fetchBlogs();
                 }}
             />
+
             <div className="admin-blogs-title-box">
 
                 <div className="admin-blogs-title">
@@ -64,18 +80,71 @@ const AdminBlogSection = () => {
                 >
                     Add Blog +
                 </div>
+
             </div>
 
+            {loading && (
+                <div className="admin-blogs-loading">
+                    Loading blogs...
+                </div>
+            )}
+
+            {error && (
+                <div className="admin-blogs-error">
+                    {error}
+                </div>
+            )}
+
+            {!loading &&
+                blogs.length === 0 && (
+                    <div className="admin-blogs-empty">
+                        No blogs found
+                    </div>
+                )}
+
             {blogs.map((blog, index) => {
-                const reverse = index % 2 !== 0;
+
+                const reverse =
+                    index % 2 !== 0;
 
                 return (
                     <section
                         key={blog.blogId}
-                        className={`admin-blog-section ${reverse ? "admin-blog-section-reverse" : ""
+                        className={`admin-blog-section ${reverse
+                            ? "admin-blog-section-reverse"
+                            : ""
                             }`}
                     >
+
+                        <div className="admin-blog-actions">
+
+                            <button
+                                className="admin-blog-edit-btn"
+                                onClick={() => {
+
+                                    setSelectedBlog(blog);
+                                    setShowDialog(true);
+                                }}
+                            >
+                                ✏️ Edit
+                            </button>
+
+                            <button
+                                className="admin-blog-delete-btn"
+                                disabled={deleting}
+                                onClick={() =>
+                                    handleDelete(blog.blogId)
+                                }
+                            >
+                                {deleting
+                                    ? "Deleting..."
+                                    : "🗑 Delete"}
+                            </button>
+
+                        </div>
+
                         <div className="admin-blog-content">
+
                             <span className="admin-blog-tagline">
                                 {blog.tagline}
                             </span>
@@ -91,14 +160,17 @@ const AdminBlogSection = () => {
                             <button className="admin-blog-btn">
                                 Read Story →
                             </button>
+
                         </div>
 
                         <div className="admin-blog-image-wrapper">
+
                             <img
                                 src={blog.imageUrl}
                                 alt={blog.title}
                                 className="admin-blog-image"
                             />
+
                         </div>
                     </section>
                 );

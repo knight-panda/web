@@ -4,34 +4,34 @@
 }
 
 .admin-blogs-title-box {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  gap: 1rem;
-  margin-bottom: 2rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .admin-blogs-title {
-  width: 100%;
-  font-size: 1.5rem;
-  color: black;
-  font-weight: 600;
+    width: 100%;
+    font-size: 1.5rem;
+    color: black;
+    font-weight: 600;
 }
 
 .admin-add-blogs {
-  width: 10rem;
-  color: var(--primary-color);
-  border: 1px solid var(--primary-color);
-  padding: 0.5rem;
-  border-radius: 0.9rem;
-  font-weight: 500;
-  font-size: 0.8rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+    width: 10rem;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    padding: 0.5rem;
+    border-radius: 0.9rem;
+    font-weight: 500;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
 
 .admin-blog-section {
@@ -41,6 +41,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
+    position: relative;
 }
 
 .admin-blog-section-reverse .admin-blog-content {
@@ -49,6 +50,58 @@
 
 .admin-blog-section-reverse .admin-blog-image-wrapper {
     order: 1;
+}
+
+.admin-blog-actions {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.75rem;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-0.5rem);
+
+    transition: all 0.25s ease;
+    z-index: 10;
+}
+
+.admin-blog-section:hover .admin-blog-actions {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.admin-blog-edit-btn,
+.admin-blog-delete-btn {
+    border: none;
+    cursor: pointer;
+    padding: 0.65rem 1rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    backdrop-filter: blur(12px);
+
+    transition: all 0.25s ease;
+}
+
+.admin-blog-edit-btn {
+    background: var(--primary-color);
+    color: white;
+}
+
+.admin-blog-edit-btn:hover {
+    transform: translateY(-2px);
+}
+
+.admin-blog-delete-btn {
+    background: rgba(239, 68, 68, 0.95);
+    color: white;
+}
+
+.admin-blog-delete-btn:hover {
+    transform: translateY(-2px);
 }
 
 .admin-blog-content {
@@ -156,6 +209,20 @@
         grid-template-columns: 1fr;
         padding: 2rem 1rem;
         gap: 1.5rem;
+    }
+
+    .admin-blog-actions {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        top: 0.75rem;
+        right: 0.75rem;
+    }
+
+    .admin-blog-edit-btn,
+    .admin-blog-delete-btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
     }
 
     .admin-blog-section-reverse .admin-blog-content {

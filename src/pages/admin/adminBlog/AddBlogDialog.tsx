@@ -1,5 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./AddBlogDialog.css";
+import { useUpdateAdminProfile } from "../../../hooks/admin/auth/useAdminRegister";
+import { useCreateStoreBlog } from "../../../hooks/admin/adminStoreBlogs/useCreateStoreBlog";
+import type { AdminStoreBlogsRequest } from "../../../models/admin/storeBlogs/request/AdminStoreBlogsRequest";
+import { useUpdateStoreBlog } from "../../../hooks/admin/adminStoreBlogs/useUpdateStoreBlog";
+import type { StoreBlogsData } from "../../../models/admin/storeBlogs/response/StoreBlogsData";
 
 export interface BlogModel {
     blogId: string;
@@ -12,55 +17,214 @@ export interface BlogModel {
 interface AddBlogDialogProps {
     isOpen: boolean;
     onClose: () => void;
-    onSave: (blog: BlogModel) => void;
+    onSave: () => void;
+
+    editMode?: boolean;
+
+    initialData?: StoreBlogsData | null;
 }
 
 const AddBlogDialog = ({
     isOpen,
     onClose,
-    onSave
+    onSave,
+    editMode = false,
+    initialData
 }: AddBlogDialogProps) => {
     const [tagline, setTagline] = useState("");
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [imageUrl, setImageUrl] = useState("");
 
+    const { updateProfile } =
+        useUpdateAdminProfile();
+
+    const { createBlog, loading } =
+        useCreateStoreBlog();
+
+    const { updateBlog } =
+        useUpdateStoreBlog();
+
+    const [file, setFile] =
+        useState<File | null>(null);
+
+    const [uploading, setUploading] =
+        useState(false);
+
+    useEffect(() => {
+
+        if (!isOpen) return;
+
+        setTagline(
+            initialData?.tagline ?? ""
+        );
+
+        setTitle(
+            initialData?.title ?? ""
+        );
+
+        setDescription(
+            initialData?.description ?? ""
+        );
+
+        setImageUrl(
+            initialData?.imageUrl ?? ""
+        );
+
+        setFile(null);
+
+    }, [isOpen, initialData]);
+
     const handleImageSelect = (
         e: React.ChangeEvent<HTMLInputElement>
     ) => {
-        const file = e.target.files?.[0];
 
-        if (!file) return;
+        const selectedFile =
+            e.target.files?.[0];
 
-        const preview = URL.createObjectURL(file);
-        setImageUrl(preview);
-    };
+        if (!selectedFile) return;
 
-    const handleSave = () => {
         if (
-            !tagline.trim() ||
-            !title.trim() ||
-            !description.trim() ||
-            !imageUrl
+            !selectedFile.type.startsWith(
+                "image/"
+            )
         ) {
-            alert("Please fill all fields");
+
+            alert(
+                "Please upload a valid image"
+            );
+
             return;
         }
 
-        onSave({
-            blogId: crypto.randomUUID(),
-            tagline,
-            title,
-            description,
-            imageUrl
-        });
+        const maxSize =
+            7 * 1024 * 1024;
 
-        setTagline("");
-        setTitle("");
-        setDescription("");
-        setImageUrl("");
+        if (
+            selectedFile.size > maxSize
+        ) {
 
-        onClose();
+            alert(
+                "Image size must be less than 7MB"
+            );
+
+            return;
+        }
+
+        setFile(selectedFile);
+
+        setImageUrl(
+            URL.createObjectURL(
+                selectedFile
+            )
+        );
+    };
+
+    const handleSave = async () => {
+
+        if (
+            !tagline.trim() ||
+            !title.trim() ||
+            !description.trim()
+        ) {
+
+            alert(
+                "Please fill all fields"
+            );
+
+            return;
+        }
+
+        if (
+            !file &&
+            !initialData?.imageUrl
+        ) {
+
+            alert(
+                "Please select an image"
+            );
+
+            return;
+        }
+
+        try {
+
+            setUploading(true);
+
+            let uploadedImageUrl =
+                initialData?.imageUrl ?? "";
+
+            if (file) {
+
+                const uploaded =
+                    await updateProfile(file);
+
+                if (!uploaded) {
+
+                    alert(
+                        "Image upload failed"
+                    );
+
+                    return;
+                }
+
+                uploadedImageUrl =
+                    uploaded;
+            }
+
+            const request:
+                AdminStoreBlogsRequest = {
+
+                tagline,
+                title,
+                description,
+                imageUrl:
+                    uploadedImageUrl
+            };
+
+            const response =
+                editMode &&
+                    initialData?.blogId
+
+                    ? await updateBlog(
+                        initialData.blogId,
+                        request
+                    )
+
+                    : await createBlog(
+                        request
+                    );
+
+            if (response.success) {
+
+                onSave();
+                setTagline("");
+                setTitle("");
+                setDescription("");
+                setImageUrl("");
+                setFile(null);
+
+                onClose();
+
+            } else {
+
+                alert(
+                    response.message
+                );
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Failed to create blog"
+            );
+
+        } finally {
+
+            setUploading(false);
+        }
     };
 
     if (!isOpen) return null;
@@ -69,7 +233,13 @@ const AddBlogDialog = ({
         <div className="blog-dialog-overlay">
             <div className="blog-dialog">
                 <div className="blog-dialog-header">
-                    <h2>Add Blog</h2>
+                    <h2>
+                        {
+                            editMode
+                                ? "Edit Blog"
+                                : "Add Blog"
+                        }
+                    </h2>
 
                     <button
                         className="blog-close-btn"
@@ -150,8 +320,23 @@ const AddBlogDialog = ({
                     <button
                         className="save-btn"
                         onClick={handleSave}
+                        disabled={
+                            loading || uploading
+                        }
                     >
-                        Save Blog
+                        {
+                            loading || uploading
+                                ? (
+                                    editMode
+                                        ? "Updating..."
+                                        : "Saving..."
+                                )
+                                : (
+                                    editMode
+                                        ? "Update Blog"
+                                        : "Save Blog"
+                                )
+                        }
                     </button>
                 </div>
             </div>
