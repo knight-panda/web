@@ -1,0 +1,138 @@
+.reels-section {
+    width: 100%;
+}
+
+.reels-header {
+    max-width: 89rem;
+    padding: 0rem 2rem;
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+}
+
+.reels-grid {
+    max-width: 89rem;
+    padding: 0rem 2rem;
+    display: flex;
+    margin: 0 auto;
+    gap: 2rem;
+    flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reel-card {
+    width: 20rem;
+    height: 35rem;
+    overflow: hidden;
+    position: relative;
+    border-radius: 1rem;
+}
+
+.instagram-media {
+    position: absolute;
+    top: -3.4rem;
+    left: -4.4rem;
+    width: calc(100% + 8.6rem) !important;
+    margin: 0 !important;
+}
+
+.reel-title {
+    margin-top: 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+/* Tablet */
+
+@media screen and (max-width: 992px) {
+
+    .reels-header,
+    .reels-grid {
+        max-width: 100%;
+        padding: 0 1.5rem;
+    }
+
+    .reels-grid {
+        gap: 1.5rem;
+        justify-content: center;
+    }
+
+    .reel-card {
+        width: 18rem;
+        height: 32rem;
+    }
+
+    .instagram-media {
+        top: -3rem;
+        left: -4rem;
+        width: calc(100% + 8rem) !important;
+    }
+}
+
+/* Mobile */
+
+@media screen and (max-width: 768px) {
+
+    .reels-header,
+    .reels-grid {
+        padding: 0 1rem;
+    }
+
+    .reels-header {
+        margin-bottom: 2rem;
+    }
+
+    .reels-grid {
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .reel-card {
+        width: calc(50% - 0.5rem);
+        max-width: 18rem;
+        height: 30rem;
+    }
+
+    .instagram-media {
+        top: -3rem;
+        left: -4rem;
+        width: calc(100% + 8rem) !important;
+    }
+
+    .reel-title {
+        font-size: 1.2rem;
+    }
+}
+
+/* Small Mobile */
+
+@media screen and (max-width: 480px) {
+
+    .reels-header {
+        padding: 0 1rem;
+    }
+
+    .reels-grid {
+        gap: 1rem;
+    }
+
+    .reel-card {
+        width: 100%;
+        max-width: 22rem;
+        height: 34rem;
+    }
+
+    .instagram-media {
+        top: -3.4rem;
+        left: -4.4rem;
+        width: calc(100% + 8.6rem) !important;
+    }
+
+    .reel-title {
+        font-size: 1.1rem;
+    }
+}

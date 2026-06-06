@@ -49,6 +49,7 @@ const AddUpdateProduct = lazy(() => import("./pages/admin/products/AddUpdateProd
 const AdminProfile = lazy(() => import("./pages/admin/adminProfile/AdminProfile"));
 const StoreDomain = lazy(() => import("./pages/admin/storeDomain/StoreDomain"));
 const AdminBlogSection = lazy(() => import("./pages/admin/adminBlog/AdminBlogSection"));
+const StoreReels = lazy(() => import("./pages/admin/storeReels/StoreReels"));
 
 /* ========================= */
 
@@ -128,6 +129,7 @@ function App() {
                 <Route path="store-settings" element={<StoreSettings />} />
                 <Route path="store-information" element={<StoreInformation />} />
                 <Route path="blogs" element={<AdminBlogSection />} />
+                <Route path="reels" element={<StoreReels />} />
                 <Route path="store-domain" element={<StoreDomain />} />
                 <Route path="carousels" element={<CarouselAdmin />} />
                 <Route path="products" element={<ProductsAdmin />} />

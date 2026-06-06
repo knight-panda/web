@@ -107,6 +107,12 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ onTagClick }) => {
         },
 
         {
+            id: "reels",
+            label: "Reels",
+            icon: FaFileMedical,
+        },
+
+        {
             id: "store-domain",
             label: "Store Domain",
             icon: FaGlobe,
