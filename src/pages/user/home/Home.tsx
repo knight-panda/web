@@ -17,7 +17,7 @@ const Home = () => {
       <Carousel storeId={storeId} />
       <Products storeId={storeId} />
       <BlogSection storeId={storeId} />
-      <ReelsUser />
+      <ReelsUser storeId={storeId}/>
     </div>
   );
 };

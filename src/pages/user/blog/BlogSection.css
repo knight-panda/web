@@ -1,11 +1,12 @@
 .blogs-container {
     width: 100%;
+    margin-top: 2rem;
 }
 
 .blog-section {
     max-width: 89rem;
     margin: 0 auto;
-    padding: 2rem 4rem;
+    padding: 0rem 2rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
@@ -98,11 +99,14 @@
 }
 
 /* Tablet */
-
 @media screen and (max-width: 992px) {
+    .blogs-container {
+        margin-top: 1rem;
+    }
+
     .blog-section {
         max-width: 100%;
-        padding: 2rem;
+        padding: 0rem 1rem;
         gap: 1.5rem;
     }
 
@@ -124,7 +128,7 @@
 @media screen and (max-width: 768px) {
     .blog-section {
         grid-template-columns: 1fr;
-        padding: 2rem 1rem;
+        padding: 0rem 1rem;
         gap: 1.5rem;
     }
 
@@ -157,6 +161,10 @@
 /* Small Mobile */
 
 @media screen and (max-width: 480px) {
+    .blogs-container {
+        margin-top: 0.8rem;
+    }
+
     .blogs-container {
         padding: 0;
     }

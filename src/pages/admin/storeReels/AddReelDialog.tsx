@@ -1,22 +1,25 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import "./AddReelDialog.css";
 
-interface ReelModel {
-    reelId: string;
-    title: string;
-    videoUrl: string;
-}
+import { useAdminCreateStoreReel } from "../../../hooks/admin/adminStoreReels/useAdminCreateStoreReel";
+import { useAdminUpdateStoreReel } from "../../../hooks/admin/adminStoreReels/useAdminUpdateStoreReel";
+import type { StoreReelData } from "../../../models/admin/storeReels/response/StoreReelData";
+import type { AdminStoreReelRequest } from "../../../models/admin/storeReels/request/AdminStoreReelRequest";
 
 interface AddReelDialogProps {
     isOpen: boolean;
     onClose: () => void;
-    onSave: (reel: ReelModel) => void;
+    onSave: () => void;
+    editMode?: boolean;
+    initialData?: StoreReelData | null;
 }
 
 const AddReelDialog = ({
     isOpen,
     onClose,
-    onSave
+    onSave,
+    editMode = false,
+    initialData
 }: AddReelDialogProps) => {
 
     const [title, setTitle] =
@@ -25,38 +28,35 @@ const AddReelDialog = ({
     const [videoUrl, setVideoUrl] =
         useState("");
 
-    const handleVideoSelect = (
-        e: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const {
+        createReel,
+        loading: creating
+    } = useAdminCreateStoreReel();
 
-        const file =
-            e.target.files?.[0];
+    const {
+        updateReel,
+        loading: updating
+    } = useAdminUpdateStoreReel();
 
-        if (!file) return;
+    useEffect(() => {
 
-        if (
-            !file.type.startsWith(
-                "video/"
-            )
-        ) {
+        if (!isOpen) return;
 
-            alert(
-                "Please select a valid video"
-            );
-
-            return;
-        }
+        setTitle(
+            initialData?.title ?? ""
+        );
 
         setVideoUrl(
-            URL.createObjectURL(file)
+            initialData?.videoUrl ?? ""
         );
-    };
 
-    const handleSave = () => {
+    }, [isOpen, initialData]);
+
+    const handleSave = async () => {
 
         if (
             !title.trim() ||
-            !videoUrl
+            !videoUrl.trim()
         ) {
 
             alert(
@@ -66,17 +66,65 @@ const AddReelDialog = ({
             return;
         }
 
-        onSave({
-            reelId:
-                crypto.randomUUID(),
-            title,
-            videoUrl
-        });
+        try {
 
-        setTitle("");
-        setVideoUrl("");
+            const request:
+                AdminStoreReelRequest = {
 
-        onClose();
+                title,
+                videoUrl
+            };
+
+            let response;
+
+            if (
+                editMode &&
+                initialData
+            ) {
+
+                response =
+                    await updateReel(
+                        initialData.reelId,
+                        request
+                    );
+
+            } else {
+
+                response =
+                    await createReel(
+                        request
+                    );
+            }
+
+            if (
+                response?.success
+            ) {
+
+                setTitle("");
+                setVideoUrl("");
+
+                onSave();
+
+            } else {
+
+                alert(
+                    response?.message ||
+                    "Operation failed"
+                );
+            }
+
+        } catch (error) {
+
+            console.error(
+                error
+            );
+
+            alert(
+                editMode
+                    ? "Failed to update reel"
+                    : "Failed to create reel"
+            );
+        }
     };
 
     if (!isOpen) return null;
@@ -89,7 +137,11 @@ const AddReelDialog = ({
                 <div className="reel-dialog-header">
 
                     <h2>
-                        Add Reel
+                        {
+                            editMode
+                                ? "Edit Reel"
+                                : "Add Reel"
+                        }
                     </h2>
 
                     <button
@@ -125,18 +177,18 @@ const AddReelDialog = ({
                     <div className="reel-form-group">
 
                         <label>
-                            Video
+                            Instagram Reel URL
                         </label>
 
                         <input
                             type="text"
-                            value={title}
+                            value={videoUrl}
                             onChange={(e) =>
-                                setTitle(
+                                setVideoUrl(
                                     e.target.value
                                 )
                             }
-                            placeholder="Enter reel title"
+                            placeholder="https://www.instagram.com/reel/..."
                         />
 
                     </div>
@@ -154,9 +206,28 @@ const AddReelDialog = ({
 
                     <button
                         className="reel-save-btn"
-                        onClick={handleSave}
+                        onClick={
+                            handleSave
+                        }
+                        disabled={
+                            creating ||
+                            updating
+                        }
                     >
-                        Save Reel
+                        {
+                            creating ||
+                                updating
+                                ? (
+                                    editMode
+                                        ? "Updating..."
+                                        : "Saving..."
+                                )
+                                : (
+                                    editMode
+                                        ? "Update Reel"
+                                        : "Save Reel"
+                                )
+                        }
                     </button>
 
                 </div>

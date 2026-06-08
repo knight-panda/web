@@ -1,18 +1,25 @@
-.reels-section {
+.user-reels-section {
     width: 100%;
+    margin-top: 3rem;
 }
 
-.reels-header {
+.user-reels-header {
     max-width: 89rem;
     padding: 0rem 2rem;
     display: flex;
     margin: 0 auto;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 3rem;
 }
 
-.reels-grid {
+.user-reels-header-title {
+    font-size: 2rem;
+    font-weight: 700;
+    padding: 0;
+    margin: 0;
+}
+
+.user-reels-grid {
     max-width: 89rem;
     padding: 0rem 2rem;
     display: flex;
@@ -22,9 +29,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 1.5rem;
 }
 
-.reel-card {
+.user-reel-card {
     width: 20rem;
     height: 35rem;
     overflow: hidden;
@@ -40,87 +48,58 @@
     margin: 0 !important;
 }
 
-.reel-title {
-    margin-top: 1rem;
-    font-size: 1.4rem;
-    font-weight: 600;
-}
-
 /* Tablet */
-
 @media screen and (max-width: 992px) {
 
-    .reels-header,
-    .reels-grid {
-        max-width: 100%;
-        padding: 0 1.5rem;
+    .user-reels-section {
+        margin-top: 2rem;
     }
 
-    .reels-grid {
-        gap: 1.5rem;
-        justify-content: center;
+    .user-reels-header {
+        padding: 0rem 1rem;
     }
 
-    .reel-card {
-        width: 18rem;
-        height: 32rem;
+    .user-reels-grid {
+        margin-top: 1rem;
     }
 
-    .instagram-media {
-        top: -3rem;
-        left: -4rem;
-        width: calc(100% + 8rem) !important;
+    .user-reels-header-title {
+        font-size: 1.8rem;
     }
+
 }
 
 /* Mobile */
-
 @media screen and (max-width: 768px) {
 
-    .reels-header,
-    .reels-grid {
-        padding: 0 1rem;
+    .user-reels-header-title {
+        font-size: 1.6rem;
     }
 
-    .reels-header {
-        margin-bottom: 2rem;
-    }
-
-    .reels-grid {
-        gap: 1rem;
-        justify-content: center;
-    }
-
-    .reel-card {
-        width: calc(50% - 0.5rem);
-        max-width: 18rem;
-        height: 30rem;
-    }
-
-    .instagram-media {
-        top: -3rem;
-        left: -4rem;
-        width: calc(100% + 8rem) !important;
-    }
-
-    .reel-title {
-        font-size: 1.2rem;
-    }
 }
 
 /* Small Mobile */
 
 @media screen and (max-width: 480px) {
 
-    .reels-header {
-        padding: 0 1rem;
+    .user-reels-section {
+        margin-top: 0rem;
     }
 
-    .reels-grid {
+    .user-reels-header {
+        padding: 0.5rem 1rem;
+    }
+
+    .user-reels-header-title {
+        font-size: 1.4rem;
+    }
+
+    .user-reels-grid {
         gap: 1rem;
+        margin-top: 1rem;
     }
 
-    .reel-card {
+    .user-reel-card {
         width: 100%;
         max-width: 22rem;
         height: 34rem;
@@ -132,7 +111,4 @@
         width: calc(100% + 8.6rem) !important;
     }
 
-    .reel-title {
-        font-size: 1.1rem;
-    }
 }

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import "./ReelsUser.css";
+import { useUserStoreReels } from "../../../hooks/user/storeReels/useUserStoreReels";
 
 declare global {
     interface Window {
@@ -11,92 +12,132 @@ declare global {
     }
 }
 
-interface ReelModel {
-    reelId: string;
-    title: string;
-    url: string;
+interface Props {
+    storeId: string;
 }
 
-const reels: ReelModel[] = [
-    {
-        reelId: "1",
-        title: "How We Make Leather Wallets",
-        url: "https://www.instagram.com/reel/DZAzvfDP84Y/"
-    },
-    {
-        reelId: "2",
-        title: "How We Make Leather Wallets",
-        url: "https://www.instagram.com/reel/DZCib0ZP77m/"
-    },
-    {
-        reelId: "1",
-        title: "How We Make Leather Wallets",
-        url: "https://www.instagram.com/reel/DZAzvfDP84Y/"
-    },
-    {
-        reelId: "2",
-        title: "How We Make Leather Wallets",
-        url: "https://www.instagram.com/reel/DZCib0ZP77m/"
-    },
-    {
-        reelId: "1",
-        title: "How We Make Leather Wallets",
-        url: "https://www.instagram.com/reel/DZAzvfDP84Y/"
-    },
-    {
-        reelId: "2",
-        title: "How We Make Leather Wallets",
-        url: "https://www.instagram.com/reel/DZCib0ZP77m/"
-    }
-];
+const ReelsUser = ({
+    storeId
+}: Props) => {
 
-export default function ReelsUser() {
+    const {
+        loading,
+        error,
+        reels,
+        fetchReels
+    } = useUserStoreReels();
 
     useEffect(() => {
-        const script = document.createElement("script");
-        script.src = "https://www.instagram.com/embed.js";
-        script.async = true;
 
-        script.onload = () => {
-            window.instgrm?.Embeds?.process();
-        };
+        if (storeId) {
 
-        document.body.appendChild(script);
+            fetchReels(
+                storeId
+            );
+        }
 
-        return () => {
-            document.body.removeChild(script);
-        };
+    }, [storeId]);
+
+    useEffect(() => {
+
+        const existingScript =
+            document.querySelector(
+                'script[src="https://www.instagram.com/embed.js"]'
+            );
+
+        if (!existingScript) {
+
+            const script =
+                document.createElement(
+                    "script"
+                );
+
+            script.src =
+                "https://www.instagram.com/embed.js";
+
+            script.async = true;
+
+            script.onload = () => {
+
+                window.instgrm
+                    ?.Embeds
+                    ?.process();
+            };
+
+            document.body.appendChild(
+                script
+            );
+
+        } else {
+
+            window.instgrm
+                ?.Embeds
+                ?.process();
+        }
+
     }, [reels]);
 
+    if (
+        !loading &&
+        reels.length === 0
+    ) {
+
+        return null;
+    }
+
     return (
-        <section className="reels-section">
-            <div className="reels-header">
-                <h2>Instagram Reels</h2>
+        <section className="user-reels-section">
+
+            <div className="user-reels-header">
+
+                <h2 className="user-reels-header-title">
+                    Our Customer Reviews
+                </h2>
+
             </div>
 
-            <div className="reels-grid">
-                {reels.map((reel) => (
-                    <div
-                        key={reel.reelId}
-                        className="reel-card"
-                    >
+            {loading && (
+                <div className="user-reels-loading">
+                    Loading reels...
+                </div>
+            )}
+
+            {error && (
+                <div className="user-reels-error">
+                    {error}
+                </div>
+            )}
+
+            <div className="user-reels-grid">
+
+                {reels.map(
+                    (reel) => (
+
                         <div
-                            dangerouslySetInnerHTML={{
-                                __html: `
-            <blockquote
-                class="instagram-media"
-                data-instgrm-permalink="${reel.url}"
-                data-instgrm-version="14">
-            </blockquote>
-        `
-                            }}
-                        />
-                        <div className="reel-title">
-                            {reel.title}
+                            key={reel.reelId}
+                            className="user-reel-card"
+                        >
+
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: `
+                                    <blockquote
+                                        class="instagram-media"
+                                        data-instgrm-permalink="${reel.videoUrl}"
+                                        data-instgrm-version="14">
+                                    </blockquote>
+                                `
+                                }}
+                            />
+
                         </div>
-                    </div>
-                ))}
+                    )
+                )}
+
             </div>
+
         </section>
     );
-}
+};
+
+export default ReelsUser;
