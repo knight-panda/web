@@ -9,16 +9,17 @@ import ProductInfo from "../../../components/Product/ProductInfo";
 import "./ProductDetailsPage.css";
 import { usePublicProductDetails } from "../../../hooks/user/usePublicProductDetails";
 import { useUserProductDetails } from "../../../hooks/user/products/useUserProductDetails";
+import type { Store } from "../../../models/store/response/SingleStoreResponse";
 
 // import Products from "./Products";
 type OutletContextType = {
   storeId: string;
-  store: any;
+  storeData: Store;
 };
 
 const ProductDetailsPage = () => {
 
-  const { storeId } =
+  const { storeId, storeData } =
     useOutletContext<OutletContextType>();
 
   const { productId } = useParams();
@@ -102,10 +103,12 @@ const ProductDetailsPage = () => {
 
         <ProductGallery
           product={product}
+          storeData={storeData}
         />
 
         <ProductInfo
           product={product}
+          storeData={storeData}
         />
 
       </div>

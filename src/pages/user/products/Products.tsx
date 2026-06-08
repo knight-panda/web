@@ -8,12 +8,14 @@ import "./Products.css";
 import { usePublicProducts } from "../../../hooks/user/usePublicStore";
 
 import { useUserProducts } from "../../../hooks/user/products/useUserProducts";
+import type { Store } from "../../../models/store/response/SingleStoreResponse";
 
 type Props = {
   storeId: string;
+  storeData?: Store;
 };
 
-const Products = ({ storeId }: Props) => {
+const Products = ({ storeId, storeData }: Props) => {
 
   const navigate = useNavigate();
 
@@ -155,6 +157,8 @@ const Products = ({ storeId }: Props) => {
                 description={
                   product.description
                 }
+
+                primaryColor={storeData?.primaryColor || "var(--primary-color)" }
 
                 // image
                 image={

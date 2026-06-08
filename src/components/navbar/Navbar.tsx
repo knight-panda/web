@@ -7,12 +7,14 @@ import { FaRegCircleUser } from "react-icons/fa6";
 import { BsCart3 } from "react-icons/bs";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { IoMdMore } from "react-icons/io";
+import type { Store } from "../../models/store/response/SingleStoreResponse";
 
 /* ================= TYPES ================= */
 
 interface NavbarProps {
   logoUrl?: string;
   storeName?: string;
+  storeData?: Store;
 }
 
 interface NavbarSettings {
@@ -27,13 +29,18 @@ interface NavbarSettings {
 
 const Navbar: React.FC<NavbarProps> = ({
   logoUrl,
-  storeName
+  storeName,
+  storeData,
 }) => {
+
+  const activeStoreId = localStorage.getItem("activeStoreId");
+  const storeTokens = JSON.parse(localStorage.getItem("storeTokens") || "{}");
+  const isLoggedIn = activeStoreId && storeTokens[activeStoreId];
 
   const [openModal, setOpenModal] =
     useState<boolean>(false);
   const navigate = useNavigate();
-  const cartCount: number = 3;
+  const cartCount: number = 0;
   const [settings, setSettings] =
     useState<NavbarSettings>({
       bgColor: "#ffffff",
@@ -134,7 +141,7 @@ const Navbar: React.FC<NavbarProps> = ({
           <div className="navbar-right">
 
             {/* LOGIN */}
-            {settings.showLogin && (
+            {settings.showLogin && !isLoggedIn && (
 
               <div
                 className="nav-item-user"
@@ -185,9 +192,17 @@ const Navbar: React.FC<NavbarProps> = ({
                     className="nav-item-icon"
                   />
 
-                  <span className="nav-item-count">
-                    {cartCount}
-                  </span>
+                  {cartCount >= 1 && (
+                    <span
+                      className="nav-item-count"
+                      style={{
+                        backgroundColor:
+                          storeData?.primaryColor || "var(--primary-color)"
+                      }}
+                    >
+                      {cartCount}
+                    </span>
+                  )}
 
                 </div>
 
@@ -228,7 +243,7 @@ const Navbar: React.FC<NavbarProps> = ({
               </h3>
 
               <button
-                onClick={() => setOpenModal(false) }
+                onClick={() => setOpenModal(false)}
               >
                 ✕
               </button>
@@ -295,8 +310,8 @@ const Navbar: React.FC<NavbarProps> = ({
 
                 <input
                   type="checkbox"
-                  checked={ settings.showOrders }
-                  onChange={() => handleToggle("showOrders") }
+                  checked={settings.showOrders}
+                  onChange={() => handleToggle("showOrders")}
                 />
                 Show Orders
               </label>
@@ -317,14 +332,14 @@ const Navbar: React.FC<NavbarProps> = ({
 
               <button
                 className="model-close-btn"
-                onClick={() => setOpenModal(false) }
+                onClick={() => setOpenModal(false)}
               >
                 Close
               </button>
 
               <button
                 className="model-save-btn"
-                onClick={() => setOpenModal(false) }
+                onClick={() => setOpenModal(false)}
               >
                 Save
               </button>

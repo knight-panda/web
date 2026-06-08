@@ -21,13 +21,15 @@ import {
 import type {
     Product
 } from "../../models/user/products/response/UserProductDetailsResponse";
+import type { Store } from "../../models/store/response/SingleStoreResponse";
 
 type ProductInfoProps = {
     product: Product;
+    storeData: Store
 };
 
 const ProductInfo = ({
-    product,
+    product, storeData
 }: ProductInfoProps) => {
 
     const navigate =
@@ -255,7 +257,11 @@ const ProductInfo = ({
             : 0;
 
     return (
-        <div className="product-info">
+        <div
+            className="product-info"
+            style={{
+                "--store-primary-color": storeData.primaryColor || "var(--primary-color)"
+            } as React.CSSProperties}>
 
             <div className="pd-name">{product.name}</div>
 
@@ -274,8 +280,8 @@ const ProductInfo = ({
                                 key={variant.variantId}
 
                                 className={`pd-variant-item ${isSelected
-                                        ? "active"
-                                        : ""
+                                    ? "active"
+                                    : ""
                                     }`}
 
                                 onClick={() => {

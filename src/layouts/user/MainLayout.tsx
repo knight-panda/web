@@ -192,12 +192,13 @@ const MainLayout = () => {
       <Navbar
         logoUrl={data?.data?.logoUrl}
         storeName={data?.data?.storeName}
+        storeData={data?.data}
       />
 
       <Outlet
         context={{
           storeId: data?.data?.id,
-          store: data?.data,
+          storeData: data?.data,
           storeName,
         }}
       />
