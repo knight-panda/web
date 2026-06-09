@@ -129,9 +129,6 @@ const ProductsAdmin = () => {
 
         {data?.data?.map((product) => {
 
-          const firstVariant =
-            product?.variants?.[0];
-
           return (
 
             <div

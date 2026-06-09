@@ -17,7 +17,7 @@ const LoginPage: React.FC = () => {
     const { storeData } = useOutletContext<OutletContextType>();
 
     const { login, loading, error } = useUserLogin();
-    const { forgotPassword, loading: forgotLoading, error: forgotError, } = useUserForgotPassword();
+    const { forgotPassword, loading: forgotLoading } = useUserForgotPassword();
 
     const [number, setNumber] = useState("");
     const [password, setPassword] = useState("");

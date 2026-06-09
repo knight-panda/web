@@ -16,7 +16,7 @@ type OutletContextType = {
 };
 
 const CartPage = () => {
-  const { storeId, storeData } = useOutletContext<OutletContextType>();
+  const { storeData } = useOutletContext<OutletContextType>();
 
   const [openAddress, setOpenAddress] =
     useState(false);
