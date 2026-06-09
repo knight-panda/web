@@ -3,12 +3,20 @@ import { useEffect, useState } from "react";
 import CartItems from "../../../components/cart/CartItems";
 import CartSummary from "../../../components/cart/CartSummary";
 import AddressDialog from "../../../components/address/AddressDialog";
+import { useOutletContext } from "react-router-dom";
 
 import "./CartPage.css";
 import { useGetCart } from "../../../hooks/user/cart/useGetCart";
 import { useUserAddress } from "../../../hooks/user/address/useUserAddress";
+import type { Store } from "../../../models/store/response/SingleStoreResponse";
+
+type OutletContextType = {
+  storeId: string;
+  storeData: Store; // replace with proper type if available
+};
 
 const CartPage = () => {
+  const { storeId, storeData } = useOutletContext<OutletContextType>();
 
   const [openAddress, setOpenAddress] =
     useState(false);
@@ -90,6 +98,9 @@ const CartPage = () => {
           loading={loading}
           fetchCart={fetchCart}
           setCartData={setCartData}
+          primaryColor={
+            storeData?.primaryColor
+          }
         />
 
         {/* RIGHT */}
@@ -138,6 +149,9 @@ const CartPage = () => {
           onlinePaymentEnabled={
             cartData?.onlinePaymentEnabled || false
           }
+          primaryColor={
+            storeData?.primaryColor
+          }
         />
 
       </div>
@@ -158,6 +172,7 @@ const CartPage = () => {
             onClose={closeAddressDialog}
             addressData={addressData?.data}
             fetchAddress={fetchAddress}
+            primaryColor={storeData?.primaryColor}
           />
         )
       }

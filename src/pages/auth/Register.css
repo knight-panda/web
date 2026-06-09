@@ -2,7 +2,6 @@
     max-width: 89rem;
     padding: 3rem 0;
     margin: auto;
-    background: #f5f6f8;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,7 +34,7 @@
     font-size: 1.5rem;
     font-weight: 700;
     margin-top: 0.5rem;
-    color: var(--primary-color);
+    color: var(--store-primary-color);
 }
 
 .register-logo-img {
@@ -64,7 +63,7 @@
 }
 
 .register-input:focus {
-    border-color: var(--primary-color);
+    border-color: var(--store-primary-color);
 }
 
 /* Row */
@@ -87,7 +86,7 @@
     padding: 14px;
     border-radius: 6px;
     border: none;
-    background: var(--primary-color);
+    background: var(--store-primary-color);
     color: white;
     font-weight: 600;
     cursor: pointer;
@@ -96,7 +95,9 @@
 }
 
 .register-btn:hover {
-    background: #c5621b;
+    background: color-mix(in srgb,
+            var(--store-primary-color) 90%,
+            black);
 }
 
 /* Footer */

@@ -121,6 +121,11 @@
     text-align: center;
 }
 
+.dialog-banner-desc {
+    font-size: 0.9rem;
+    color: #666;
+}
+
 .upload-box {
     margin: 20px 0;
 }

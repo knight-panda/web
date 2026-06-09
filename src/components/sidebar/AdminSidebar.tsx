@@ -9,7 +9,9 @@ import {
     FaChevronRight,
     FaImages,
     FaStore,
-    FaGlobe
+    FaGlobe,
+    FaNewspaper,
+    FaFilm
 } from "react-icons/fa";
 
 import { useLocation } from "react-router-dom";
@@ -103,13 +105,13 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ onTagClick }) => {
         {
             id: "blogs",
             label: "Blogs",
-            icon: FaFileMedical,
+            icon: FaNewspaper,
         },
 
         {
             id: "reels",
             label: "Reels",
-            icon: FaFileMedical,
+            icon: FaFilm,
         },
 
         {

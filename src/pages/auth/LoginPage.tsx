@@ -4,9 +4,17 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../assets/Knight Panda Logo.png";
 import { useUserLogin } from "../../hooks/user/useUserLogin";
 import { useUserForgotPassword } from "../../hooks/user/useUserForgotPassword";
+import type { Store } from "../../models/store/response/SingleStoreResponse";
+import { useOutletContext } from "react-router-dom";
+
+type OutletContextType = {
+    storeId: string;
+    storeData: Store; // replace with proper type if available
+};
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
+    const { storeData } = useOutletContext<OutletContextType>();
 
     const { login, loading, error } = useUserLogin();
     const { forgotPassword, loading: forgotLoading, error: forgotError, } = useUserForgotPassword();
@@ -84,7 +92,11 @@ const LoginPage: React.FC = () => {
     };
 
     return (
-        <div className="login-wrapper">
+        <div
+            className="login-wrapper"
+            style={{
+                "--store-primary-color": storeData?.primaryColor || "var(--primary-color)"
+            } as React.CSSProperties}>
             <div className="login-card">
                 <img className="login-logo-img" src={logo} alt="logo" />
                 <div className="login-title">Welcome back</div>
@@ -131,6 +143,7 @@ const LoginPage: React.FC = () => {
                     <div className="login-row">
                         <label className="remember">
                             <input
+                                className="login-checkbox"
                                 type="checkbox"
                                 checked={remember}
                                 onChange={() => setRemember(!remember)}

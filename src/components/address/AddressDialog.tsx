@@ -9,6 +9,7 @@ type AddressDialogProps = {
     onClose: () => void;
     addressData?: UserAddressData;
     fetchAddress: () => Promise<any>;
+    primaryColor?: string;
 };
 
 const AddressDialog: React.FC<
@@ -17,6 +18,7 @@ const AddressDialog: React.FC<
     onClose,
     addressData,
     fetchAddress,
+    primaryColor,
 }) => {
 
         const {
@@ -189,6 +191,9 @@ const AddressDialog: React.FC<
 
             <div
                 className="address-backdrop"
+                style={{
+                    "--store-primary-color": primaryColor || "var(--primary-color)"
+                } as React.CSSProperties}
                 onClick={onClose}
             >
 

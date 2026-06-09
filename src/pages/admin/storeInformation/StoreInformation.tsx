@@ -121,7 +121,13 @@ const StoreInformation = () => {
                     formData
                 );
 
-            console.log(res);
+            if (res.success) {
+
+                // Update original data
+                setOriginalData({
+                    ...formData
+                });
+            }
 
         } catch (error) {
 

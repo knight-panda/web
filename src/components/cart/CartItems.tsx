@@ -10,19 +10,19 @@ import "./Cart.css";
 
 type Props = {
     items: CartItem[];
-
     loading?: boolean;
-
     fetchCart: () => Promise<GetCartResponse>;
-
     setCartData: React.Dispatch<any>;
+    primaryColor?: string;
 };
 
 const CartItems = ({
     items,
     loading,
     fetchCart,
-    setCartData
+    setCartData,
+    primaryColor,
+
 }: Props) => {
 
     const {
@@ -244,7 +244,11 @@ const CartItems = ({
     };
 
     return (
-        <div className="cart-left">
+        <div
+            className="cart-left"
+            style={{
+                "--store-primary-color": primaryColor || "var(--primary-color)"
+            } as React.CSSProperties}>
 
             {/* FREE DELIVERY */}
             <div className="free-banner">

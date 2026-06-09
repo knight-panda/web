@@ -14,14 +14,16 @@
 }
 
 .as-profile-icon {
-    height: 2rem;
-    width: 2rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
     color: #444;
 }
 
 .as-user-info {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 0.2rem;
 }
 

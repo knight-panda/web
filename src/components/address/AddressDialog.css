@@ -65,9 +65,14 @@
 }
 
 .save {
-    background: var(--primary-color);
+    background: var(--store-primary-color);
     color: #fff;
     border: none;
     padding: 0.6rem 1.2rem;
     border-radius: 0.6rem;
+}
+
+.save:hover {
+    background: var(--store-primary-color);
+   
 }

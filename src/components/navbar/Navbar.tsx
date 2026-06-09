@@ -94,9 +94,8 @@ const Navbar: React.FC<NavbarProps> = ({
       <div
         className="navbar"
         style={{
-          backgroundColor:
-            settings.bgColor
-        }}
+          "--store-primary-color": storeData?.primaryColor || "var(--primary-color)"
+        } as React.CSSProperties}
       >
 
         <div className="navbar-container">

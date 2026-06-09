@@ -21,6 +21,7 @@ type CartSummaryProps = {
     grandTotal: number;
     codEnabled: boolean;
     onlinePaymentEnabled: boolean;
+    primaryColor?: string;
 };
 
 const CartSummary: React.FC<CartSummaryProps> = ({
@@ -36,6 +37,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
     grandTotal,
     codEnabled,
     onlinePaymentEnabled,
+    primaryColor,
 }) => {
 
     const navigate = useNavigate();
@@ -291,7 +293,11 @@ const CartSummary: React.FC<CartSummaryProps> = ({
 
     return (
 
-        <div className="cart-right">
+        <div
+            className="cart-right"
+            style={{
+                "--store-primary-color": primaryColor || "var(--primary-color)"
+            } as React.CSSProperties}>
 
             {/* ADDRESS */}
             <div className="summary-card">

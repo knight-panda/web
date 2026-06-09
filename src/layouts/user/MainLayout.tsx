@@ -5,6 +5,7 @@ import ScrollToTop from "../../utils/ScrollToTop";
 import { useEffect, useMemo } from "react";
 import { usePublicStore } from "../../hooks/user/usePublicStore";
 import AppShimmer from "../../components/shimmer/AppShimmer";
+import './MainLayout.css'
 
 /* ================= STORE DETECTION ================= */
 const getStoreName = () => {
@@ -185,7 +186,11 @@ const MainLayout = () => {
   /* ================= SUCCESS ================= */
   return (
 
-    <div>
+    <div
+      className="bg-main-layout"
+      style={{
+          "--store-primary-color": data?.data?.primaryColor || "var(--primary-color)"
+        } as React.CSSProperties}>
 
       <ScrollToTop />
 

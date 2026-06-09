@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import "./Register.css";
 import { useNavigate } from "react-router-dom";
-
 import logo from "../../assets/Knight Panda Logo.png";
-
 import { useUserRegister } from "../../hooks/user/useUserRegister";
+import type { Store } from "../../models/store/response/SingleStoreResponse";
+import { useOutletContext } from "react-router-dom";
+
+type OutletContextType = {
+    storeId: string;
+    storeData: Store; // replace with proper type if available
+};
 
 const RegisterPage = () => {
     const navigate = useNavigate();
+    const { storeData } = useOutletContext<OutletContextType>();
 
     const {
         register,
@@ -110,7 +116,11 @@ const RegisterPage = () => {
     };
 
     return (
-        <div className="register-wrapper">
+        <div
+            className="register-wrapper"
+            style={{
+                "--store-primary-color": storeData?.primaryColor || "var(--primary-color)"
+            } as React.CSSProperties}>
             <div className="register-card">
                 <img
                     className="register-logo-img"
