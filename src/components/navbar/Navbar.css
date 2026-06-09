@@ -51,7 +51,7 @@
 /* SEARCH */
 .search-box {
   flex: 1;
-  max-width: 38rem;
+  max-width: 28rem;
   height: 2.8rem;
   display: flex;
   align-items: center;

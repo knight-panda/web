@@ -54,7 +54,7 @@
 .ca-card-image {
     width: 100%;
     height: 100%;
-    aspect-ratio: 2/1;
+    aspect-ratio: 2.8/1;
     object-fit: fill;
 }
 
@@ -147,10 +147,9 @@
     position: relative;
 }
 
-.preview {
+.preview-carousel {
     width: 100%;
-    height: 180px;
-    aspect-ratio: 2/1;
+    aspect-ratio: 2.8/1;
     object-fit: fill;
     border-radius: 10px;
 }

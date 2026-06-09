@@ -115,9 +115,9 @@ const AddCarouselDialog: React.FC<Props> = ({
       <div className="dialog">
         <h2>Upload Banner</h2>
         <p className="dialog-banner-desc">
-          Banner ratio: 2:1
+          Banner ratio: 2.8:1
           (Recommended:
-          2000 × 1000 px)
+          2240 × 800 px)
           • Max size: 7 MB
         </p>
 
@@ -144,7 +144,7 @@ const AddCarouselDialog: React.FC<Props> = ({
             </label>
           ) : (
             <div className="preview-container">
-              <img src={preview} alt="preview" className="preview" />
+              <img src={preview} alt="preview" className="preview-carousel" />
 
               <button
                 type="button"
