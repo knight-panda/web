@@ -19,7 +19,7 @@
 /* CONTAINER */
 .navbar-container {
   width: 100%;
-  max-width: 1440px;
+  max-width: 89rem;
   height: 100%;
   display: flex;
   align-items: center;

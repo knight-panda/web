@@ -51,6 +51,9 @@ const StoreDomain = lazy(() => import("./pages/admin/storeDomain/StoreDomain"));
 const AdminBlogSection = lazy(() => import("./pages/admin/adminBlog/AdminBlogSection"));
 const StoreReels = lazy(() => import("./pages/admin/storeReels/StoreReels"));
 
+/* ai store */
+const AiStoreLayout = lazy(() => import("./layouts/aiStore/AiStoreLayout"));
+
 /* ========================= */
 
 function getHostInfo() {
@@ -211,6 +214,9 @@ function App() {
               <Route path="terms" element={<TermsPage />} />
             </Route>
           )}
+
+          {/* ================= AI STORE ================= */}
+          <Route path="/ai-store" element={<AiStoreLayout />}></Route>
 
         </Routes>
       </Suspense>
