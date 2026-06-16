@@ -67,43 +67,13 @@ const MainLayout = () => {
 
     if (!store) return;
 
-    // Title
+    // ================= TITLE =================
     document.title = store.storeName || "Store";
 
-    // Favicon
-    const favicon = store.faviconUrl || store.logoUrl;
-
-    if (favicon) {
-
-      // Remove old favicons
-      const oldLinks = document.querySelectorAll("link[rel*='icon']");
-
-      oldLinks.forEach((item) => item.remove());
-
-      // Create new favicon
-      const link = document.createElement("link");
-      link.rel = "icon";
-      link.type = "image/png";
-
-      // cache bust
-      link.href = favicon + "?v=" + Date.now();
-
-      document.head.appendChild(link);
-    }
-
-    // Theme Color
-    let metaTheme = document.querySelector("meta[name='theme-color']");
-
-    if (!metaTheme) {
-      metaTheme = document.createElement("meta");
-      metaTheme.setAttribute("name", "theme-color");
-      document.head.appendChild(metaTheme);
-    }
-
-    metaTheme.setAttribute("content", store.primaryColor || "#ff6b00");
-
-    // Meta Description
-    let metaDescription = document.querySelector("meta[name='description']");
+    // ================= DESCRIPTION =================
+    let metaDescription = document.querySelector(
+      "meta[name='description']"
+    );
 
     if (!metaDescription) {
       metaDescription = document.createElement("meta");
@@ -113,12 +83,45 @@ const MainLayout = () => {
 
     metaDescription.setAttribute(
       "content",
-      store.storeDescription ||
-      "Welcome to our store"
+      store.storeDescription || "Welcome to our store"
     );
 
-    // Open Graph Title
-    let ogTitle = document.querySelector("meta[property='og:title']");
+    // ================= THEME COLOR =================
+    let metaTheme = document.querySelector(
+      "meta[name='theme-color']"
+    );
+
+    if (!metaTheme) {
+      metaTheme = document.createElement("meta");
+      metaTheme.setAttribute("name", "theme-color");
+      document.head.appendChild(metaTheme);
+    }
+
+    metaTheme.setAttribute(
+      "content",
+      store.primaryColor || "#ff6b00"
+    );
+
+    // ================= FAVICON =================
+    const favicon = store.faviconUrl || store.logoUrl;
+
+    if (favicon) {
+      document
+        .querySelectorAll("link[rel*='icon']")
+        .forEach((item) => item.remove());
+
+      const link = document.createElement("link");
+      link.rel = "icon";
+      link.type = "image/png";
+      link.href = favicon;
+
+      document.head.appendChild(link);
+    }
+
+    // ================= OG TITLE =================
+    let ogTitle = document.querySelector(
+      "meta[property='og:title']"
+    );
 
     if (!ogTitle) {
       ogTitle = document.createElement("meta");
@@ -128,19 +131,88 @@ const MainLayout = () => {
 
     ogTitle.setAttribute(
       "content",
-      store.storeName ||
-      "Store"
+      store.storeName || "Store"
     );
 
-    // Open Graph Image
-    let ogImage = document.querySelector("meta[property='og:image']");
+    // ================= OG DESCRIPTION =================
+    let ogDescription = document.querySelector(
+      "meta[property='og:description']"
+    );
+
+    if (!ogDescription) {
+      ogDescription = document.createElement("meta");
+      ogDescription.setAttribute(
+        "property",
+        "og:description"
+      );
+      document.head.appendChild(ogDescription);
+    }
+
+    ogDescription.setAttribute(
+      "content",
+      store.storeDescription || "Welcome to our store"
+    );
+
+    // ================= OG IMAGE =================
+    let ogImage = document.querySelector(
+      "meta[property='og:image']"
+    );
 
     if (!ogImage) {
       ogImage = document.createElement("meta");
       ogImage.setAttribute("property", "og:image");
       document.head.appendChild(ogImage);
     }
-    ogImage.setAttribute("content", store.logoUrl || "");
+
+    ogImage.setAttribute(
+      "content",
+      store.logoUrl || ""
+    );
+
+    // ================= OG URL =================
+    let ogUrl = document.querySelector(
+      "meta[property='og:url']"
+    );
+
+    if (!ogUrl) {
+      ogUrl = document.createElement("meta");
+      ogUrl.setAttribute("property", "og:url");
+      document.head.appendChild(ogUrl);
+    }
+
+    ogUrl.setAttribute(
+      "content",
+      window.location.href
+    );
+
+    // ================= JSON-LD STORE SCHEMA =================
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "Store",
+      name: store.storeName,
+      description: store.storeDescription,
+      image: store.logoUrl,
+      logo: store.logoUrl,
+      url: window.location.origin,
+    };
+
+    let schemaTag = document.getElementById(
+      "store-schema"
+    ) as HTMLScriptElement | null;
+
+    if (!schemaTag) {
+      schemaTag = document.createElement("script");
+      schemaTag.id = "store-schema";
+      schemaTag.type = "application/ld+json";
+      document.head.appendChild(schemaTag);
+    }
+
+    schemaTag.textContent = JSON.stringify(schema);
+
+    return () => {
+      const schema = document.getElementById("store-schema");
+      schema?.remove();
+    };
   }, [data]);
 
   /* ================= SAFETY ================= */
@@ -189,8 +261,8 @@ const MainLayout = () => {
     <div
       className="bg-main-layout"
       style={{
-          "--store-primary-color": data?.data?.primaryColor || "var(--primary-color)"
-        } as React.CSSProperties}>
+        "--store-primary-color": data?.data?.primaryColor || "var(--primary-color)"
+      } as React.CSSProperties}>
 
       <ScrollToTop />
 
