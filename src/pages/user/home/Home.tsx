@@ -4,6 +4,7 @@ import { useOutletContext } from "react-router-dom";
 import BlogSection from "../blog/BlogSection";
 import ReelsUser from "../reels/ReelsUser";
 import type { Store } from "../../../models/store/response/SingleStoreResponse";
+import Course from "../course/Course";
 
 type OutletContextType = {
   storeId: string;
@@ -16,6 +17,7 @@ const Home = () => {
   return (
     <div>
       <Carousel storeId={storeId} />
+      <Course />
       <Products storeId={storeId} storeData={storeData} />
       <BlogSection storeId={storeId} />
       <ReelsUser storeId={storeId} />
