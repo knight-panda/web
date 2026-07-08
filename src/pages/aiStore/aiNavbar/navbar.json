@@ -1,7 +1,7 @@
 {
     "styles": {
-        "backgroundColor": "#ffffff",
-        "primaryColor": "#07c900",
+        "backgroundColor": "#2003fc",
+        "primaryColor": "#fc0303",
         "height": "4.2rem",
         "paddingX": "1rem",
         "borderRadius": "0.8rem",
@@ -17,13 +17,14 @@
         "borderColor": "#ececec",
         "layout": {
             "left": [
-                "logo",
                 "cart",
                 "orders"
             ],
-            "center": [],
+            "center": [
+                "logo",
+                "search"
+            ],
             "right": [
-                "search",
                 "user"
             ]
         }
