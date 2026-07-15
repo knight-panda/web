@@ -22,6 +22,16 @@ const courses = [
     status: "Draft",
     lessons: 24,
   },
+  {
+    id: 2,
+    title: "React JS Masterclass",
+    thumbnail: "https://picsum.photos/400/220?random=2",
+    price: 3999,
+    discountPrice: 799,
+    duration: "28 Hours",
+    status: "Draft",
+    lessons: 24,
+  },
 ];
 
 const Course = () => {
@@ -38,40 +48,32 @@ const Course = () => {
       <div className="course-grid">
         {courses.map((course) => (
           <div className="course-card" key={course.id}>
-            <img
-              src={course.thumbnail}
-              alt={course.title}
-            />
+            <div className="course-thumbnail">
+              <img src={course.thumbnail} alt={course.title} />
+
+              <div className="course-overlay">
+                <span className="course-duration">
+                  ⏱ {course.duration}
+                </span>
+              </div>
+            </div>
 
             <div className="course-content">
-              <div className="course-top">
-                <h3>{course.title}</h3>
-                
+              <h3>{course.title}</h3>
+
+              <div className="course-meta">
+                <span>🎥 {course.lessons} Lessons</span>
+                <span>⭐ Beginner</span>
               </div>
 
-              <div className="course-info">
-                <p>
-                  💰 ₹{course.discountPrice}
-                  <span> ₹{course.price}</span>
-                </p>
-
-                <p>🎥 {course.lessons} Lessons</p>
-
-                <p>⏱ {course.duration}</p>
+              <div className="course-price">
+                <span className="new-price">₹{course.discountPrice}</span>
+                <span className="old-price">₹{course.price}</span>
               </div>
 
               <div className="course-actions">
-                <button className="view-btn">
-                  Lessons
-                </button>
-
-                <button className="edit-btn">
-                  Edit
-                </button>
-
-                <button className="delete-btn">
-                  Delete
-                </button>
+                <button className="lesson-btn">View Lessons</button>
+                <button className="buy-btn">Buy Now</button>
               </div>
             </div>
           </div>
