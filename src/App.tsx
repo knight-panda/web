@@ -36,7 +36,10 @@ const PrivacyPolicyPage = lazy(() => import("./pages/user/policy/PrivacyPolicyPa
 const RefundPolicyPage = lazy(() => import("./pages/user/policy/RefundPolicyPage"));
 const ShippingPolicyPage = lazy(() => import("./pages/user/policy/ShippingPolicyPage"));
 const TermsPage = lazy(() => import("./pages/user/policy/TermsPage"));
+<<<<<<< HEAD
 const CourseDetailsPage = lazy(() => import("./pages/user/course/CourseDetailsPage"));
+=======
+>>>>>>> 9a85450914df58f779c6a60a9a23814818accddc
 
 /* admin */
 const AdminDashboard = lazy(() => import("./pages/admin/dashboard/AdminDashboard"));
@@ -194,7 +197,10 @@ function App() {
                 }
               />
               <Route path="product/:productId" element={<ProductDetailsPage />} />
+<<<<<<< HEAD
               <Route path="course/:courseId" element={<CourseDetailsPage />} />
+=======
+>>>>>>> 9a85450914df58f779c6a60a9a23814818accddc
 
               {/* account */}
               <Route

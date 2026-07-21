@@ -2,7 +2,11 @@ import axios from "axios";
 
 const userApiClient = axios.create({
     baseURL:
+<<<<<<< HEAD
         "http://localhost:8080/api",
+=======
+        "https://api.crazoweb.com/api",
+>>>>>>> 9a85450914df58f779c6a60a9a23814818accddc
 
     headers: {
         "Content-Type": "application/json",
@@ -61,6 +65,7 @@ userApiClient.interceptors.response.use(
                 localStorage.getItem("activeStoreId");
 
             // remove only current store token
+<<<<<<< HEAD
             // if (activeStoreId) {
 
             //     const storeTokens = JSON.parse(
@@ -77,6 +82,24 @@ userApiClient.interceptors.response.use(
 
             // // redirect home
             // window.location.href = "/login";
+=======
+            if (activeStoreId) {
+
+                const storeTokens = JSON.parse(
+                    localStorage.getItem("storeTokens") || "{}"
+                );
+
+                delete storeTokens[activeStoreId];
+
+                localStorage.setItem(
+                    "storeTokens",
+                    JSON.stringify(storeTokens)
+                );
+            }
+
+            // redirect home
+            window.location.href = "/login";
+>>>>>>> 9a85450914df58f779c6a60a9a23814818accddc
         }
 
         return Promise.reject(error);
