@@ -1,0 +1,12 @@
+:root {
+  --primary-color: #004AAD;
+  --search-bg-color: #f6f4ff;
+  --gray-color: #aaaaaa;
+  --primary-hover: #005fdb;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Arial, sans-serif;
+}

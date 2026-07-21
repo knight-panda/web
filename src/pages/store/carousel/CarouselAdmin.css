@@ -1,0 +1,180 @@
+.carousel-admin {
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Header */
+.ca-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.ca-header-title {
+    font-size: 1.5rem;
+    color: black;
+    font-weight: 600;
+}
+
+.ca-add-carousel {
+    padding: 10px 18px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+/* Grid */
+.carousel-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+/* Card */
+.ca-card {
+    position: relative;
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Image */
+.ca-card-image {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 2.8/1;
+    object-fit: fill;
+}
+
+/* Overlay */
+.ca-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    opacity: 0;
+    transition: 0.3s ease;
+}
+
+/* Correct hover target */
+.ca-card:hover .ca-overlay {
+    opacity: 1;
+}
+
+/* Buttons */
+.edit-btn,
+.delete-btn {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background: #4caf50;
+    color: white;
+}
+
+.delete-btn {
+    background: #f44336;
+    color: white;
+}
+
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialog {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 400px;
+    text-align: center;
+}
+
+.dialog-banner-desc {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.upload-box {
+    margin: 20px 0;
+}
+
+/* Upload placeholder */
+.upload-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 180px;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #666;
+}
+
+/* Preview */
+.preview-container {
+    position: relative;
+}
+
+.preview-carousel {
+    width: 100%;
+    aspect-ratio: 2.8/1;
+    object-fit: fill;
+    border-radius: 10px;
+}
+
+/* Change button */
+.change-btn {
+    margin-top: 10px;
+    background: #eee;
+    border: none;
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+/* Actions */
+.dialog-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.primary {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+}

@@ -1,0 +1,78 @@
+.address-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.address-dialog {
+    background: #fff;
+    width: 100%;
+    max-width: 28rem;
+    border-radius: 1rem;
+    padding: 1.5rem;
+}
+
+.dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dialog-header button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.dialog-body {
+    display: grid;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.dialog-body input {
+    padding: 0.7rem;
+    border-radius: 0.5rem;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+}
+
+.dialog-body textarea {
+    padding: 0.7rem;
+    border-radius: 0.5rem;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    resize: none;
+}
+
+.dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.cancel {
+    background: #f2f2f2;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.6rem;
+}
+
+.save {
+    background: var(--store-primary-color);
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.6rem;
+}
+
+.save:hover {
+    background: var(--store-primary-color);
+   
+}

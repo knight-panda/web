@@ -1,0 +1,201 @@
+.admin-dashboard {
+    width: 89rem;
+    overflow-y: auto;
+}
+
+/* Header */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 1rem;
+    box-sizing: border-box;
+}
+
+.ad-user-name {
+    font-size: 1rem;
+    color: black;
+    font-weight: 600;
+}
+
+.ad-user-subtitle {
+    font-size: 1rem;
+    color: #888;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.icon-btn {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.export-btn {
+    background: black;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ad-profile-img {
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+}
+
+.profile-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.profile-role {
+    font-size: 12px;
+    color: gray;
+}
+
+/* Stats */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 25px;
+    margin-top: 2rem;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #666;
+}
+
+.card h3 {
+    font-size: 24px;
+    margin-bottom: 6px;
+}
+
+.card-sub {
+    font-size: 12px;
+    color: #999;
+}
+
+.badge {
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 6px;
+}
+
+.positive {
+    background: #e6f9f0;
+    color: #1ca36d;
+}
+
+.negative {
+    background: #fde8e8;
+    color: #d93025;
+}
+
+/* Chart */
+.chart-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+.chart-placeholder {
+    height: 200px;
+    background: #f3f6fa;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+}
+
+/* Table */
+.table-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th {
+    text-align: left;
+    font-size: 13px;
+    color: #777;
+    padding-bottom: 10px;
+}
+
+td {
+    padding: 12px 0;
+    border-top: 1px solid #f0f0f0;
+    font-size: 14px;
+}
+
+.customer-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.customer-cell img {
+    border-radius: 50%;
+}
+
+.customer-cell span {
+    font-size: 12px;
+    color: #888;
+}
+
+.status {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.status.paid {
+    background: #e6f9f0;
+    color: #1ca36d;
+}
+
+.link-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+    color: #999;
+}
+
+.link-btn.edit {
+    color: #6c5ce7;
+}

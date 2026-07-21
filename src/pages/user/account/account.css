@@ -1,0 +1,12 @@
+.account-page {
+  min-height: 100vh;
+  padding: 1rem 1rem;
+}
+
+.account-container {
+  max-width: 89rem;
+  margin: auto;
+  display: flex;
+  grid-template-columns: 18rem 1fr;
+  gap: 2rem;
+}

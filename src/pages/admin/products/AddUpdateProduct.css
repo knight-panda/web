@@ -1,0 +1,350 @@
+.au-product-page {
+  background: #f6f7fb;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ================= HEADER ================= */
+
+.au-product-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.au-product-back {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: #111827;
+}
+
+.au-product-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ================= BUTTONS ================= */
+
+.au-product-btn {
+  border: none;
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  border-radius: 0.7rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: 0.2s ease;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.au-product-btn:hover {
+  transform: translateY(-1px);
+}
+
+.au-product-btn.primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.au-product-btn.product-add {
+  background: var(--primary-color);
+  color: white;
+}
+
+.au-product-btn.tag-add {
+  width: 10rem;
+  background: var(--primary-color);
+  color: white;
+}
+
+.au-product-btn.light {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.au-product-btn.danger {
+  background: #ff5b5b;
+  color: white;
+}
+
+.au-product-btn.variant-remove {
+  margin-top: 1rem;
+  background: #ff5b5b;
+  color: white;
+}
+
+.au-product-btn.variant-add {
+  margin-top: 1rem;
+  background: var(--primary-color);
+  color: white;
+}
+
+.au-product-btn.small {
+  padding: 0.45rem 0.8rem;
+  font-size: 0.75rem;
+}
+
+.au-product-btn.full {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* ================= GRID ================= */
+
+.au-product-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 1.2rem;
+  align-items: start;
+}
+
+/* ================= CARD ================= */
+
+.au-product-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.2rem;
+  box-sizing: border-box;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.06),
+    0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.au-product-header-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+/* ================= IMAGE ================= */
+
+.au-product-image-box {
+  width: 100%;
+  background: #f3f4f6;
+  border: 2px dashed #d1d5db;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  min-height: 320px;
+}
+
+.au-product-image {
+  width: 100%;
+  max-width: 220px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.au-product-placeholder {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.au-product-img-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* ================= EXTRA IMAGES ================= */
+
+.au-product-image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.au-product-image-item {
+  position: relative;
+}
+
+.au-product-image-item img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 0.7rem;
+}
+
+.remove-btn {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  font-size: 11px;
+}
+
+/* ================= FORM ================= */
+.au-product-card{
+  margin-top: 1rem;
+}
+
+.au-product-form-group {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.au-product-form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.45rem;
+  color: #374151;
+}
+
+.au-product-row input,
+.au-product-form-group input,
+.au-product-form-group textarea,
+.au-product-form-group select {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 0.7rem;
+  padding: 0.8rem;
+  font-size: 0.9rem;
+  outline: none;
+  transition: 0.2s ease;
+  box-sizing: border-box;
+  background: white;
+}
+
+.au-product-row input:focus,
+.au-product-form-group input:focus,
+.au-product-form-group textarea:focus,
+.au-product-form-group select:focus {
+  border-color: var(--primary-color);
+}
+
+.au-product-form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* ================= ROW ================= */
+
+.au-product-row {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.au-product-row .au-product-form-group {
+  flex: 1;
+}
+
+/* ================= TAGS ================= */
+.au-product-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.au-product-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #eef2ff;
+  color: #4338ca;
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.au-product-tag button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #4338ca;
+  font-size: 0.8rem;
+}
+
+/* ================= VARIANTS ================= */
+
+.au-product-variant-box {
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-top: 1rem;
+  background: #fafafa;
+}
+
+/* ================= RIGHT COLUMN ================= */
+
+.au-product-right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1024px) {
+
+  .au-product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .au-product-image-box {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .au-product-page {
+    padding: 0.8rem;
+  }
+
+  .au-product-row {
+    flex-direction: column;
+  }
+
+  .au-product-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .au-product-actions {
+    width: 100%;
+  }
+
+  .au-product-actions button {
+    flex: 1;
+  }
+
+  .au-product-card {
+    padding: 1rem;
+  }
+
+  .au-product-image-grid {
+    grid-template-columns:
+      repeat(auto-fill, minmax(75px, 1fr));
+  }
+}

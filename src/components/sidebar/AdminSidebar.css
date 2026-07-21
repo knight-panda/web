@@ -1,0 +1,49 @@
+.account-sidebar {
+    background: #fff;
+    border-radius: 1rem;
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    width: 20rem;
+    box-sizing: border-box;
+}
+
+.account-sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.account-sidebar li {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 0;
+    cursor: pointer;
+    color: #444;
+}
+
+.account-sidebar li.active {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.account-sidebar li.logout {
+    color: #c0392b;
+}
+
+.submenu {
+    padding-left: 2rem;
+    box-sizing: border-box;
+}
+
+.submenu-item {
+    font-size: 0.9rem;
+    padding: 1rem 0;
+    cursor: pointer;
+}
+
+.submenu-item:hover {
+    color: #007bff;
+}
+
+.arrow {
+    margin-left: auto;
+}

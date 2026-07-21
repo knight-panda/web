@@ -1,0 +1,281 @@
+.sd-connect-domain {
+    width: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    box-sizing: border-box;
+}
+
+.sd-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.sd-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.sd-title {
+    margin: 0;
+    padding: 0;
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: -0.03125rem;
+}
+
+.sd-desc {
+    margin: 0;
+    padding: 0;
+    font-size: 0.9375rem;
+    color: #6b7280;
+    font-weight: 400;
+}
+
+.sd-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.sd-card {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 1.5rem;
+    border: 0.0625rem solid #e2e8f0;
+    box-shadow: 0 0.25rem 1rem rgba(15, 23, 42, 0.05);
+    box-sizing: border-box;
+}
+
+.sd-card-title {
+    margin: 0 0 2rem 0;
+    padding: 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.sd-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    margin-bottom: 1.5rem;
+}
+
+.sd-label {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.sd-input {
+    width: 100%;
+    height: 3.25rem;
+    padding: 0 1rem;
+    border-radius: 1rem;
+    border: 0.0625rem solid #d1d5db;
+    background: #ffffff;
+    font-size: 0.95rem;
+    color: #111827;
+    outline: none;
+    transition: 0.2s ease;
+    box-sizing: border-box;
+}
+
+.sd-input:focus {
+    border-color: #111827;
+}
+
+.sd-ssl-box {
+    padding: 1rem;
+    border-radius: 1rem;
+    background: #ecfdf5;
+    border: 0.0625rem solid #bbf7d0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+}
+
+.sd-ssl-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #15803d;
+}
+
+.sd-ssl-desc {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #166534;
+    line-height: 1.5;
+}
+
+.sd-save-btn {
+    height: 3.25rem;
+    padding: 0 1.75rem;
+    border: none;
+    border-radius: 0.875rem;
+    background: #111827;
+    color: white;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.sd-save-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.sd-save-btn:hover {
+    transform: translateY(-0.0625rem);
+    opacity: 0.95;
+}
+
+.sd-dns-box {
+    background: #f8fafc;
+    border: 0.0625rem solid #e2e8f0;
+    border-radius: 1rem;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.sd-dns-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sd-dns-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.sd-copy-btn {
+    height: 2.25rem;
+    padding: 0 1rem;
+    border: none;
+    border-radius: 0.75rem;
+    background: #e5e7eb;
+    color: #111827;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.sd-dns-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sd-dns-key {
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+.sd-dns-value {
+    color: #111827;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.sd-info-box {
+    padding: 1rem;
+    border-radius: 1rem;
+    background: #eff6ff;
+    border: 0.0625rem solid #bfdbfe;
+    color: #1d4ed8;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.sd-steps-card {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 1.5rem;
+    border: 0.0625rem solid #e2e8f0;
+    box-shadow: 0 0.25rem 1rem rgba(15, 23, 42, 0.05);
+}
+
+.sd-steps-title {
+    margin: 0 0 2rem 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.sd-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.sd-step:not(:last-child) {
+    margin-bottom: 2rem;
+}
+
+.sd-step-number {
+    min-width: 3rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: #111827;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.sd-step-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.sd-step-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.sd-step-desc {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
+
+@media (max-width: 62rem) {
+
+    .sd-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 40rem) {
+
+    .sd-card,
+    .sd-steps-card {
+        padding: 1.25rem;
+    }
+
+    .sd-title {
+        font-size: 1.5rem;
+    }
+}

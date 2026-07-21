@@ -1,0 +1,51 @@
+import type { LoginAdminRequest } from "../../models/admin/auth/request/LoginAdminRequest";
+import type { RegisterAdminRequest } from "../../models/admin/auth/request/RegisterAdminRequest";
+import type { VerifyAdminRequest } from "../../models/admin/auth/request/VerifyAdminRequest";
+import type { LoginAdminResponse } from "../../models/admin/auth/response/LoginAdminResponse";
+import type { RegisterAdminResponse } from "../../models/admin/auth/response/RegisterAdminResponse";
+import type { VerifyAdminResponse } from "../../models/admin/auth/response/VerifyAdminResponse";
+import apiClient from "../apiClient";
+
+// ✅ API call
+export const registerAdmin = async (
+  payload: RegisterAdminRequest
+): Promise<RegisterAdminResponse> => {
+  const response = await apiClient.post("/auth/admin/register", payload);
+  return response.data;
+};
+
+export const verifyRegisterAdmin = async (
+  payload: VerifyAdminRequest
+): Promise<VerifyAdminResponse> => {
+  const response = await apiClient.post("/auth/admin/verify-register-otp", payload);
+  return response.data;
+};
+
+export const loginAdmin = async (
+  payload: LoginAdminRequest
+): Promise<LoginAdminResponse> => {
+  const response = await apiClient.post("/auth/admin/login", payload);
+  return response.data;
+};
+
+export const verifyLoginAdmin = async (
+  payload: VerifyAdminRequest
+): Promise<VerifyAdminResponse> => {
+  const response = await apiClient.post("/auth/admin/verify-login-otp", payload);
+  return response.data;
+};
+
+export const updateAdminProfile = async (
+  file: File
+): Promise<any> => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await apiClient.post("/upload-photo", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return response.data;
+};

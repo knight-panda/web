@@ -1,0 +1,12 @@
+.cart-page {
+  padding: 2rem 1rem;
+}
+
+.cart-container {
+  max-width: 89rem;
+  /* 1424px */
+  margin: auto;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 2rem;
+}

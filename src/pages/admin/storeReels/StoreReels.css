@@ -1,0 +1,256 @@
+.reels-section {
+    width: 100%;
+    overflow-y: auto;
+}
+
+.admin-reels-title-box {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.admin-reels-title {
+    width: 100%;
+    font-size: 1.5rem;
+    color: black;
+    font-weight: 600;
+}
+
+.admin-add-reels {
+    width: 10rem;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    padding: 0.5rem;
+    border-radius: 0.9rem;
+    font-weight: 500;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.admin-add-reels:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.reels-header {
+    max-width: 89rem;
+    padding: 0rem 2rem;
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+}
+
+/* Action Container */
+.reel-actions {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.75rem;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-0.5rem);
+    transition: all 0.25s ease;
+}
+
+.reel-card:hover .reel-actions {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Common Button */
+.reel-edit-btn,
+.reel-delete-btn {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.65rem 1rem;
+    border-radius: 999rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    backdrop-filter: blur(0.5rem);
+    transition: all 0.25s ease;
+}
+
+/* Edit Button */
+.reel-edit-btn {
+    background: rgba(37, 99, 235, 0.95);
+    color: white;
+    box-shadow: 0 0.5rem 1rem rgba(37, 99, 235, 0.25);
+}
+
+.reel-edit-btn:hover {
+    transform: translateY(-0.125rem);
+    background: #1d4ed8;
+}
+
+/* Delete Button */
+.reel-delete-btn {
+    background: rgba(239, 68, 68, 0.95);
+    color: white;
+    box-shadow: 0 0.5rem 1rem rgba(239, 68, 68, 0.25);
+}
+
+.reel-delete-btn:hover:not(:disabled) {
+    transform: translateY(-0.125rem);
+    background: #dc2626;
+}
+
+/* Disabled */
+.reel-delete-btn:disabled,
+.reel-edit-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.reels-grid {
+    max-width: 89rem;
+    padding: 0rem 2rem;
+    display: flex;
+    margin: 0 auto;
+    gap: 2rem;
+    flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reel-card {
+    width: 20rem;
+    height: 35rem;
+    overflow: hidden;
+    position: relative;
+    border-radius: 1rem;
+}
+
+.instagram-media {
+    position: absolute;
+    top: -3.4rem;
+    left: -4.4rem;
+    width: calc(100% + 8.6rem) !important;
+    margin: 0 !important;
+}
+
+.reel-title {
+    margin-top: 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+/* Tablet */
+
+@media screen and (max-width: 992px) {
+
+    .reels-header,
+    .reels-grid {
+        max-width: 100%;
+        padding: 0 1.5rem;
+    }
+
+    .reels-grid {
+        gap: 1.5rem;
+        justify-content: center;
+    }
+
+    .reel-card {
+        width: 18rem;
+        height: 32rem;
+    }
+
+    .instagram-media {
+        top: -3rem;
+        left: -4rem;
+        width: calc(100% + 8rem) !important;
+    }
+}
+
+/* Mobile */
+
+@media screen and (max-width: 768px) {
+
+    .reels-header,
+    .reels-grid {
+        padding: 0 1rem;
+    }
+
+    .reels-header {
+        margin-bottom: 2rem;
+    }
+
+    .reels-grid {
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .reel-card {
+        width: calc(50% - 0.5rem);
+        max-width: 18rem;
+        height: 30rem;
+    }
+
+    .instagram-media {
+        top: -3rem;
+        left: -4rem;
+        width: calc(100% + 8rem) !important;
+    }
+
+    .reel-title {
+        font-size: 1.2rem;
+    }
+}
+
+/* Small Mobile */
+
+@media screen and (max-width: 480px) {
+
+    .reels-header {
+        padding: 0 1rem;
+    }
+
+    .reel-actions {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+    }
+
+    .reel-edit-btn,
+    .reel-delete-btn {
+        padding: 0.55rem 0.85rem;
+        font-size: 0.75rem;
+    }
+
+    .reels-grid {
+        gap: 1rem;
+    }
+
+    .reel-card {
+        width: 100%;
+        max-width: 22rem;
+        height: 34rem;
+    }
+
+    .instagram-media {
+        top: -3.4rem;
+        left: -4.4rem;
+        width: calc(100% + 8.6rem) !important;
+    }
+
+    .reel-title {
+        font-size: 1.1rem;
+    }
+}
