@@ -1,62 +1,372 @@
-.ah-container {
+.ah-main {
+    position: relative;
+    width: 100%;
+
+    margin: 0 auto;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background-color: white;
-    max-width: 89rem;
-    margin: auto;
-    padding: 2rem;
+
     box-sizing: border-box;
 }
 
+
+/* =========================
+   BACKGROUND IMAGE
+========================= */
+
+.ah-bg-img {
+    position: absolute;
+
+    right: -8rem;
+    top: 40%;
+
+    width: 48rem;
+    height: auto;
+
+    transform: translateY(-50%);
+
+    z-index: 0;
+
+    pointer-events: none;
+    opacity: 0.90;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.ah-container {
+    position: relative;
+
+    width: 100%;
+    max-width: 89rem;
+
+    margin: 0 auto;
+
+    padding: 5rem 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 4rem;
+
+    box-sizing: border-box;
+
+    z-index: 2;
+}
+
+
+/* =========================
+   LEFT SIDE
+========================= */
+
 .ah-left-side {
     flex: 1;
+
+    max-width: 570px;
+
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
     justify-content: center;
-    gap: 0.5rem;
 }
+
+
+/* =========================
+   TITLE
+========================= */
 
 .ah-intro-title {
-    color: black;
-    font-size: 2.5rem;
-    font-weight: 700;
+    color: #081b4b;
+
+    font-size: clamp(2.8rem, 4vw, 4.5rem);
+
+    line-height: 1.05;
+
+    font-weight: 800;
+
+    letter-spacing: -2px;
+
+    margin-bottom: 1.5rem;
 }
 
-.ah-intro-desc {
-    color: rgb(65, 65, 65);
-    font-size: 1rem;
-    font-weight: 500;
+
+/* Highlight */
+
+.ah-intro-title span {
+    color: var(--primary-color);
 }
+
+
+/* =========================
+   DESCRIPTION
+========================= */
+
+.ah-intro-desc {
+    color: #52627a;
+
+    max-width: 550px;
+
+    font-size: 1.1rem;
+
+    line-height: 1.7;
+
+    font-weight: 400;
+
+    margin-bottom: 1rem;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
 
 .ah-intro-btn {
     outline: none;
+
     border: none;
-    box-shadow: none;
-    border-radius: 0.5rem;
+
+    border-radius: 0.65rem;
+
     background-color: var(--primary-color);
+
     color: white;
-    margin-top: 1rem;
-    font-size: 1.2rem;
-    padding: 0.7rem 2rem;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+    margin-top: 1.2rem;
+
+    font-size: 1.05rem;
+
+    font-weight: 600;
+
+    padding: 0.9rem 1.8rem;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.15);
+
     cursor: pointer;
-    transition: transform 0.3s ease;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
+
 .ah-intro-btn:hover {
-    transform: scale(1.05);
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 15px 30px rgba(0, 0, 0, 0.20);
 }
+
+
+/* =========================
+   RIGHT SIDE
+========================= */
 
 .ah-right-side {
     flex: 1;
+
+    min-width: 0;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
+    position: relative;
 }
 
+
+/* =========================
+   DASHBOARD IMAGE
+========================= */
+
 .ah-intro-img {
-    height: 30rem;
-    width: 30rem;
+    width: min(100%, 620px);
+
+    height: auto;
+
+    display: block;
+
+    position: relative;
+
+    z-index: 2;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 30px 70px rgba(8, 27, 75, 0.16),
+        0 10px 30px rgba(8, 27, 75, 0.10);
+
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+
+.ah-intro-img:hover {
+    transform: translateY(-8px);
+
+    box-shadow:
+        0 40px 80px rgba(8, 27, 75, 0.20),
+        0 15px 35px rgba(8, 27, 75, 0.12);
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1000px) {
+
+    .ah-main {
+        min-height: auto;
+    }
+
+    .ah-container {
+        padding: 5rem 2rem;
+
+        gap: 2.5rem;
+    }
+
+    .ah-intro-title {
+        font-size: 3rem;
+    }
+
+    .ah-intro-desc {
+        font-size: 1rem;
+    }
+
+    .ah-intro-img {
+        width: 100%;
+        max-width: 520px;
+    }
+
+    .ah-bg-img {
+        width: 38rem;
+
+        right: -10rem;
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    .ah-main {
+        min-height: auto;
+
+        overflow: hidden;
+    }
+
+    .ah-container {
+        flex-direction: column;
+
+        text-align: center;
+
+        padding: 4rem 1.5rem 5rem;
+
+        gap: 3.5rem;
+    }
+
+    .ah-left-side {
+        width: 100%;
+
+        max-width: 650px;
+
+        align-items: center;
+    }
+
+    .ah-intro-title {
+        font-size: 2.7rem;
+
+        line-height: 1.1;
+
+        letter-spacing: -1px;
+    }
+
+    .ah-intro-desc {
+        font-size: 1rem;
+
+        line-height: 1.6;
+
+        max-width: 600px;
+    }
+
+    .ah-intro-btn {
+        margin-top: 1rem;
+    }
+
+    .ah-right-side {
+        width: 100%;
+    }
+
+    .ah-intro-img {
+        width: 100%;
+
+        max-width: 650px;
+
+        border-radius: 18px;
+    }
+
+    .ah-bg-img {
+        width: 35rem;
+
+        right: -15rem;
+
+        top: 55%;
+    }
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+    .ah-container {
+        padding: 3.5rem 1rem 4rem;
+
+        gap: 3rem;
+    }
+
+    .ah-intro-title {
+        font-size: 2.2rem;
+    }
+
+    .ah-intro-desc {
+        font-size: 0.95rem;
+    }
+
+    .ah-intro-btn {
+        font-size: 1rem;
+
+        padding: 0.85rem 1.5rem;
+    }
+
+    .ah-intro-img {
+        border-radius: 14px;
+
+        box-shadow:
+            0 20px 45px rgba(8, 27, 75, 0.15),
+            0 8px 20px rgba(8, 27, 75, 0.08);
+    }
+
+    .ah-bg-img {
+        width: 28rem;
+
+        right: -13rem;
+    }
 }

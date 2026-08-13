@@ -1,120 +1,118 @@
-<<<<<<< HEAD
-import React, { useEffect } from "react";
-import "./Course.css";
-import { useGetUserCourses } from "../../../hooks/user/userCourse/useGetUserCourses";
+// import React, { useEffect } from "react";
+// import "./Course.css";
+// import { useGetUserCourses } from "../../../hooks/user/userCourse/useGetUserCourses";
 
-const STORE_ID = "ca29abf2-4845-4544-bcd0-9343ead271de";
+// const STORE_ID = "ca29abf2-4845-4544-bcd0-9343ead271de";
 
-const Course = () => {
+// const Course = () => {
 
-    const {
-        fetchUserCourses,
-        data,
-        loading,
-        error
-    } = useGetUserCourses();
+//     const {
+//         fetchUserCourses,
+//         data,
+//         loading,
+//         error
+//     } = useGetUserCourses();
 
-    useEffect(() => {
-        fetchUserCourses(STORE_ID);
-    }, []);
+//     useEffect(() => {
+//         fetchUserCourses(STORE_ID);
+//     }, []);
 
-    if (loading) {
-        return <h2>Loading...</h2>;
-    }
+//     if (loading) {
+//         return <h2>Loading...</h2>;
+//     }
 
-    if (error) {
-        return <h2>{error}</h2>;
-    }
+//     if (error) {
+//         return <h2>{error}</h2>;
+//     }
 
-    return (
-        <div className="course-page">
+//     return (
+//         <div className="course-page">
 
-            <div className="course-header">
-                <div>
-                    <h2>Courses</h2>
-                    <p>Manage your online courses.</p>
-                </div>
-            </div>
+//             <div className="course-header">
+//                 <div>
+//                     <h2>Courses</h2>
+//                     <p>Manage your online courses.</p>
+//                 </div>
+//             </div>
 
-            <div className="course-grid">
+//             <div className="course-grid">
 
-                {data?.data.map((course) => (
+//                 {data?.data.map((course) => (
 
-                    <div
-                        className="course-card"
-                        key={course.courseId}
-                    >
+//                     <div
+//                         className="course-card"
+//                         key={course.courseId}
+//                     >
 
-                        <div className="course-thumbnail">
+//                         <div className="course-thumbnail">
 
-                            <img
-                                src={course.thumbnail}
-                                alt={course.title}
-                            />
+//                             <img
+//                                 src={course.thumbnail}
+//                                 alt={course.title}
+//                             />
 
-                            <div className="course-overlay">
+//                             <div className="course-overlay">
 
-                                <span className="course-duration">
-                                    ⏱ {course.duration} Hours
-                                </span>
+//                                 <span className="course-duration">
+//                                     ⏱ {course.duration} Hours
+//                                 </span>
 
-                            </div>
+//                             </div>
 
-                        </div>
+//                         </div>
 
-                        <div className="course-content">
+//                         <div className="course-content">
 
-                            <h3>{course.title}</h3>
+//                             <h3>{course.title}</h3>
 
-                            <div className="course-meta">
+//                             <div className="course-meta">
 
-                                <span>
-                                    📌 {course.status}
-                                </span>
+//                                 <span>
+//                                     📌 {course.status}
+//                                 </span>
 
-                                <span>
-                                    ⭐ Beginner
-                                </span>
+//                                 <span>
+//                                     ⭐ Beginner
+//                                 </span>
 
-                            </div>
+//                             </div>
 
-                            <div className="course-price">
+//                             <div className="course-price">
 
-                                <span className="new-price">
-                                    ₹{course.discountedPrice}
-                                </span>
+//                                 <span className="new-price">
+//                                     ₹{course.discountedPrice}
+//                                 </span>
 
-                                {!course.isFree && (
-                                    <span className="old-price">
-                                        ₹{course.price}
-                                    </span>
-                                )}
+//                                 {!course.isFree && (
+//                                     <span className="old-price">
+//                                         ₹{course.price}
+//                                     </span>
+//                                 )}
 
-                            </div>
+//                             </div>
 
-                            <div className="course-actions">
+//                             <div className="course-actions">
 
-                                <button className="lesson-btn">
-                                    View Lessons
-                                </button>
+//                                 <button className="lesson-btn">
+//                                     View Lessons
+//                                 </button>
 
-                                <button className="buy-btn">
-                                    Buy Now
-                                </button>
+//                                 <button className="buy-btn">
+//                                     Buy Now
+//                                 </button>
 
-                            </div>
+//                             </div>
 
-                        </div>
+//                         </div>
 
-                    </div>
+//                     </div>
 
-                ))}
+//                 ))}
 
-            </div>
+//             </div>
 
-        </div>
-    );
-=======
+//         </div>
+//     );
 import React from "react";
 import "./Course.css";
 
@@ -198,7 +196,6 @@ const Course = () => {
       </div>
     </div>
   );
->>>>>>> 9a85450914df58f779c6a60a9a23814818accddc
 };
 
 export default Course;

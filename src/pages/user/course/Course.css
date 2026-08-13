@@ -8,11 +8,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-<<<<<<< HEAD
-    margin-bottom: 1rem;
-=======
     margin-bottom: 35px;
->>>>>>> 9a85450914df58f779c6a60a9a23814818accddc
 }
 
 .course-header h2 {
