@@ -138,7 +138,7 @@ const courses = [
     lessons: 24,
   },
   {
-    id: 2,
+    id: 3,
     title: "React JS Masterclass",
     thumbnail: "https://picsum.photos/400/220?random=2",
     price: 3999,
