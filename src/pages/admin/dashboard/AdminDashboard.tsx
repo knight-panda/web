@@ -13,10 +13,21 @@ import {
 import "./AdminDashboard.css";
 import { useStoreAnalytics } from "../../../hooks/admin/adminStoreAnalytics/useAdminStoreAnalytics";
 import { useAdminProfile } from "../../../hooks/admin/auth/useAdminProfile";
+import { useAdminStoreDomain } from "../../../hooks/admin/storeDomain/useAdminStoreDomain";
 
 const AdminDashboard = () => {
 
+    const [selectedPeriod, setSelectedPeriod] = useState(30);
+    const [showDateDropdown, setShowDateDropdown] = useState(false);
     const [profile, setProfile] = useState("");
+    const periodLabel =
+        selectedPeriod === 7
+            ? "Last 7 Days"
+            : selectedPeriod === 30
+                ? "Last 30 Days"
+                : selectedPeriod === 90
+                    ? "Last 90 Days"
+                    : "Last 1 Year";
     const {
         analytics,
         fetchAnalytics,
@@ -29,10 +40,13 @@ const AdminDashboard = () => {
         data,
     } = useAdminProfile();
 
-    useEffect(() => {
-        fetchAnalytics(30);
+    const {
+        fetchStoreDomain,
+    } = useAdminStoreDomain();
 
-    }, []);
+    useEffect(() => {
+        fetchAnalytics(selectedPeriod);
+    }, [selectedPeriod]);
 
     useEffect(() => {
 
@@ -56,6 +70,100 @@ const AdminDashboard = () => {
         fetchData();
 
     }, []);
+
+    // ==============================
+    // VIEW STORE
+    // ==============================
+    const handleViewStore = async () => {
+
+        try {
+
+            const response =
+                await fetchStoreDomain();
+
+            const storeData =
+                response.data;
+
+            if (!storeData) {
+
+                alert("Store information not found");
+
+                return;
+            }
+
+
+            const domain =
+                storeData.domain?.trim();
+
+            const subdomain =
+                storeData.subdomain?.trim();
+
+
+            let storeUrl = "";
+
+
+            // ==============================
+            // CUSTOM DOMAIN
+            // ==============================
+
+            if (domain) {
+
+                storeUrl =
+                    domain.startsWith("http://") ||
+                        domain.startsWith("https://")
+                        ? domain
+                        : `https://${domain}`;
+
+            }
+
+
+            // ==============================
+            // SUBDOMAIN
+            // ==============================
+
+            else if (subdomain) {
+
+                storeUrl =
+                    `https://${subdomain}.crazoweb.com`;
+
+            }
+
+
+            // ==============================
+            // NOTHING FOUND
+            // ==============================
+
+            else {
+
+                alert(
+                    "Your store domain is not configured yet."
+                );
+
+                return;
+            }
+
+
+            // Open store in new tab
+            window.open(
+                storeUrl,
+                "_blank",
+                "noopener,noreferrer"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Failed to open store:",
+                error
+            );
+
+            alert(
+                "Unable to open your store"
+            );
+        }
+
+    };
 
     const totalRevenue =
         analytics.reduce(
@@ -111,9 +219,83 @@ const AdminDashboard = () => {
 
                 <div className="header-right">
 
-                    <button className="icon-btn">
-                        📅 Date
+                    <button
+                        className="dashboard-view-store-btn"
+                        onClick={handleViewStore}>
+                        View Your Store
                     </button>
+
+                    <div className="date-filter">
+
+                        <button
+                            className="icon-btn date-filter-btn"
+                            onClick={() =>
+                                setShowDateDropdown((prev) => !prev)
+                            }
+                        >
+                            📅
+                            <span>
+                                {selectedPeriod === 7 && "7 Days"}
+                                {selectedPeriod === 30 && "30 Days"}
+                                {selectedPeriod === 90 && "90 Days"}
+                                {selectedPeriod === 360 && "1 Year"}
+                            </span>
+
+                            <span className="date-arrow">
+                                {showDateDropdown ? "▲" : "▼"}
+                            </span>
+                        </button>
+
+
+                        {showDateDropdown && (
+
+                            <div className="date-dropdown">
+
+                                <button
+                                    className={selectedPeriod === 7 ? "active" : ""}
+                                    onClick={() => {
+                                        setSelectedPeriod(7);
+                                        setShowDateDropdown(false);
+                                    }}
+                                >
+                                    7 Days
+                                </button>
+
+                                <button
+                                    className={selectedPeriod === 30 ? "active" : ""}
+                                    onClick={() => {
+                                        setSelectedPeriod(30);
+                                        setShowDateDropdown(false);
+                                    }}
+                                >
+                                    30 Days
+                                </button>
+
+                                <button
+                                    className={selectedPeriod === 90 ? "active" : ""}
+                                    onClick={() => {
+                                        setSelectedPeriod(90);
+                                        setShowDateDropdown(false);
+                                    }}
+                                >
+                                    90 Days
+                                </button>
+
+                                <button
+                                    className={selectedPeriod === 360 ? "active" : ""}
+                                    onClick={() => {
+                                        setSelectedPeriod(360);
+                                        setShowDateDropdown(false);
+                                    }}
+                                >
+                                    1 Year
+                                </button>
+
+                            </div>
+
+                        )}
+
+                    </div>
 
                     <div className="profile">
 
@@ -165,7 +347,7 @@ const AdminDashboard = () => {
                     </h3>
 
                     <p className="card-sub">
-                        Last 30 Days Revenue
+                        {periodLabel} Revenue
                     </p>
 
                 </div>
@@ -186,7 +368,7 @@ const AdminDashboard = () => {
                     </h3>
 
                     <p className="card-sub">
-                        Last 30 Days Orders
+                        {periodLabel} Orders
                     </p>
 
                 </div>
@@ -207,7 +389,7 @@ const AdminDashboard = () => {
                     </h3>
 
                     <p className="card-sub">
-                        Last 30 Days Visitors
+                        {periodLabel} Visitors
                     </p>
 
                 </div>
@@ -228,7 +410,7 @@ const AdminDashboard = () => {
                     </h3>
 
                     <p className="card-sub">
-                        Last 30 Days Customers
+                        {periodLabel} Customers
                     </p>
 
                 </div>

@@ -29,12 +29,161 @@
     gap: 1rem;
 }
 
-.icon-btn {
-    background: white;
-    border: 1px solid #ddd;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
+.dashboard-view-store-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    background: var(--primary-color);
+    color: #ffffff;
+
+    border: 1px solid var(--primary-color);
+    padding: 0.75rem 1.35rem;
+
+    border-radius: 8px;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1;
+
     cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-view-store-btn:hover {
+    background: color-mix(in srgb,
+            var(--primary-color) 90%,
+            black);
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow:
+        0 5px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* ==============================
+   DATE FILTER
+============================== */
+.icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    background: #ffffff;
+    color: #333333;
+    border: 1px solid #e1e1e1;
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.icon-btn:hover {
+    background: #f8f8f8;
+    border-color: #d2d2d2;
+    color: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow:
+        0 3px 8px rgba(0, 0, 0, 0.07);
+}
+
+.date-filter {
+    position: relative;
+}
+
+/* Button */
+.date-filter-btn {
+    min-width: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #333;
+    background: #fff;
+}
+
+/* Arrow */
+.date-arrow {
+    font-size: 9px;
+    color: #777;
+    margin-left: 2px;
+    transition: transform 0.2s ease;
+}
+
+/* Dropdown */
+.date-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 155px;
+    padding: 6px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.12);
+    z-index: 1000;
+    animation: dateDropdownShow 0.15s ease;
+}
+
+/* Dropdown options */
+.date-dropdown button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 7px;
+    color: #444;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.date-dropdown button:hover {
+    background: #f4f7fb;
+    color: var(--primary-color);
+}
+
+/* Selected option */
+.date-dropdown button.active {
+    background: rgba(0, 82, 204, 0.08);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Animation */
+@keyframes dateDropdownShow {
+
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
 }
 
 .export-btn {
