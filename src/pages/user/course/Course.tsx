@@ -113,7 +113,6 @@
 
 //         </div>
 //     );
-import React from "react";
 import "./Course.css";
 
 const courses = [

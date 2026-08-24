@@ -1,15 +1,19 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./Navbar.css";
+import navbarConfig from "./navbar.json";
+
 import defaultLogo from "../../assets/Knight Panda Logo.png";
+
 import { useNavigate } from "react-router-dom";
+
 import { CiSearch } from "react-icons/ci";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { BsCart3 } from "react-icons/bs";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { IoMdMore } from "react-icons/io";
-import type { Store } from "../../models/store/response/SingleStoreResponse";
+import { HiOutlineMenu } from "react-icons/hi";
 
-/* ================= TYPES ================= */
+import type { Store } from "../../models/store/response/SingleStoreResponse";
 
 interface NavbarProps {
   logoUrl?: string;
@@ -17,212 +21,298 @@ interface NavbarProps {
   storeData?: Store;
 }
 
-interface NavbarSettings {
-  bgColor: string;
-  showSearch: boolean;
-  showLogin: boolean;
-  showOrders: boolean;
-  showCart: boolean;
-}
-
-/* ================= COMPONENT ================= */
-
 const Navbar: React.FC<NavbarProps> = ({
   logoUrl,
   storeName,
-  storeData,
+  storeData
 }) => {
 
-  const activeStoreId = localStorage.getItem("activeStoreId");
-  const storeTokens = JSON.parse(localStorage.getItem("storeTokens") || "{}");
-  const isLoggedIn = activeStoreId && storeTokens[activeStoreId];
-
-  const [openModal, setOpenModal] =
-    useState<boolean>(false);
   const navigate = useNavigate();
-  const cartCount: number = 0;
-  const [settings, setSettings] =
-    useState<NavbarSettings>({
-      bgColor: "#ffffff",
-      showSearch: true,
-      showLogin: true,
-      showOrders: true,
-      showCart: true,
-    });
 
-  /* ================= TOGGLE ================= */
+  const activeStoreId =
+    localStorage.getItem("activeStoreId");
 
-  const handleToggle = (
-    key: keyof NavbarSettings
-  ) => {
+  const storeTokens =
+    JSON.parse(localStorage.getItem("storeTokens") || "{}");
 
-    setSettings((prev) => ({
-      ...prev,
-      [key]:
-        !prev[key] as boolean,
-    }));
-  };
+  const isLoggedIn =
+    activeStoreId &&
+    storeTokens[activeStoreId];
 
-  /* ================= NAVIGATION ================= */
+  const [isMenuOpen, setIsMenuOpen] =
+    useState(false);
 
-  const goToCart = () => {
-    navigate("/cart");
-  };
+  const cartCount = 0;
+
+  const styles = navbarConfig.styles;
+  const layout = styles.layout;
+
+  const mobileItems = [
+    ...layout.left,
+    ...layout.center,
+    ...layout.right
+  ].filter(
+    item =>
+      item !== "logo" &&
+      item !== "cart"
+  );
 
   const goToHome = () => {
     navigate("/");
   };
 
-  const goToAccount = () => {
-    navigate("account");
+  const goToLogin = () => {
+    navigate("/login");
+  };
+
+  const goToCart = () => {
+    navigate("/cart");
   };
 
   const goToOrders = () => {
-    navigate("account/my-orders");
+    navigate("/account/my-orders");
   };
 
-  const goToLogin = () => {
-    navigate("login");
+  const goToAccount = () => {
+    navigate("/account");
   };
 
-  /* ================= UI ================= */
+  const navbarComponents = {
+
+    logo: (
+
+      <img
+        className="logo-img"
+        src={logoUrl || defaultLogo}
+        alt={storeName || "Logo"}
+        onClick={goToHome}
+      />
+
+    ),
+
+    search: (
+
+      <div className="search-box">
+
+        <CiSearch className="search-icon" />
+
+        <input
+          type="text"
+          placeholder="Search products"
+        />
+
+      </div>
+
+    ),
+
+    user: !isLoggedIn && (
+
+      <div
+        className="nav-item-user"
+        onClick={goToLogin}
+      >
+
+        <FaRegCircleUser className="nav-item-icon" />
+
+        <span className="icon-text">
+          Login
+        </span>
+
+      </div>
+
+    ),
+
+    orders: (
+
+      <div
+        className="nav-item"
+        onClick={goToOrders}
+      >
+
+        <MdOutlineShoppingBag className="nav-item-icon" />
+
+        <span className="icon-text">
+          Orders
+        </span>
+
+      </div>
+
+    ),
+
+    cart: (
+
+      <div
+        className="nav-item"
+        onClick={goToCart}
+      >
+
+        <div className="nav-cart-inline">
+
+          <BsCart3 className="nav-item-icon" />
+
+          {cartCount > 0 && (
+
+            <span
+              className="nav-item-count"
+              style={{
+                backgroundColor:
+                  storeData?.primaryColor ||
+                  styles.primaryColor
+              }}
+            >
+              {cartCount}
+            </span>
+
+          )}
+
+        </div>
+
+        <span className="icon-text">
+          Cart
+        </span>
+
+      </div>
+
+    ),
+
+    more: (
+
+      <div
+        className="nav-item"
+        onClick={goToAccount}
+      >
+
+        <IoMdMore className="nav-item-icon" />
+
+      </div>
+
+    )
+  };
+
+  const renderSection = (
+    items: string[] = []
+  ) =>
+    items.map(item => (
+
+      <React.Fragment key={item}>
+
+        {
+          navbarComponents[
+          item as keyof typeof navbarComponents
+          ]
+        }
+
+      </React.Fragment>
+
+    ));
 
   return (
 
-    <>
+    <div
+      className="navbar"
+      style={{
+        "--navbar-bg":
+          styles.backgroundColor,
 
-      <div
-        className="navbar"
-        style={{
-          "--store-primary-color": storeData?.primaryColor || "var(--primary-color)"
-        } as React.CSSProperties}
-      >
+        "--store-primary-color":
+          storeData?.primaryColor ||
+          styles.primaryColor,
 
-        <div className="navbar-container">
+        "--navbar-height":
+          styles.height,
 
-          {/* LEFT */}
-          <div className="navbar-left">
+        "--navbar-padding-x":
+          styles.paddingX,
 
-            {/* LOGO */}
-            <img
-              className="logo-img"
-              src={
-                logoUrl ||
-                defaultLogo
-              }
-              alt={
-                storeName ||
-                "logo"
-              }
-              onClick={goToHome}
-            />
+        "--navbar-radius":
+          styles.borderRadius,
 
-            {/* SEARCH */}
-            {settings.showSearch && (
+        "--search-height":
+          styles.searchHeight,
 
-              <div className="search-box">
+        "--search-width":
+          styles.searchWidth,
 
-                <CiSearch
-                  className="search-icon"
-                />
+        "--logo-height":
+          styles.logoHeight,
 
-                <input
-                  type="text"
-                  placeholder="Search products"
-                />
+        "--items-icon-size":
+          styles.itemsIconSize,
 
-              </div>
-            )}
+        "--items-text-size":
+          styles.itemsTextSize,
 
-          </div>
+        "--items-color":
+          styles.itemsColor,
 
-          {/* RIGHT */}
-          <div className="navbar-right">
+        "--items-gap":
+          styles.itemsGap,
 
-            {/* LOGIN */}
-            {settings.showLogin && !isLoggedIn && (
+        "--items-cart-count-text-size":
+          styles.itemsCartCountTextSize,
 
-              <div
-                className="nav-item-user"
-                onClick={goToLogin}
+        "--items-cart-count-size":
+          styles.itemsCartCountSize,
+
+        "--border-color":
+          styles.borderColor
+
+      } as React.CSSProperties}
+    >
+
+      {/* Desktop */}
+
+      <div className="navbar-container desktop-navbar">
+
+        <div className="navbar-left">
+          {renderSection(layout.left)}
+        </div>
+
+        <div className="navbar-center">
+          {renderSection(layout.center)}
+        </div>
+
+        <div className="navbar-right">
+          {renderSection(layout.right)}
+        </div>
+
+      </div>
+
+      {/* Mobile */}
+
+      <div className="mobile-navbar">
+
+        <HiOutlineMenu
+          className="mobile-menu-icon"
+          onClick={() =>
+            setIsMenuOpen(true)
+          }
+        />
+
+        <img
+          className="logo-img"
+          src={logoUrl || defaultLogo}
+          alt="logo"
+        />
+
+        <div
+          className="nav-item"
+          onClick={goToCart}
+        >
+
+          <div className="nav-cart-inline">
+
+            <BsCart3 className="nav-item-icon" />
+
+            {cartCount > 0 && (
+
+              <span
+                className="nav-item-count"
               >
+                {cartCount}
+              </span>
 
-                <FaRegCircleUser
-                  className="nav-item-icon"
-                />
-
-                <span className="icon-text">
-                  Login
-                </span>
-
-              </div>
             )}
-
-            {/* ORDERS */}
-            {settings.showOrders && (
-
-              <div
-                className="nav-item"
-                onClick={goToOrders}
-              >
-
-                <MdOutlineShoppingBag
-                  className="nav-item-icon"
-                />
-
-                <span className="icon-text">
-                  Orders
-                </span>
-
-              </div>
-            )}
-
-            {/* CART */}
-            {settings.showCart && (
-
-              <div
-                className="nav-item"
-                onClick={goToCart}
-              >
-
-                <div className="nav-cart-inline">
-
-                  <BsCart3
-                    className="nav-item-icon"
-                  />
-
-                  {cartCount >= 1 && (
-                    <span
-                      className="nav-item-count"
-                      style={{
-                        backgroundColor:
-                          storeData?.primaryColor || "var(--primary-color)"
-                      }}
-                    >
-                      {cartCount}
-                    </span>
-                  )}
-
-                </div>
-
-                <span className="icon-text">
-                  Cart
-                </span>
-
-              </div>
-            )}
-
-            {/* MORE */}
-            <div
-              className="nav-item"
-              onClick={goToAccount}
-            >
-
-              <IoMdMore
-                className="nav-item-icon"
-              />
-
-            </div>
 
           </div>
 
@@ -230,125 +320,63 @@ const Navbar: React.FC<NavbarProps> = ({
 
       </div>
 
-      {/* ================= POPUP ================= */}
+      {/* Overlay */}
 
-      {openModal && (
+      <div
+        className={`mobile-overlay ${isMenuOpen ? "active" : ""
+          }`}
+        onClick={() =>
+          setIsMenuOpen(false)
+        }
+      />
 
-        <div className="modal-overlay">
-          <div className="modal-box">
-            <div className="modal-header">
-              <h3>
-                Edit Navbar
-              </h3>
+      {/* Sidebar */}
 
-              <button
-                onClick={() => setOpenModal(false)}
-              >
-                ✕
-              </button>
+      <div
+        className={`mobile-sidebar ${isMenuOpen ? "open" : ""
+          }`}
+      >
 
-            </div>
+        <div className="mobile-sidebar-header">
 
-            <div className="modal-body">
+          <img
+            className="logo-img"
+            src={logoUrl || defaultLogo}
+            alt="logo"
+          />
 
-              {/* Background Color */}
-              <label>
+          <button
+            className="mobile-close-btn"
+            onClick={() =>
+              setIsMenuOpen(false)
+            }
+          >
+            ✕
+          </button>
 
-                Navbar Background Color
-
-                <input
-                  type="color"
-                  value={
-                    settings.bgColor
-                  }
-                  onChange={(e) =>
-                    setSettings((prev) => ({
-                      ...prev,
-                      bgColor:
-                        e.target.value,
-                    }))
-                  }
-                />
-
-              </label>
-
-              {/* TOGGLES */}
-
-              <label>
-                <input
-                  type="checkbox"
-                  checked={
-                    settings.showSearch
-                  }
-                  onChange={() =>
-                    handleToggle(
-                      "showSearch"
-                    )
-                  }
-                />
-                Show Search
-              </label>
-
-              <label>
-
-                <input
-                  type="checkbox"
-                  checked={
-                    settings.showLogin
-                  }
-                  onChange={() =>
-                    handleToggle(
-                      "showLogin"
-                    )
-                  }
-                />
-                Show Login
-              </label>
-
-              <label>
-
-                <input
-                  type="checkbox"
-                  checked={settings.showOrders}
-                  onChange={() => handleToggle("showOrders")}
-                />
-                Show Orders
-              </label>
-
-              <label>
-
-                <input
-                  type="checkbox"
-                  checked={settings.showCart}
-                  onChange={() => handleToggle("showCart")}
-                />
-                Show Cart
-              </label>
-
-            </div>
-
-            <div className="modal-footer">
-
-              <button
-                className="model-close-btn"
-                onClick={() => setOpenModal(false)}
-              >
-                Close
-              </button>
-
-              <button
-                className="model-save-btn"
-                onClick={() => setOpenModal(false)}
-              >
-                Save
-              </button>
-
-            </div>
-          </div>
         </div>
-      )}
 
-    </>
+        {mobileItems.map(item => (
+
+          <div
+            key={item}
+            className="mobile-sidebar-item"
+          >
+
+            {
+              navbarComponents[
+              item as keyof typeof navbarComponents
+              ]
+            }
+
+          </div>
+
+        ))}
+
+      </div>
+
+    </div>
+
   );
 };
 

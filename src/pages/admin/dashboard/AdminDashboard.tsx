@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
 
 import {
-    LineChart,
-    Line,
+    AreaChart,
+    Area,
+    CartesianGrid,
     XAxis,
     YAxis,
-    CartesianGrid,
     Tooltip,
-    ResponsiveContainer
+    ResponsiveContainer,
+    Legend
 } from "recharts";
+import {
+    FaRupeeSign,
+    FaShoppingBag,
+    FaUsers,
+    FaEye
+} from "react-icons/fa";
 
 import "./AdminDashboard.css";
 import { useStoreAnalytics } from "../../../hooks/admin/adminStoreAnalytics/useAdminStoreAnalytics";
@@ -213,7 +220,7 @@ const AdminDashboard = () => {
                     </div>
 
                     <div className="ad-user-subtitle">
-                        Welcome to the Dashboard
+                        Here's what's happening in your store today.
                     </div>
                 </div>
 
@@ -336,9 +343,10 @@ const AdminDashboard = () => {
 
                     <div className="card-header">
 
-                        <span>
-                            Total Revenue
-                        </span>
+                        <div className="card-title">
+                            <FaRupeeSign className="card-icon revenue-icon" />
+                            <span>Total Revenue</span>
+                        </div>
 
                     </div>
 
@@ -357,9 +365,12 @@ const AdminDashboard = () => {
 
                     <div className="card-header">
 
-                        <span>
-                            Total Orders
-                        </span>
+                        <div className="card-title">
+                            <FaShoppingBag className="card-icon orders-icon" />
+                            <span>
+                                Total Orders
+                            </span>
+                        </div>
 
                     </div>
 
@@ -378,9 +389,12 @@ const AdminDashboard = () => {
 
                     <div className="card-header">
 
-                        <span>
-                            Total Visitors
-                        </span>
+                        <div className="card-title">
+                            <FaEye className="card-icon visitors-icon" />
+                            <span>
+                                Total Visitors
+                            </span>
+                        </div>
 
                     </div>
 
@@ -399,9 +413,12 @@ const AdminDashboard = () => {
 
                     <div className="card-header">
 
-                        <span>
-                            Total Customers
-                        </span>
+                        <div className="card-title">
+                            <FaUsers className="card-icon customers-icon" />
+                            <span>
+                                Total Customers
+                            </span>
+                        </div>
 
                     </div>
 
@@ -418,81 +435,114 @@ const AdminDashboard = () => {
             </div>
 
             {/* Chart Section */}
-            <div className="chart-card">
+            <div className="analytics-section">
 
-                <div className="card-header">
+                {/* Visitors */}
+                <div className="visitors-card">
 
-                    <span>
-                        Transaction Activity
-                    </span>
-
-                    <span>⋮</span>
-
-                </div>
-
-                <div
-                    className="chart-placeholder"
-                    style={{
-                        width: "100%",
-                        height: "350px"
-                    }}
-                >
+                    <h3>Visitors Activity</h3>
 
                     <ResponsiveContainer
                         width="100%"
-                        height="100%"
+                        height={260}
                     >
+                        <AreaChart data={analytics}>
 
-                        <LineChart
-                            data={analytics}
-                        >
+                            <defs>
+                                <linearGradient
+                                    id="visitorsGradient"
+                                    x1="0"
+                                    y1="0"
+                                    x2="0"
+                                    y2="1"
+                                >
+                                    <stop
+                                        offset="5%"
+                                        stopColor="#2563eb"
+                                        stopOpacity={0.35}
+                                    />
+                                    <stop
+                                        offset="95%"
+                                        stopColor="#2563eb"
+                                        stopOpacity={0}
+                                    />
+                                </linearGradient>
+                            </defs>
 
-                            <CartesianGrid
-                                strokeDasharray="3 3"
-                            />
+                            <CartesianGrid strokeDasharray="3 3" />
 
-                            <XAxis
-                                dataKey="date"
-                            />
+                            <XAxis dataKey="date" />
 
-                            <YAxis
-                                yAxisId="left"
-                                domain={[0, (dataMax: number) => dataMax + 1]}
-                            />
+                            <YAxis />
 
                             <Tooltip />
 
-                            <Line
-                                yAxisId="left"
-                                type="monotone"
-                                dataKey="customers"
-                                stroke="#8884d8"
-                                strokeWidth={3}
-                                dot={false}
-                            />
-
-                            <Line
-                                yAxisId="left"
-                                type="monotone"
-                                dataKey="orders"
-                                stroke="#82ca9d"
-                                strokeWidth={3}
-                                dot={false}
-                            />
-
-                            <Line
-                                yAxisId="left"
+                            <Area
                                 type="monotone"
                                 dataKey="visitors"
-                                stroke="#ff7300"
+                                stroke="#2563eb"
                                 strokeWidth={3}
-                                dot={false}
+                                fill="url(#visitorsGradient)"
                             />
 
-                        </LineChart>
-
+                        </AreaChart>
                     </ResponsiveContainer>
 
+                </div>
+
+                {/* Orders + Customers */}
+                <div className="analytics-card">
+
+                    <h3>Orders & Customers</h3>
+
+                    <ResponsiveContainer
+                        width="100%"
+                        height={260}
+                    >
+                        <AreaChart data={analytics}>
+
+                            <defs>
+                                <linearGradient id="ordersColor" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="5%" stopColor="#22c55e" stopOpacity={0.35} />
+                                    <stop offset="95%" stopColor="#22c55e" stopOpacity={0} />
+                                </linearGradient>
+
+                                <linearGradient id="customersColor" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="5%" stopColor="#f97316" stopOpacity={0.35} />
+                                    <stop offset="95%" stopColor="#f97316" stopOpacity={0} />
+                                </linearGradient>
+                            </defs>
+
+                            <CartesianGrid strokeDasharray="3 3" />
+
+                            <XAxis dataKey="date" />
+
+                            <YAxis />
+
+                            <Tooltip />
+
+                            <Legend />
+
+                            <Area
+                                type="monotone"
+                                dataKey="orders"
+                                stroke="#22c55e"
+                                strokeWidth={3}
+                                fill="url(#ordersColor)"
+                                name="Orders"
+                            />
+
+                            <Area
+                                type="monotone"
+                                dataKey="customers"
+                                stroke="#f97316"
+                                strokeWidth={3}
+                                fill="url(#customersColor)"
+                                name="Customers"
+                            />
+
+                        </AreaChart>
+                    </ResponsiveContainer>
                 </div>
 
             </div>

@@ -1,0 +1,32 @@
+{
+    "styles": {
+        "backgroundColor": "#ffffff",
+        "primaryColor": "#fc0303",
+        "height": "4.2rem",
+        "paddingX": "1rem",
+        "borderRadius": "0.8rem",
+        "searchHeight": "2.8rem",
+        "searchWidth": "28rem",
+        "logoHeight": "3.6rem",
+        "itemsIconSize": "1.5rem",
+        "itemsTextSize": "1rem",
+        "itemsColor": "#757575",
+        "itemsGap": "1.5rem",
+        "itemsCartCountSize": "1.15rem",
+        "itemsCartCountTextSize": "0.8rem",
+        "borderColor": "#ececec",
+        "layout": {
+            "left": [
+                "logo",
+                "search"
+            ],
+            "center": [],
+            "right": [
+                "cart",
+                "orders",
+                "user",
+                "more"
+            ]
+        }
+    }
+}

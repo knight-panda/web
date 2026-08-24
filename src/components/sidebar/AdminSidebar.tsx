@@ -87,6 +87,10 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ onTagClick }) => {
                     id: "store-information",
                     label: "Store Information",
                 },
+                {
+                    id: "store-profile",
+                    label: "Store Profile",
+                },
             ],
         },
 

@@ -138,9 +138,9 @@ const Products = ({ storeId, storeData }: Props) => {
   }
 
   return (
-    <div className="product">
+    <div className="user-product">
 
-      <div className="products-grid">
+      <div className="user-products-grid">
 
         {data.data.map(
           (product: any) => {
