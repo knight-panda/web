@@ -4,11 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useCreateStore } from "../../../hooks/store/useStore";
 import { useUpdateAdminProfile } from "../../../hooks/admin/auth/useAdminRegister";
 
-interface Props {
-    onClose: () => void;
-}
 
-const StoreProfile: React.FC<Props> = () => {
+const StoreProfile: React.FC = () => {
 
     const navigate = useNavigate();
 
