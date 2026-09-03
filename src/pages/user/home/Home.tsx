@@ -279,8 +279,8 @@ const renderSection = (
         />
       );
 
-    case "course":
-      return <Course />;
+    // case "course":
+    //   return <Course />;
 
     case "products":
       return (
