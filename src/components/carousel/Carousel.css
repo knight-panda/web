@@ -4,7 +4,7 @@
   position: relative;
   width: 100%;
   max-width: 89rem;
-  margin: 0rem auto 1rem auto;
+  box-sizing: border-box;
   overflow: hidden;
   /* aspect-ratio: 2.8/1; */
   /* margin: 2rem 1rem; */

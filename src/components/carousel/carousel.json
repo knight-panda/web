@@ -4,6 +4,7 @@
     "width": "100%",
     "backgroundColor": "#ffffff",
     "borderRadius": "1rem",
+    "borderRadiusMobile": "0.5rem",
     "desktopAspectRatio": "3.2/1",
     "mobileAspectRatio": "3.2/1",
     "objectFit": "fill",
@@ -22,13 +23,17 @@
     "arrowColor": "#d97706",
     "arrowBorderRadius": "50%",
     "dotSize": "0.65rem",
+    "dotSizeMobile": "0.45rem",
     "dotGap": "0.4rem",
+    "dotGapMobile": "0.2rem",
     "dotColor": "#e5e7eb",
     "activeDotColor": "#d97706",
     "lazyLoad": true,
     "infiniteLoop": true,
     "enableSwipe": true,
     "desktopMargin": "1rem auto 1.5rem auto",
-    "mobileMargin": "0 auto 1rem auto"
+    "mobileMargin": "0.5rem auto 0.5rem auto",
+    "desktopPaddingX": "1rem",
+    "mobilePaddingX": "0.5rem"
   }
 }

@@ -126,147 +126,162 @@ const Carousel = ({ storeId }: Props) => {
 
   return (
     <div
-      className="slider"
-      onMouseEnter={() =>
-        styles.pauseOnHover &&
-        setPaused(true)
-      }
-      onMouseLeave={() =>
-        styles.pauseOnHover &&
-        setPaused(false)
-      }
       style={{
-        maxWidth: styles.maxWidth,
-        width: styles.width,
-        backgroundColor:
-          styles.backgroundColor,
-        borderRadius:
-          styles.borderRadius,
-        aspectRatio: isMobile
-          ? styles.mobileAspectRatio
-          : styles.desktopAspectRatio,
-        margin: isMobile
-          ? styles.mobileMargin
-          : styles.desktopMargin,
-        boxShadow: styles.showShadow
-          ? styles.shadow
-          : "none",
-        border: styles.showBorder
-          ? styles.border
-          : "none"
+        paddingLeft: isMobile
+          ? styles.mobilePaddingX
+          : styles.desktopPaddingX,
+        paddingRight: isMobile
+          ? styles.mobilePaddingX
+          : styles.desktopPaddingX
       }}
     >
-      {currentImages.map(
-        (
-          img: string,
-          index: number
-        ) => (
-          <img
-            key={index}
-            src={img}
-            alt={`Slide ${index + 1
-              }`}
-            loading={
-              styles.lazyLoad
-                ? "lazy"
-                : "eager"
-            }
-            className={`slide ${index === currentIndex
-              ? "active"
-              : ""
-              }`}
-            style={{
-              objectFit:
-                styles.objectFit,
-              transition: `opacity ${styles.transitionDuration} ease-in-out`
-            }}
-          />
-        )
-      )}
-
-      {isMobile
-        ? false : styles.showArrows && (
-          <>
-            <button
-              type="button"
-              aria-label="Previous Slide"
-              className="carousel-arrow left"
-              onClick={prevSlide}
+      <div
+        className="slider"
+        onMouseEnter={() =>
+          styles.pauseOnHover &&
+          setPaused(true)
+        }
+        onMouseLeave={() =>
+          styles.pauseOnHover &&
+          setPaused(false)
+        }
+        style={{
+          maxWidth: styles.maxWidth,
+          width: styles.width,
+          backgroundColor:
+            styles.backgroundColor,
+          borderRadius:
+            isMobile
+              ? styles.borderRadiusMobile : styles.borderRadius,
+          aspectRatio: isMobile
+            ? styles.mobileAspectRatio
+            : styles.desktopAspectRatio,
+          margin: isMobile
+            ? styles.mobileMargin
+            : styles.desktopMargin,
+          boxShadow: styles.showShadow
+            ? styles.shadow
+            : "none",
+          border: styles.showBorder
+            ? styles.border
+            : "none"
+        }}
+      >
+        {currentImages.map(
+          (
+            img: string,
+            index: number
+          ) => (
+            <img
+              key={index}
+              src={img}
+              alt={`Slide ${index + 1
+                }`}
+              loading={
+                styles.lazyLoad
+                  ? "lazy"
+                  : "eager"
+              }
+              className={`slide ${index === currentIndex
+                ? "active"
+                : ""
+                }`}
               style={{
-                width: styles.arrowSize,
-                height: styles.arrowSize,
-                background:
-                  styles.arrowBackground,
-                color: styles.arrowColor,
-                borderRadius:
-                  styles.arrowBorderRadius
+                objectFit:
+                  styles.objectFit,
+                transition: `opacity ${styles.transitionDuration} ease-in-out`
               }}
-            >
-              <FaChevronLeft
-                style={{
-                  width: styles.arrowIconSize,
-                  height: styles.arrowIconSize,
-                }} />
-            </button>
-
-            <button
-              type="button"
-              aria-label="Next Slide"
-              className="carousel-arrow right"
-              onClick={nextSlide}
-              style={{
-                width: styles.arrowSize,
-                height: styles.arrowSize,
-                background:
-                  styles.arrowBackground,
-                color: styles.arrowColor,
-                borderRadius:
-                  styles.arrowBorderRadius
-              }}
-            >
-              <FaChevronRight
-                style={{
-                  width: styles.arrowIconSize,
-                  height: styles.arrowIconSize,
-                }} />
-            </button>
-          </>
+            />
+          )
         )}
 
-      {styles.showDots && (
-        <div className="carousel-dots">
-          {currentImages.map(
-            (_, index) => (
-              <span
-                key={index}
-                onClick={() =>
-                  setCurrentIndex(
-                    index
-                  )
-                }
+        {isMobile
+          ? false : styles.showArrows && (
+            <>
+              <button
+                type="button"
+                aria-label="Previous Slide"
+                className="carousel-arrow left"
+                onClick={prevSlide}
                 style={{
-                  width:
-                    styles.dotSize,
-                  height:
-                    styles.dotSize,
-                  margin: `0 ${styles.dotGap}`,
+                  width: styles.arrowSize,
+                  height: styles.arrowSize,
                   background:
-                    currentIndex ===
-                      index
-                      ? styles.activeDotColor
-                      : styles.dotColor,
+                    styles.arrowBackground,
+                  color: styles.arrowColor,
                   borderRadius:
-                    "50%",
-                  display:
-                    "inline-block",
-                  cursor:
-                    "pointer"
+                    styles.arrowBorderRadius
                 }}
-              />
-            )
+              >
+                <FaChevronLeft
+                  style={{
+                    width: styles.arrowIconSize,
+                    height: styles.arrowIconSize,
+                  }} />
+              </button>
+
+              <button
+                type="button"
+                aria-label="Next Slide"
+                className="carousel-arrow right"
+                onClick={nextSlide}
+                style={{
+                  width: styles.arrowSize,
+                  height: styles.arrowSize,
+                  background:
+                    styles.arrowBackground,
+                  color: styles.arrowColor,
+                  borderRadius:
+                    styles.arrowBorderRadius
+                }}
+              >
+                <FaChevronRight
+                  style={{
+                    width: styles.arrowIconSize,
+                    height: styles.arrowIconSize,
+                  }} />
+              </button>
+            </>
           )}
-        </div>
-      )}
+
+        {styles.showDots && (
+          <div className="carousel-dots">
+            {currentImages.map(
+              (_, index) => (
+                <span
+                  key={index}
+                  onClick={() =>
+                    setCurrentIndex(
+                      index
+                    )
+                  }
+                  style={{
+                    width:
+                      isMobile
+                        ? styles.dotSizeMobile : styles.dotSize,
+                    height:
+                      isMobile
+                        ? styles.dotSizeMobile : styles.dotSize,
+                    margin: `0 ${isMobile
+                      ? styles.dotGapMobile : styles.dotGap}`,
+                    background:
+                      currentIndex ===
+                        index
+                        ? styles.activeDotColor
+                        : styles.dotColor,
+                    borderRadius:
+                      "50%",
+                    display:
+                      "inline-block",
+                    cursor:
+                      "pointer"
+                  }}
+                />
+              )
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
