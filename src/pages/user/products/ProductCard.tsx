@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { BsPlus, BsDash } from "react-icons/bs";
 import { IoMdArrowDropdown } from "react-icons/io";
 import "./ProductCard.css";
+import productsConfig from "./products.json";
+
+const styles = (productsConfig as any).styles;
 
 import {
   useAddToCart
-} from "../../hooks/user/cart/useAddToCart";
+} from "../../../hooks/user/cart/useAddToCart";
 
 type Variant = {
   variantId: string;
@@ -173,15 +176,34 @@ const ProductCard: React.FC<
     // ================= DISCOUNT =================
     const discount = mrp > price ? Math.round(((mrp - price) / mrp) * 100) : 0;
 
+    const variantStyles = {
+      background: styles.variantBackground,
+      borderRadius: styles.variantRadius,
+      "--store-primary-color": primaryColor
+    } as React.CSSProperties;
+
     return (
-      <div className="product-card-modern">
+      <div
+        className="product-card-modern"
+        style={{
+          background: styles.cardBackground,
+          borderRadius: styles.cardBorderRadius,
+          boxShadow: styles.cardShadow
+        }}
+      >
 
         {/* IMAGE */}
         <div className="product-img">
 
           {discount > 0 && (
 
-            <div className="product-discount">
+            <div
+              className="product-discount"
+              style={{
+                background: styles.discountBackground,
+                color: styles.discountTextColor
+              }}
+            >
               {discount}% Off
             </div>
           )}
@@ -189,7 +211,11 @@ const ProductCard: React.FC<
           <img
             src={image}
             alt={title}
-            onClick={handleClick}
+            style={{
+              aspectRatio: styles.imageAspectRatio,
+              objectFit: styles.imageObjectFit,
+              padding: styles.imagePadding
+            }}
           />
 
           {/* CART */}
@@ -265,14 +291,23 @@ const ProductCard: React.FC<
         >
 
           {/* TITLE */}
-          <div className="product-name">
+          <div
+            className="product-name"
+            style={{
+              fontSize: styles.titleFontSize
+            }}
+          >
             {title}
           </div>
 
           {/* DESCRIPTION */}
-          {description && (
-
-            <div className="product-desc">
+          {styles.showDescription && description && (
+            <div
+              className="product-desc"
+              style={{
+                fontSize: styles.descriptionFontSize
+              }}
+            >
               {description}
             </div>
           )}
@@ -280,74 +315,82 @@ const ProductCard: React.FC<
           {/* PRICE */}
           <div className="product-price-row">
 
-            <span className="price">
+            <span
+              className="price"
+              style={{
+                fontSize: styles.priceFontSize
+              }}
+            >
               ₹{price}
             </span>
 
             {mrp > price && (
 
-              <span className="mrp">
+              <span
+                className="mrp"
+                style={{
+                  fontSize: styles.mrpFontSize
+                }}
+              >
                 ₹{mrp}
               </span>
             )}
           </div>
 
           {/* VARIANT */}
-          <div
-            className="product-quantity-box"
-            style={{
-              "--store-primary-color": primaryColor
-            } as React.CSSProperties}
-            onClick={(e) =>
-              e.stopPropagation()
-            }
-          >
-
-            <select
-              value={selectedVariantIndex}
-              onChange={(e) => {
-
-                const index = Number(
-                  e.target.value
-                );
-
-                setSelectedVariantIndex(
-                  index
-                );
-
-                setQty(
-                  variants[index]
-                    ?.cartQuantity || 0
-                );
-              }}
+          {styles.showVariantSelector && (
+            <div
+              className="product-quantity-box"
+              style={variantStyles}
+              onClick={(e) => e.stopPropagation()}
             >
 
-              {variants?.map(
-                (variant, index) => (
+              <select
+                value={selectedVariantIndex}
+                onChange={(e) => {
 
-                  <option
-                    key={variant.variantId}
-                    value={index}
-                  >
+                  const index = Number(
+                    e.target.value
+                  );
 
-                    {variant.variantName}
+                  setSelectedVariantIndex(
+                    index
+                  );
 
-                    {variant.unitValue &&
-                      variant.unitType
-                      ? ` (${variant.unitValue}${variant.unitType})`
-                      : ""}
-                  </option>
-                )
-              )}
-            </select>
+                  setQty(
+                    variants[index]
+                      ?.cartQuantity || 0
+                  );
+                }}
+              >
 
-            <IoMdArrowDropdown
-              className="product-dropdown-icon"
-              style={{
-                "--store-primary-color": primaryColor
-              } as React.CSSProperties}
-            />
-          </div>
+                {variants?.map(
+                  (variant, index) => (
+
+                    <option
+                      key={variant.variantId}
+                      value={index}
+                    >
+
+                      {variant.variantName}
+
+                      {variant.unitValue &&
+                        variant.unitType
+                        ? ` (${variant.unitValue}${variant.unitType})`
+                        : ""}
+                    </option>
+                  )
+                )}
+              </select>
+
+              <IoMdArrowDropdown
+                className="product-dropdown-icon"
+                style={{
+                  "--store-primary-color": primaryColor
+                } as React.CSSProperties}
+              />
+            </div>
+          )}
         </div>
       </div>
     );

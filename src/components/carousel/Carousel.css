@@ -89,8 +89,9 @@
     0 0 8px rgba(255, 255, 255, 0.6);
 }
 
-/* @media (max-width: 1024px) {
-  .slider {
-    aspect-ratio: 2.8/1;
+@media (max-width: 1024px) {
+  .carousel-dots {
+    bottom: 0.5rem;
   }
-} */
+
+}

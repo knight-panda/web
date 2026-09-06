@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import ProductCard from "../../../components/Product/ProductCard";
+import ProductCard from "./ProductCard";
 
 import "./Products.css";
 
@@ -9,6 +9,9 @@ import { usePublicProducts } from "../../../hooks/user/usePublicStore";
 
 import { useUserProducts } from "../../../hooks/user/products/useUserProducts";
 import type { Store } from "../../../models/store/response/SingleStoreResponse";
+import productsConfig from "./products.json";
+
+const styles = (productsConfig as any).styles;
 
 type Props = {
   storeId: string;
@@ -138,47 +141,44 @@ const Products = ({ storeId, storeData }: Props) => {
   }
 
   return (
-    <div className="user-product">
+    <div
+      className="user-product"
+      style={
+        {
+          "--container-padding": styles.containerPadding,
+          "--mobile-container-padding": styles.mobileContainerPadding,
 
+          "--grid-gap": styles.gridGap,
+          "--mobile-grid-gap": styles.mobileGridGap,
+
+          "--desktop-columns": styles.desktopColumns,
+          "--tablet-columns": styles.tabletColumns,
+          "--mobile-columns": styles.mobileColumns,
+          "--small-mobile-columns": styles.smallMobileColumns,
+
+          "--max-width": styles.maxWidth
+        } as React.CSSProperties
+      }
+    >
       <div className="user-products-grid">
-
-        {data.data.map(
-          (product: any) => {
-
-            return (
-
-              <ProductCard
-                key={product.id}
-
-                id={product.id}
-
-                title={product.name}
-
-                description={
-                  product.description
-                }
-
-                primaryColor={storeData?.primaryColor || "var(--primary-color)" }
-
-                // image
-                image={
-                  product.imageThumbnail ||
-                  product.imageUrls?.[0]
-                }
-
-                // variants
-                variants={
-                  product.variants || []
-                }
-
-                onProductClick={
-                  handleProductClick
-                }
-              />
-            );
-          }
-        )}
-
+        {data.data.map((product: any) => (
+          <ProductCard
+            key={product.id}
+            id={product.id}
+            title={product.name}
+            description={product.description}
+            primaryColor={
+              storeData?.primaryColor ||
+              "var(--primary-color)"
+            }
+            image={
+              product.imageThumbnail ||
+              product.imageUrls?.[0]
+            }
+            variants={product.variants || []}
+            onProductClick={handleProductClick}
+          />
+        ))}
       </div>
     </div>
   );
