@@ -172,26 +172,32 @@ const Carousel = ({ storeId }: Props) => {
             img: string,
             index: number
           ) => (
-            <img
-              key={index}
-              src={img}
-              alt={`Slide ${index + 1
-                }`}
-              loading={
-                styles.lazyLoad
-                  ? "lazy"
-                  : "eager"
-              }
-              className={`slide ${index === currentIndex
-                ? "active"
-                : ""
-                }`}
-              style={{
-                objectFit:
-                  styles.objectFit,
-                transition: `opacity ${styles.transitionDuration} ease-in-out`
-              }}
-            />
+            <a
+              href="https://prepone.akamai.net.in/new-courses/2-complete-gk"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                key={index}
+                src={img}
+                alt={`Slide ${index + 1
+                  }`}
+                loading={
+                  styles.lazyLoad
+                    ? "lazy"
+                    : "eager"
+                }
+                className={`slide ${index === currentIndex
+                  ? "active"
+                  : ""
+                  }`}
+                style={{
+                  objectFit:
+                    styles.objectFit,
+                  transition: `opacity ${styles.transitionDuration} ease-in-out`
+                }}
+              />
+            </a>
           )
         )}
 

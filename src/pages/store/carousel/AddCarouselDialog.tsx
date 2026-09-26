@@ -9,6 +9,7 @@ interface Props {
   initialData?: {
     id: string;
     imageUrl: string;
+    redirectUrl: string;
   };
 }
 
@@ -26,9 +27,19 @@ const AddCarouselDialog: React.FC<Props> = ({
   const { createStoreCarousel, loading: createLoading } = useAddStoreCarousel();
   const { editStoreCarousel, loading: updateLoading } = useUpdateStoreCarousel();
 
+  const [mode, setMode] = useState<"upload" | "url">("upload");
+  const [imageUrlInput, setImageUrlInput] = useState(
+    initialData?.imageUrl || ""
+  );
+  const [redirectUrl, setRedirectUrl] = useState(
+    initialData?.redirectUrl || ""
+  );
+  const [urlMode, setUrlMode] = useState(false);
+
   const [uploading, setUploading] = useState(false);
 
   const isLoading = uploading || createLoading || updateLoading;
+
 
   const handleImage = (file: File | null) => {
 
@@ -65,17 +76,20 @@ const AddCarouselDialog: React.FC<Props> = ({
     try {
       setUploading(true);
 
-      let imageUrl = initialData?.imageUrl;
-
+      let imageUrl = initialData?.imageUrl || "";
       // ✅ If user selected new image → upload
-      if (file) {
-        const uploadedUrl = await updateProfile(file);
+      if (!urlMode) {
+        if (file) {
+          const uploadedUrl = await updateProfile(file);
 
-        if (!uploadedUrl) {
-          throw new Error("Image upload failed");
+          if (!uploadedUrl) {
+            throw new Error("Image upload failed");
+          }
+
+          imageUrl = uploadedUrl;
         }
-
-        imageUrl = uploadedUrl;
+      } else {
+        imageUrl = imageUrlInput;
       }
 
       if (!imageUrl) {
@@ -83,7 +97,7 @@ const AddCarouselDialog: React.FC<Props> = ({
         return;
       }
 
-      const payload = { imageUrl };
+      const payload = { imageUrl, redirectUrl };
 
       let res;
 
@@ -123,56 +137,95 @@ const AddCarouselDialog: React.FC<Props> = ({
 
         {/* Upload Area */}
         <div className="upload-box">
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            hidden
-            onChange={(e) => {
-              const file = e.target.files?.[0] || null;
-              handleImage(file);
-              e.target.value = ""; // allow same file reselect
-            }}
-          />
 
-          {!preview ? (
-            <label
-              className="upload-placeholder"
-              onClick={() => fileInputRef.current?.click()}
-            >
-              <div>Click to upload image</div>
-            </label>
+          {!urlMode ? (
+            <>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={(e) => {
+                  const file = e.target.files?.[0] || null;
+                  handleImage(file);
+                  e.target.value = "";
+                }}
+              />
+
+              {!preview ? (
+                <label
+                  className="upload-placeholder"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <div>Click to upload image</div>
+                </label>
+              ) : (
+                <div className="preview-container">
+                  <img
+                    src={preview}
+                    alt="preview"
+                    className="preview-carousel"
+                  />
+
+                  <button
+                    type="button"
+                    className="change-btn"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    Change Image
+                  </button>
+                </div>
+              )}
+
+              <input
+                type="text"
+                placeholder="Redirect URL"
+                value={redirectUrl}
+                onChange={(e) => setRedirectUrl(e.target.value)}
+                className="dialog-input"
+              />
+            </>
           ) : (
-            <div className="preview-container">
-              <img src={preview} alt="preview" className="preview-carousel" />
+            <div className="url-mode-container">
+              <input
+                type="text"
+                placeholder="Image URL"
+                value={imageUrlInput}
+                onChange={(e) => setImageUrlInput(e.target.value)}
+                className="dialog-input"
+              />
 
-              <button
-                type="button"
-                className="change-btn"
-                onClick={() => fileInputRef.current?.click()} // ✅ open picker
-              >
-                Change Image
-              </button>
+              <input
+                type="text"
+                placeholder="Redirect URL"
+                value={redirectUrl}
+                onChange={(e) => setRedirectUrl(e.target.value)}
+                className="dialog-input"
+              />
             </div>
           )}
+
         </div>
 
         {/* Actions */}
         <div className="dialog-actions">
           <button onClick={onClose}>Cancel</button>
+
+          <button
+            type="button"
+            className="secondary"
+            onClick={() => setUrlMode(!urlMode)}
+          >
+            {urlMode ? "Upload Image" : "Add URL"}
+          </button>
+
           <button
             type="button"
             className="primary"
             onClick={handleSave}
             disabled={isLoading}
           >
-            {isLoading
-              ? editMode
-                ? "Updating..."
-                : "Uploading..."
-              : editMode
-                ? "Update"
-                : "Upload"}
+            {isLoading ? "Uploading..." : "Upload"}
           </button>
         </div>
       </div>

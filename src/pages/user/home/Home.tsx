@@ -31,9 +31,9 @@ const ReelsUser = lazy(
   () => import("../reels/ReelsUser")
 );
 
-const Course = lazy(
-  () => import("../course/Course")
-);
+// const Course = lazy(
+//   () => import("../course/Course")
+// );
 
 // ==================================================
 // Types
